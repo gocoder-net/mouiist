@@ -451,6 +451,18 @@
       opacity: 0.3;
       transform: scale(1.15);
     }
+    .core-card-img {
+      width: 55%; height: auto;
+      object-fit: contain;
+      position: relative;
+      z-index: 0;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;
+      filter: grayscale(30%);
+    }
+    .core-card:hover .core-card-img {
+      transform: scale(1.08);
+      filter: grayscale(0%);
+    }
     /* shimmer */
     .core-card-visual::before {
       content: '';
@@ -502,6 +514,64 @@
       color: var(--muted);
       line-height: 1.8;
     }
+    .core-card-link {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent-dim);
+      padding-bottom: 2px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .core-card-link:hover {
+      color: var(--accent-light);
+      border-color: var(--accent-light);
+    }
+    .core-card-visual { cursor: pointer; }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      position: fixed; inset: 0;
+      z-index: 100000;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(20px);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1.5rem;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s, visibility 0.4s;
+      cursor: pointer;
+    }
+    .lightbox.open {
+      opacity: 1; visibility: visible;
+    }
+    .lightbox img {
+      max-width: 90vw; max-height: 80vh;
+      object-fit: contain;
+      border-radius: 2px;
+      transform: scale(0.9);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lightbox.open img {
+      transform: scale(1);
+    }
+    .lightbox-caption {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 2rem; right: 2rem;
+      font-size: 1.5rem;
+      color: var(--fg);
+      background: none; border: none;
+      cursor: pointer;
+      transition: color 0.3s;
+      font-family: var(--font-en);
+    }
+    .lightbox-close:hover { color: var(--accent); }
 
     /* ===== ARTISTS ===== */
     .artists {
@@ -1031,14 +1101,15 @@
       </div>
       <div class="core-team-grid">
         <div class="core-card reveal">
-          <div class="core-card-visual">
+          <div class="core-card-visual" onclick="openLightbox('director.png', '고코더 (이진현)')">
             <span class="core-card-role-badge">Director</span>
-            <span class="core-card-icon">&#9670;</span>
+            <img src="director.png" alt="고코더" class="core-card-img">
           </div>
           <div class="core-card-body">
             <p class="core-card-role">Exhibition Director</p>
-            <p class="core-card-name">TBA</p>
+            <p class="core-card-name">고코더 (이진현)</p>
             <p class="core-card-desc">전시의 방향성과 전체 기획을 총괄합니다.<br>모의의 큰 그림을 그리는 사람.</p>
+            <a href="http://brunch.co.kr/@gocoder" target="_blank" rel="noopener" class="core-card-link">브런치 →</a>
           </div>
         </div>
         <div class="core-card reveal reveal-delay-1">
@@ -1139,6 +1210,13 @@
       </div>
     </div>
   </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -1494,6 +1572,25 @@
       heroContent.style.opacity = 1 - p * 1.8;
       heroContent.style.transform = `translateY(${s * 0.35}px) scale(${1 - p * 0.05})`;
     }
+  });
+
+  // ===== LIGHTBOX =====
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+
+  function openLightbox(src, caption) {
+    lightboxImg.src = src;
+    lightboxCaption.textContent = caption || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
   });
   </script>
 </body>

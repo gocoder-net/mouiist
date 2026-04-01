@@ -131,6 +131,155 @@
       100% { clip-path: inset(0 0 100% 0); }
     }
 
+    /* ===== FIRST-VISIT INTRO ===== */
+    .loader.first-visit .loader-progress {
+      animation-duration: 4s;
+    }
+    .loader.first-visit .loader-sub {
+      animation-delay: 3s;
+    }
+    /* Scramble letter style */
+    .loader-title span.scrambling {
+      color: var(--accent-dim);
+      animation: none;
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .loader-title span.resolved {
+      color: var(--fg);
+      animation: none;
+      transform: translateY(0);
+      opacity: 1;
+      transition: color 0.3s, text-shadow 0.5s;
+      text-shadow: 0 0 20px rgba(200,169,110,0.4);
+    }
+    .loader-title span.resolved.dash {
+      color: var(--accent);
+      text-shadow: 0 0 30px rgba(200,169,110,0.6);
+    }
+    /* Flash line */
+    .intro-flash {
+      position: absolute;
+      top: 50%; left: -10%;
+      width: 120%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-light), var(--accent), var(--accent-light), transparent);
+      transform: translateY(-50%) scaleX(0);
+      opacity: 0;
+      z-index: 1;
+    }
+    .intro-flash.go {
+      animation: flashSweep 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes flashSweep {
+      0% { transform: translateY(-50%) scaleX(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-50%) scaleX(1); opacity: 0; }
+    }
+    /* Vertical reveal lines */
+    .intro-vline {
+      position: absolute;
+      width: 1px; height: 0;
+      background: linear-gradient(180deg, transparent, var(--accent-dim), transparent);
+      opacity: 0;
+      z-index: 0;
+    }
+    .intro-vline.go {
+      animation: vlineGrow 1.5s ease-out forwards;
+    }
+    @keyframes vlineGrow {
+      0% { height: 0; opacity: 0; }
+      30% { opacity: 0.3; }
+      100% { height: 60vh; opacity: 0; }
+    }
+    /* Netflix-style zoom + bloom */
+    .loader-inner.zoom-bloom {
+      animation: zoomBloom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes zoomBloom {
+      0% { transform: scale(1); filter: brightness(1) blur(0); }
+      30% { transform: scale(1.15); filter: brightness(1.8) blur(0); }
+      60% { transform: scale(1.3); filter: brightness(2.5) blur(1px); }
+      100% { transform: scale(3.5); filter: brightness(4) blur(6px); opacity: 0; }
+    }
+    .loader-title span.resolved {
+      transition: color 0.3s, text-shadow 0.5s;
+    }
+    .loader-title.bloom-glow span.resolved {
+      text-shadow:
+        0 0 10px rgba(200,169,110,0.6),
+        0 0 40px rgba(200,169,110,0.4),
+        0 0 80px rgba(200,169,110,0.2),
+        0 0 120px rgba(200,169,110,0.1);
+    }
+    .loader-title.bloom-glow span.resolved.dash {
+      text-shadow:
+        0 0 15px rgba(200,169,110,0.8),
+        0 0 60px rgba(200,169,110,0.5),
+        0 0 120px rgba(200,169,110,0.3);
+    }
+
+    /* Dramatic exit flash overlay */
+    .intro-white-flash {
+      position: fixed; inset: 0;
+      z-index: 100001;
+      background: radial-gradient(ellipse at center, rgba(200,169,110,0.3) 0%, var(--bg) 70%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .intro-white-flash.go {
+      animation: whiteFlashBang 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes whiteFlashBang {
+      0% { opacity: 0; }
+      15% { opacity: 1; background: radial-gradient(ellipse at center, rgba(224,201,146,0.6) 0%, rgba(200,169,110,0.2) 40%, var(--bg) 70%); }
+      40% { opacity: 1; }
+      100% { opacity: 0; background: radial-gradient(ellipse at center, transparent 0%, var(--bg) 50%); }
+    }
+
+    /* Horizontal split reveal */
+    .intro-split-top, .intro-split-bottom {
+      position: fixed; left: 0; right: 0;
+      z-index: 100000;
+      background: var(--bg);
+      pointer-events: none;
+    }
+    .intro-split-top { top: 0; height: 50%; }
+    .intro-split-bottom { bottom: 0; height: 50%; }
+    .intro-split-top.go {
+      animation: splitTop 1s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+    }
+    .intro-split-bottom.go {
+      animation: splitBottom 1s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+    }
+    @keyframes splitTop {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100%); }
+    }
+    @keyframes splitBottom {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100%); }
+    }
+    /* Gold line at split seam */
+    .intro-split-line {
+      position: fixed;
+      top: 50%; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 5%, var(--accent) 30%, var(--accent-light) 50%, var(--accent) 70%, transparent 95%);
+      z-index: 100002;
+      transform: translateY(-50%) scaleX(0);
+      pointer-events: none;
+      opacity: 0;
+    }
+    .intro-split-line.go {
+      animation: splitLineReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes splitLineReveal {
+      0% { transform: translateY(-50%) scaleX(0); opacity: 0; }
+      20% { transform: translateY(-50%) scaleX(1); opacity: 1; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-50%) scaleX(1); opacity: 0; }
+    }
+
     /* ===== CANVAS BG ===== */
     #bgCanvas {
       position: fixed; top: 0; left: 0;
@@ -170,6 +319,7 @@
       font-size: 0.85rem; font-weight: 900;
       letter-spacing: 0.4em;
     }
+    .nav-logo span { color: var(--accent); }
     .nav-links {
       display: flex; gap: 3rem; list-style: none;
       font-family: var(--font-en);
@@ -948,9 +1098,16 @@
 </head>
 <body>
 
+  <!-- Intro split panels (first visit) -->
+  <div class="intro-split-top" id="splitTop" style="display:none;"></div>
+  <div class="intro-split-bottom" id="splitBottom" style="display:none;"></div>
+  <div class="intro-split-line" id="splitLine" style="display:none;"></div>
+  <div class="intro-white-flash" id="whiteFlash"></div>
+
   <!-- Loader -->
   <div class="loader" id="loader">
-    <div class="loader-inner">
+    <div class="intro-flash" id="introFlash"></div>
+    <div class="loader-inner" id="loaderInner">
       <div class="loader-title" id="loaderTitle"></div>
       <p class="loader-sub">CONSPIRING CREATIVITY SINCE 2026</p>
     </div>
@@ -967,7 +1124,7 @@
 
   <!-- Nav -->
   <nav id="nav">
-    <div class="nav-logo">MOUI-IST</div>
+    <div class="nav-logo">MOUI<span>-</span>IST</div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" onclick="closeNav()">About</a></li>
       <li><a href="#artists" onclick="closeNav()">Artists</a></li>
@@ -1229,24 +1386,148 @@
   <script>
   // ===== LOADER =====
   (() => {
+    const loader = document.getElementById('loader');
     const title = document.getElementById('loaderTitle');
-    'MOUI-IST'.split('').forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.textContent = ch;
-      span.style.animationDelay = `${i * 0.08 + 0.3}s`;
-      if (ch === '-') span.classList.add('dash');
-      title.appendChild(span);
-    });
+    const isFirstVisit = !localStorage.getItem('mouiist_visited');
+    const TARGET = 'MOUI-IST';
+    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*+=?/<>{}[]0123456789';
 
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loader').classList.add('exit');
+    if (isFirstVisit) {
+      // ===== FIRST VISIT: dramatic scramble reveal =====
+      localStorage.setItem('mouiist_visited', '1');
+      loader.classList.add('first-visit');
+
+      // Create spans (start invisible)
+      const spans = TARGET.split('').map((ch, i) => {
+        const span = document.createElement('span');
+        span.textContent = ' ';
+        span.style.opacity = '0';
+        span.style.transform = 'translateY(0)';
+        span.style.animation = 'none';
+        if (ch === '-') span.classList.add('dash');
+        title.appendChild(span);
+        return { span, target: ch };
+      });
+
+      // Add vertical decorative lines
+      for (let i = 0; i < 5; i++) {
+        const vl = document.createElement('div');
+        vl.className = 'intro-vline';
+        vl.style.left = (15 + i * 17) + '%';
+        vl.style.top = '20%';
+        loader.appendChild(vl);
+        setTimeout(() => vl.classList.add('go'), 300 + i * 200);
+      }
+
+      // Phase 1: Letters appear one by one with scramble
+      let charIndex = 0;
+      const SCRAMBLE_FRAMES = 8;
+      const SCRAMBLE_SPEED = 50;
+
+      function revealNext() {
+        if (charIndex >= spans.length) {
+          // All letters resolved — trigger flash + particles + exit
+          setTimeout(finishIntro, 400);
+          return;
+        }
+
+        const current = spans[charIndex];
+        current.span.style.opacity = '1';
+        current.span.classList.add('scrambling');
+        let frame = 0;
+
+        const interval = setInterval(() => {
+          if (frame < SCRAMBLE_FRAMES) {
+            current.span.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            frame++;
+          } else {
+            clearInterval(interval);
+            current.span.textContent = current.target;
+            current.span.classList.remove('scrambling');
+            current.span.classList.add('resolved');
+            charIndex++;
+            setTimeout(revealNext, 80);
+          }
+        }, SCRAMBLE_SPEED);
+      }
+
+      function finishIntro() {
+        // Phase 1: Flash sweep across text
+        document.getElementById('introFlash').classList.add('go');
+
+        // Phase 2: Bloom glow intensifies on text
         setTimeout(() => {
-          document.getElementById('loader').style.display = 'none';
-          animateHero();
-        }, 800);
-      }, 2200);
-    });
+          title.classList.add('bloom-glow');
+        }, 300);
+
+        // Phase 3: Netflix-style zoom + bloom (text scales up with glow, fades through brightness)
+        setTimeout(() => {
+          document.getElementById('loaderInner').classList.add('zoom-bloom');
+        }, 1000);
+
+        // Phase 4: Golden flash bang covers screen
+        setTimeout(() => {
+          document.getElementById('whiteFlash').classList.add('go');
+        }, 1600);
+
+        // Phase 5: Hide loader, show split panels, then split open with gold seam line
+        setTimeout(() => {
+          loader.style.display = 'none';
+
+          const splitTop = document.getElementById('splitTop');
+          const splitBottom = document.getElementById('splitBottom');
+          const splitLine = document.getElementById('splitLine');
+
+          splitTop.style.display = 'block';
+          splitBottom.style.display = 'block';
+          splitLine.style.display = 'block';
+
+          // Gold line appears at seam first
+          setTimeout(() => {
+            splitLine.classList.add('go');
+          }, 100);
+
+          // Panels split open
+          setTimeout(() => {
+            splitTop.classList.add('go');
+            splitBottom.classList.add('go');
+            animateHero();
+          }, 350);
+
+          // Clean up
+          setTimeout(() => {
+            splitTop.style.display = 'none';
+            splitBottom.style.display = 'none';
+            splitLine.style.display = 'none';
+          }, 1600);
+        }, 2200);
+      }
+
+      // Start after brief black screen
+      window.addEventListener('load', () => {
+        setTimeout(revealNext, 600);
+      });
+
+    } else {
+      // ===== RETURNING VISIT: normal loader =====
+      TARGET.split('').forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.textContent = ch;
+        span.style.animationDelay = `${i * 0.08 + 0.3}s`;
+        if (ch === '-') span.classList.add('dash');
+        title.appendChild(span);
+      });
+
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          loader.classList.add('exit');
+          setTimeout(() => {
+            loader.style.display = 'none';
+            animateHero();
+          }, 800);
+        }, 2200);
+      });
+    }
   })();
 
   // ===== HERO ENTRANCE =====

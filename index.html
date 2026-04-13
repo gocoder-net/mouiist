@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MOUI-IST | 모의스트 — 창작을 모의하는 자들</title>
-  <meta name="description" content="MOUI-IST(모의스트) — 작품과 창작을 모의하는 자들의 집단. 10인의 작가가 펼치는 2026 상반기 단체전.">
+  <meta name="description" content="MOUI-IST(모의스트) — 작품과 창작을 모의하는 자들의 집단. 9인의 작가가 펼치는 2026 상반기 단체전.">
   <meta property="og:title" content="MOUI-IST | 모의스트">
   <meta property="og:description" content="작품과 창작을 모의하는 자들의 집단. 2026 상반기 단체전.">
   <meta property="og:type" content="website">
@@ -12,7 +12,7 @@
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700;900&family=Inter:wght@200;300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700;900&family=Inter:wght@200;300;400;700;900&family=Noto+Serif+KR:wght@300;400;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1092,6 +1092,187 @@
       text-transform: uppercase;
     }
 
+    /* ===== DOCS (서문 / 지침서) ===== */
+    .docs {
+      position: relative; z-index: 2;
+      padding: 10rem 0;
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .docs-bg-char {
+      position: absolute; font-weight: 700;
+      font-family: 'Noto Serif KR', serif;
+      color: rgba(232,228,223,0.02);
+      pointer-events: none; user-select: none;
+      font-size: clamp(160px, 20vw, 260px);
+    }
+    .docs-bg-char.c1 { top: 2%; right: -30px; }
+    .docs-bg-char.c2 { bottom: 5%; left: -50px; }
+    .docs-wrap {
+      max-width: 680px; margin: 0 auto;
+      padding: 0 2rem;
+      position: relative; z-index: 1;
+    }
+    .docs-tab-bar {
+      display: flex; justify-content: center;
+      gap: 0; margin-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(232,228,223,0.07);
+    }
+    .docs-tab-btn {
+      background: none; border: none;
+      color: rgba(232,228,223,0.2);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 16px 28px; cursor: pointer;
+      position: relative; transition: color 0.3s;
+    }
+    .docs-tab-btn:hover { color: rgba(232,228,223,0.45); }
+    .docs-tab-btn.active { color: rgba(232,228,223,0.75); }
+    .docs-tab-btn.active::after {
+      content: ''; position: absolute;
+      bottom: -1px; left: 20%; right: 20%;
+      height: 1px; background: rgba(232,228,223,0.4);
+    }
+    .docs-panel { display: none; }
+    .docs-panel.active { display: block; }
+
+    /* foreword */
+    .fw-topline {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(232,228,223,0.25));
+      margin: 0 auto 40px;
+    }
+    .fw-label {
+      text-align: center; font-size: 11px;
+      letter-spacing: 6px; color: rgba(232,228,223,0.3);
+      font-weight: 300; margin-bottom: 14px;
+    }
+    .fw-title {
+      text-align: center;
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(30px, 5vw, 40px);
+      font-weight: 700; letter-spacing: 12px;
+      margin-bottom: 8px; line-height: 1.4;
+    }
+    .fw-subtitle {
+      text-align: center; font-size: 12px;
+      letter-spacing: 4px; color: rgba(232,228,223,0.27);
+      margin-bottom: 56px; font-weight: 300;
+    }
+    .fw-divider {
+      width: 36px; height: 1px;
+      background: rgba(232,228,223,0.15);
+      margin: 0 auto 56px;
+    }
+    .fw-seomund {
+      font-size: 10px; letter-spacing: 5px;
+      color: rgba(232,228,223,0.2);
+      margin-bottom: 48px; text-align: center;
+    }
+    .fw-p {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 16.5px; line-height: 2.05;
+      font-weight: 300; color: rgba(232,228,223,0.78);
+      word-break: keep-all; white-space: pre-line;
+      margin-bottom: 44px;
+    }
+    .fw-p.closing-text {
+      color: rgba(232,228,223,0.9); font-weight: 400;
+    }
+    .fw-diamond {
+      width: 5px; height: 5px;
+      border: 1px solid rgba(232,228,223,0.12);
+      transform: rotate(45deg);
+      margin: 0 auto 44px;
+    }
+    .fw-credit {
+      text-align: center; margin-top: 72px;
+      font-size: 12px; letter-spacing: 4px;
+      color: rgba(232,228,223,0.2); font-weight: 300;
+    }
+
+    /* guide */
+    .gd-header { text-align: center; margin-bottom: 56px; }
+    .gd-header-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; letter-spacing: 5px;
+      color: rgba(232,228,223,0.18); margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .gd-header-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 28px; font-weight: 700;
+      letter-spacing: 6px; margin-bottom: 8px;
+    }
+    .gd-header-en {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; letter-spacing: 3px;
+      color: rgba(232,228,223,0.25);
+    }
+    .gd-intro {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 15px; line-height: 2;
+      font-weight: 300; color: rgba(232,228,223,0.69);
+      word-break: keep-all; white-space: pre-line;
+      margin-bottom: 56px; padding: 28px;
+      border: 1px solid rgba(232,228,223,0.06);
+    }
+    .gd-block {
+      margin-bottom: 56px;
+      border-left: 1px solid rgba(232,228,223,0.08);
+      padding-left: 28px;
+    }
+    .gd-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; color: rgba(232,228,223,0.15);
+      letter-spacing: 2px; margin-bottom: 8px;
+    }
+    .gd-block-label {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 20px; font-weight: 600;
+      letter-spacing: 3px; margin-bottom: 20px;
+      color: rgba(232,228,223,0.82);
+    }
+    .gd-block-body {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 15.5px; line-height: 2;
+      font-weight: 300; color: rgba(232,228,223,0.72);
+      word-break: keep-all; white-space: pre-line;
+      margin-bottom: 16px;
+    }
+    .gd-example {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px; line-height: 1.7;
+      color: rgba(232,228,223,0.3);
+      padding: 16px 20px;
+      background: rgba(232,228,223,0.02);
+      border-radius: 4px; word-break: keep-all;
+    }
+    .gd-format {
+      margin-top: 20px; padding: 28px;
+      border: 1px dashed rgba(232,228,223,0.08);
+    }
+    .gd-format-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; letter-spacing: 4px;
+      color: rgba(232,228,223,0.18); margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .gd-format-body {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 14px; line-height: 2;
+      font-weight: 300; color: rgba(232,228,223,0.56);
+      word-break: keep-all; white-space: pre-line;
+    }
+    @media (max-width: 600px) {
+      .docs { padding: 6rem 0; }
+      .docs-wrap { padding: 0 1.2rem; }
+      .docs-tab-btn { padding: 14px 18px; font-size: 10px; letter-spacing: 3px; }
+      .fw-p, .gd-block-body { font-size: 15px; }
+      .gd-block { padding-left: 20px; }
+    }
+
     /* ===== CTA / FOLLOW ===== */
     .cta {
       position: relative; z-index: 2;
@@ -1256,6 +1437,7 @@
     <div class="nav-logo">MOUI<span>-</span>IST</div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" onclick="closeNav()">About</a></li>
+      <li><a href="#docs" onclick="closeNav()">Docs</a></li>
       <li><a href="#artists" onclick="closeNav()">Artists</a></li>
       <li><a href="#team" onclick="closeNav()">Staff</a></li>
       <li><a href="#exhibition" onclick="closeNav()">Exhibition</a></li>
@@ -1290,14 +1472,14 @@
   <div class="marquee-section">
     <div class="marquee-track" id="marquee">
       <span class="marquee-item">Conspiring Creativity</span>
-      <span class="marquee-item">10 Artists</span>
+      <span class="marquee-item">9 Artists</span>
       <span class="marquee-item">Group Exhibition 2026</span>
       <span class="marquee-item">모의스트</span>
       <span class="marquee-item">New Narrative</span>
       <span class="marquee-item">작가모의</span>
       <span class="marquee-item">First Half</span>
       <span class="marquee-item">Conspiring Creativity</span>
-      <span class="marquee-item">10 Artists</span>
+      <span class="marquee-item">9 Artists</span>
       <span class="marquee-item">Group Exhibition 2026</span>
       <span class="marquee-item">모의스트</span>
       <span class="marquee-item">New Narrative</span>
@@ -1305,6 +1487,16 @@
       <span class="marquee-item">First Half</span>
     </div>
   </div>
+
+  <!-- Quote -->
+  <section class="quote-section">
+    <div class="reveal">
+      <p class="quote-text">
+        "우리 함께<br>재미있는 <em>모의</em>를<br>시작해 봐요"
+      </p>
+      <p class="quote-attr">— MOUI-IST</p>
+    </div>
+  </section>
 
   <!-- About -->
   <section class="about" id="about">
@@ -1318,7 +1510,7 @@
           <strong>MOUI-IST</strong>는 모임 '작가모의'에서 출발했습니다.<br><br>
           '모의(謀議)'라는 단어 속에 담긴 치밀함과 열정,
           그리고 함께 도모한다는 연대의 의미를 품고
-          10인의 작가가 하나의 이름 아래 모였습니다.<br><br>
+          9인의 작가가 하나의 이름 아래 모였습니다.<br><br>
           각자의 세계를 가진 작가들이
           하나의 공간에서 만들어내는 <strong>새로운 서사</strong>.<br><br>
           우리는 예술을 모의하고,
@@ -1350,13 +1542,172 @@
     </div>
   </section>
 
-  <!-- Quote -->
-  <section class="quote-section">
-    <div class="reveal">
-      <p class="quote-text">
-        "우리 함께<br>재미있는 <em>모의</em>를<br>시작해 봐요"
-      </p>
-      <p class="quote-attr">— MOUI-IST</p>
+  <!-- Docs -->
+  <section class="docs" id="docs">
+    <span class="docs-bg-char c1" id="docsBgC1">謀</span>
+    <span class="docs-bg-char c2" id="docsBgC2">議</span>
+    <div class="docs-wrap">
+      <div class="docs-tab-bar">
+        <button class="docs-tab-btn active" data-doc-tab="foreword">전시 서문</button>
+        <button class="docs-tab-btn" data-doc-tab="guide">작가 지침서</button>
+      </div>
+
+      <!-- 전시 서문 -->
+      <div class="docs-panel active" id="docForeword">
+        <div class="fw-topline"></div>
+        <div class="fw-label">Group Exhibition 2026</div>
+        <h2 class="fw-title">첫 번째 모의</h2>
+        <div class="fw-subtitle">MOUI-IST 1st Group Exhibition</div>
+        <div class="fw-divider"></div>
+        <div class="fw-seomund">전 시 서 문</div>
+
+        <div class="reveal">
+          <p class="fw-p">모의(謀議).
+이 두 글자에는 위험한 에너지가 있다.
+누군가와 머리를 맞대고, 아직 세상에 없는 것을 꾀하는 일.
+그것은 언제나 은밀하고, 뜨겁고, 약간은 불온하다.</p>
+          <div class="fw-diamond"></div>
+        </div>
+
+        <div class="reveal">
+          <p class="fw-p">우리는 그 단어를 이름으로 택했다.
+'작가모의'라는 모임에서 출발한 아홉 명의 작가는
+각자의 작업실에서 저마다의 모의를 거듭해왔다.
+캔버스 위에서, 렌즈 뒤에서, 컴퓨터 앞에서
+—조용히, 그러나 집요하게.</p>
+          <div class="fw-diamond"></div>
+        </div>
+
+        <div class="reveal">
+          <p class="fw-p">모의(謀議)—함께 꾀하다.
+모의(模擬)—세계를 본뜨고, 시험하다.
+모의(某意)—이름 붙일 수 없는 어떤 뜻.
+
+그리고 模擬實驗—모의실험.
+아직 일어나지 않은 일을 시험해보는 행위.</p>
+          <div class="fw-diamond"></div>
+        </div>
+
+        <div class="reveal">
+          <p class="fw-p">이 전시는 하나의 모의실험이다.
+
+아홉 명의 작가가 각자의 가설을 세우고,
+각자의 조건 안에서 실험하고,
+그 결과를 이 공간에 펼쳐 놓았다.
+
+과학의 실험은 정답을 찾기 위해 존재하지만,
+작가의 실험은 더 좋은 질문을 찾기 위해 존재한다.</p>
+          <div class="fw-diamond"></div>
+        </div>
+
+        <div class="reveal">
+          <p class="fw-p closing-text">이 전시장에 들어서는 순간,
+당신은 관람자가 아니라 관찰자가 된다.
+아홉 개의 실험을 목격하고,
+당신만의 가설을 세우게 될 것이다.
+
+실험은 계속된다.
+모의는 이미 시작되었다.</p>
+        </div>
+
+        <div class="fw-credit">2026, MOUI-IST</div>
+      </div>
+
+      <!-- 작가 지침서 -->
+      <div class="docs-panel" id="docGuide">
+        <div class="gd-header">
+          <div class="gd-header-sub">MOUI-IST Internal Document</div>
+          <h2 class="gd-header-title">작가 실험 지침서</h2>
+          <div class="gd-header-en">Artist Experiment Protocol</div>
+        </div>
+
+        <div class="reveal">
+          <div class="gd-intro">이 문서는 MOUI-IST 첫 번째 단체전에 참여하는
+작가를 위한 실험 지침서입니다.
+
+전시의 프레임은 '모의실험'입니다.
+각 작가는 하나의 실험을 수행하고,
+작품은 그 실험의 결과물이 됩니다.
+
+아래 네 항목을 바탕으로
+작가 노트(실험 보고서)를 작성해주세요.</div>
+        </div>
+
+        <div class="reveal">
+          <div class="gd-block">
+            <div class="gd-number">01</div>
+            <div class="gd-block-label">가설 Hypothesis</div>
+            <div class="gd-block-body">당신이 이 작업을 통해
+시험하고자 하는 것은 무엇인가.
+
+아직 답을 모르는 질문,
+증명되지 않은 직감,
+혹은 세상에 던지고 싶은 하나의 명제.</div>
+            <div class="gd-example">예시: "사람은 정지된 이미지 안에서도 시간의 흐름을 느낄 수 있는가"</div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="gd-block">
+            <div class="gd-number">02</div>
+            <div class="gd-block-label">실험 조건 Conditions</div>
+            <div class="gd-block-body">어떤 매체, 어떤 방법,
+어떤 제약 안에서 실험하는가.
+
+붓인가 렌즈인가, 빛인가 어둠인가.
+스스로 설정한 규칙이
+실험의 윤곽을 만든다.</div>
+            <div class="gd-example">예시: "유화, 80호 캔버스 1점, 작업 기간 4주, 따뜻한 색 배제"</div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="gd-block">
+            <div class="gd-number">03</div>
+            <div class="gd-block-label">관찰 Observation</div>
+            <div class="gd-block-body">작업하는 동안
+당신은 무엇을 발견했는가.
+
+예상과 다르게 흘러간 순간,
+통제할 수 없었던 변수,
+우연히 마주친 균열과 아름다움.</div>
+            <div class="gd-example">예시: "차가운 색만 쓰려 했으나, 3주차에 무의식적으로 붉은 선이 들어갔다"</div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="gd-block">
+            <div class="gd-number">04</div>
+            <div class="gd-block-label">결과 Result</div>
+            <div class="gd-block-body">작품, 그 자체가 실험의 결과다.
+
+성공도 실패도 아닌,
+아직 해석이 끝나지 않은
+하나의 데이터.
+
+완벽한 실험은 없다.
+바로 그것이 예술이고,
+바로 그것이 모의실험의 본질이다.</div>
+            <div class="gd-example">예시: "가설은 절반만 증명되었다. 시간은 느껴졌지만, 내가 의도한 방향과는 달랐다."</div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="gd-format">
+            <div class="gd-format-label">제출 형식 Submission Format</div>
+            <div class="gd-format-body">작가 노트 제출 형식
+
+제목: 실험 보고서 — [작가명]
+가설:
+실험 조건:
+관찰:
+결과:
+
+자유롭게 쓰되, 위 네 항목이 포함되면 됩니다.
+분량 제한은 없으나, 간결할수록 좋습니다.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1435,7 +1786,7 @@
           <span class="exh-detail-label">Title</span>
           <div>
             <p class="exh-detail-value">MOUI-IST 첫 번째 모의</p>
-            <p class="exh-detail-sub">10인의 작가가 펼치는 첫 번째 단체전</p>
+            <p class="exh-detail-sub">9인의 작가가 펼치는 첫 번째 단체전</p>
           </div>
         </div>
         <div class="exh-detail reveal reveal-delay-2">
@@ -1455,8 +1806,8 @@
         <div class="exh-detail reveal reveal-delay-3">
           <span class="exh-detail-label">Artists</span>
           <div>
-            <p class="exh-detail-value">10 Artists</p>
-            <p class="exh-detail-sub">MOUI-IST 소속 10인의 창작자</p>
+            <p class="exh-detail-value">9 Artists</p>
+            <p class="exh-detail-sub">MOUI-IST 소속 9인의 창작자</p>
           </div>
         </div>
       </div>
@@ -1467,7 +1818,7 @@
           <p class="poster-sub">GROUP EXHIBITION &middot; 1ST HALF</p>
           <div class="poster-divider"></div>
           <p class="poster-detail">
-            10 Artists<br>
+            9 Artists<br>
             One Conspiracy<br>
             New Narrative
           </p>
@@ -1945,12 +2296,12 @@
     { num: '02', name: '윤슬', field: '', img: 'assets/profile/2윤슬.jpg', url: 'https://www.instagram.com/j.a.u.n.e.brilliant', urlType: 'instagram', bio: '' },
     { num: '03', name: '떼쟁', field: '', img: 'assets/profile/3떼쟁.jpg', url: 'https://www.instagram.com/ean_space', urlType: 'instagram', bio: '' },
     { num: '04', name: '코랄', field: '', img: 'assets/profile/4코랄.jpeg', url: 'https://www.instagram.com/coral.drawing', urlType: 'instagram', bio: '' },
-    { num: '05', name: '반하리', field: '웹툰', img: 'assets/profile/5반하리.jpg', url: 'https://www.instagram.com/vanha_lee/', urlType: 'instagram',
-      bio: '[웹툰 연재]\n2018.11 - 2020.09 네이버 베스트 도전, 빵뽀시래기 (완결)\n2023.08 - 2024.11 네이버 웹툰, 손 잡은 사이 (완결)' },
+    { num: '05', name: '현지', field: '회화', img: 'assets/profile/7현지.jpeg', url: 'https://www.instagram.com/painter_hyunji', urlType: 'instagram',
+      bio: '[개인전]\n2026 <그럼에도, 안녕>, 바이브 아트 스페이스\n\n[단체전]\n2026 <겹의 원리>, 갤러리 디 아르테 청담\n2026 <태도에 대하여>, 스페이스 모순\n2025 <KMAF 초대전>, 마루아트센터\n2024 <보통의 그리움>, 경민현대미술관\n2024 <KMAF 수상전>, 마루아트센터\n\n[수상]\n2025 제25회 안견미술대전 특선\n2024 KMAF 대한민국현대미술제 최우수상' },
     { num: '06', name: '주표', field: '회화', img: 'assets/profile/6주표.jpeg', url: 'https://www.instagram.com/ultra.sulpermania', urlType: 'instagram',
       bio: '중앙미술대전 외 공모전 수상\n프랑스 파리 Galerie89 전시\n오징어 게임 외 영화·드라마·CF·무대 작화' },
-    { num: '07', name: '현지', field: '회화', img: 'assets/profile/7현지.jpeg', url: 'https://www.instagram.com/painter_hyunji', urlType: 'instagram',
-      bio: '[개인전]\n2026 <그럼에도, 안녕>, 바이브 아트 스페이스\n\n[단체전]\n2026 <겹의 원리>, 갤러리 디 아르테 청담\n2026 <태도에 대하여>, 스페이스 모순\n2025 <KMAF 초대전>, 마루아트센터\n2024 <보통의 그리움>, 경민현대미술관\n2024 <KMAF 수상전>, 마루아트센터\n\n[수상]\n2025 제25회 안견미술대전 특선\n2024 KMAF 대한민국현대미술제 최우수상' },
+    { num: '07', name: '반하리', field: '웹툰', img: 'assets/profile/5반하리.jpg', url: 'https://www.instagram.com/vanha_lee/', urlType: 'instagram',
+      bio: '[웹툰 연재]\n2018.11 - 2020.09 네이버 베스트 도전, 빵뽀시래기 (완결)\n2023.08 - 2024.11 네이버 웹툰, 손 잡은 사이 (완결)' },
     { num: '08', name: '켈빈', field: '현대음악 작곡', img: 'assets/profile/8켈빈.jpg', url: 'http://www.kelvinng.info', urlType: 'website',
       bio: '현대음악 작곡가, 예술 연구자이자 장구 연주자.\n\n허더즈필드 대학교 박사 연구원 및 전 시간강사. 오스트리아 그라츠 예술대학, 미국 미주리-캔자스시티 대학교, 홍콩 중문대학교에서 작곡을 수학하였다.\n\n작품들은 오스트리아, 호주, 중국, 홍콩, 프랑스, 페로 제도, 독일, 슬로베니아, 대한민국, 스위스, 영국, 미국에서 저명하고 헌신적인 연주자들과 앙상블에 의해 연주되었다.\n\n작품들은 시간과 공간 속에서 공존하는 존재로서의 우리 자신에 대한 근본적인 탐구로부터 비롯된다. 대부분의 작품들은 청각과 시각을 아우르는 총체적 감각 경험을 지향하며, 청중에게 한층 깊어진 주의와 공감적 몰입을 이끌어낸다.' },
     { num: '09', name: 'veil', field: '', img: 'assets/profile/9veil.jpeg', url: 'https://www.instagram.com/paradoxipse', urlType: 'instagram', bio: '' },
@@ -2031,6 +2382,25 @@
     const x = e.pageX - scrollWrap.offsetLeft;
     if (Math.abs(x - startX) > 5) hasDragged = true;
     scrollWrap.scrollLeft = scrollLeft - (x - startX) * 1.5;
+  });
+
+  // ===== DOCS TABS =====
+  const docTabs = document.querySelectorAll('.docs-tab-btn');
+  const docPanels = document.querySelectorAll('.docs-panel');
+  const docBgC1 = document.getElementById('docsBgC1');
+  const docBgC2 = document.getElementById('docsBgC2');
+  docTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      docTabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.dataset.docTab;
+      docPanels.forEach(p => p.classList.remove('active'));
+      document.getElementById(target === 'foreword' ? 'docForeword' : 'docGuide').classList.add('active');
+      docBgC1.textContent = target === 'foreword' ? '謀' : '實';
+      docBgC2.textContent = target === 'foreword' ? '議' : '驗';
+      // re-observe reveals in newly shown panel
+      document.querySelectorAll('.docs-panel.active .reveal:not(.vis)').forEach(el => revealObs.observe(el));
+    });
   });
 
   // ===== SCROLL REVEAL =====

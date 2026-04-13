@@ -1118,9 +1118,12 @@
     .docs-bg-char {
       position: absolute; font-weight: 700;
       font-family: 'Noto Serif KR', serif;
-      color: rgba(232,228,223,0.02);
+      color: rgba(232,228,223,0.025);
       pointer-events: none; user-select: none;
-      font-size: clamp(160px, 20vw, 260px);
+      font-size: clamp(160px, 22vw, 300px);
+      will-change: transform;
+      transition: color 0.6s;
+      text-shadow: 0 0 80px rgba(200,169,110,0.03);
     }
     .docs-bg-char.c1 { top: 2%; right: -30px; }
     .docs-bg-char.c2 { bottom: 5%; left: -50px; }
@@ -1153,57 +1156,228 @@
     .docs-panel { display: none; }
     .docs-panel.active { display: block; }
 
-    /* foreword */
+    /* foreword — all center-aligned */
+    #docForeword {
+      text-align: center;
+      border: 1px solid rgba(200,169,110,0.12);
+      padding: 4rem 2.5rem;
+      position: relative;
+    }
+    #docForeword::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(200,169,110,0.06);
+      pointer-events: none;
+    }
+
     .fw-topline {
-      width: 1px; height: 60px;
-      background: linear-gradient(to bottom, transparent, rgba(232,228,223,0.25));
-      margin: 0 auto 40px;
+      width: 1px; height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--accent));
+      margin: 0 auto 48px;
+      animation: fwLineDraw 1.5s ease-out forwards;
+      transform-origin: top;
+    }
+    @keyframes fwLineDraw {
+      from { transform: scaleY(0); opacity: 0; }
+      to { transform: scaleY(1); opacity: 1; }
     }
     .fw-label {
-      text-align: center; font-size: 11px;
-      letter-spacing: 6px; color: rgba(232,228,223,0.3);
+      font-size: 11px; letter-spacing: 6px;
+      color: rgba(232,228,223,0.3);
       font-weight: 300; margin-bottom: 14px;
     }
     .fw-title {
-      text-align: center;
       font-family: 'Noto Serif KR', serif;
-      font-size: clamp(30px, 5vw, 40px);
-      font-weight: 700; letter-spacing: 12px;
-      margin-bottom: 8px; line-height: 1.4;
+      font-size: clamp(32px, 6vw, 48px);
+      font-weight: 700; letter-spacing: 14px;
+      margin-bottom: 10px; line-height: 1.4;
+      position: relative; opacity: 0;
     }
+    .fw-title.vis { opacity: 1; }
+    .fw-title.vis .fw-title-text {
+      display: inline-block;
+      animation: fwFlashText 1s ease forwards;
+    }
+    .fw-title.vis .fw-flash {
+      animation: fwFlashBurst 0.8s ease-out forwards;
+    }
+    .fw-title-hanja { color: var(--accent); }
     .fw-subtitle {
-      text-align: center; font-size: 12px;
-      letter-spacing: 4px; color: rgba(232,228,223,0.27);
-      margin-bottom: 56px; font-weight: 300;
+      font-size: 12px; letter-spacing: 4px;
+      color: rgba(232,228,223,0.27);
+      margin-bottom: 60px; font-weight: 300;
     }
     .fw-divider {
-      width: 36px; height: 1px;
-      background: rgba(232,228,223,0.15);
-      margin: 0 auto 56px;
+      width: 40px; height: 1px;
+      background: var(--accent);
+      margin: 0 auto 60px; opacity: 0.4;
     }
     .fw-seomund {
       font-size: 10px; letter-spacing: 5px;
       color: rgba(232,228,223,0.2);
-      margin-bottom: 48px; text-align: center;
+      margin-bottom: 56px;
     }
+
+    /* foreword opening "모의(謀議)." — char stagger */
+    .fw-opening {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 16.5px; line-height: 2.15;
+      font-weight: 300; color: rgba(232,228,223,0.78);
+      margin-bottom: 0;
+      display: inline-block;
+    }
+    .fw-opening-wrap {
+      margin-bottom: 48px;
+    }
+    .fw-open-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(15px) scale(0.9);
+      filter: blur(4px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+    }
+    .fw-open-char.vis {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    .fw-open-char.fw-hanja { font-weight: 400; }
+
+    /* title flash-bang shared keyframes */
+    @keyframes fwFlashText {
+      0% { opacity: 0; transform: scale(1.3); filter: blur(8px) brightness(3); }
+      40% { opacity: 1; filter: blur(0) brightness(2); }
+      100% { opacity: 1; transform: scale(1); filter: blur(0) brightness(1); }
+    }
+    .fw-flash {
+      position: absolute; top: 50%; left: 50%;
+      width: 0; height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,169,110,0.6) 0%, rgba(200,169,110,0) 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    @keyframes fwFlashBurst {
+      0% { width: 0; height: 0; opacity: 1; }
+      50% { width: 300px; height: 300px; opacity: 0.6; }
+      100% { width: 500px; height: 500px; opacity: 0; }
+    }
+
+    /* foreword paragraphs */
     .fw-p {
       font-family: 'Noto Serif KR', serif;
-      font-size: 16.5px; line-height: 2.05;
+      font-size: 16.5px; line-height: 2.15;
       font-weight: 300; color: rgba(232,228,223,0.78);
       word-break: keep-all; white-space: pre-line;
-      margin-bottom: 44px;
+      margin-bottom: 48px;
     }
-    .fw-p.closing-text {
-      color: rgba(232,228,223,0.9); font-weight: 400;
+    .fw-hanja {
+      color: var(--accent);
+      text-shadow: 0 0 25px rgba(200,169,110,0.25);
+      font-weight: 400;
     }
     .fw-diamond {
       width: 5px; height: 5px;
       border: 1px solid rgba(232,228,223,0.12);
       transform: rotate(45deg);
-      margin: 0 auto 44px;
+      margin: 0 auto 48px;
+      transition: border-color 1.2s, box-shadow 1.2s;
     }
+    .reveal.vis .fw-diamond {
+      border-color: rgba(200,169,110,0.4);
+      box-shadow: 0 0 8px rgba(200,169,110,0.15);
+    }
+
+    /* foreword section-specific animations */
+    .fw-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 1.2s ease;
+      filter: blur(4px);
+    }
+    .fw-reveal.vis {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    .fw-reveal-d1 { transition-delay: 0.15s; }
+    .fw-reveal-d2 { transition-delay: 0.3s; }
+
+    /* definition block */
+    .fw-defs {
+      margin-bottom: 48px;
+      display: flex; flex-direction: column;
+      gap: 1.2rem;
+      padding: 2rem 0;
+    }
+    .fw-def-item {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 16px; line-height: 1.8;
+      font-weight: 300;
+      color: rgba(232,228,223,0.7);
+      opacity: 0; transform: translateY(15px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fw-reveal.vis .fw-def-item { opacity: 1; transform: translateY(0); }
+    .fw-reveal.vis .fw-def-item:nth-child(1) { transition-delay: 0.1s; }
+    .fw-reveal.vis .fw-def-item:nth-child(2) { transition-delay: 0.25s; }
+    .fw-reveal.vis .fw-def-item:nth-child(3) { transition-delay: 0.4s; }
+    .fw-reveal.vis .fw-def-experiment { transition-delay: 0.6s; }
+    .fw-reveal.vis .fw-def-experiment-sub { transition-delay: 0.7s; }
+    .fw-def-key {
+      color: var(--accent);
+      font-weight: 400;
+      margin-right: 0.3rem;
+    }
+    .fw-def-experiment {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px; font-weight: 400;
+      color: rgba(232,228,223,0.85);
+      margin-top: 1.5rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(232,228,223,0.06);
+      opacity: 0; transform: translateY(15px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fw-def-experiment-sub {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 14px; font-weight: 300;
+      color: rgba(232,228,223,0.45);
+      margin-top: 0.4rem;
+      opacity: 0; transform: translateY(15px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    /* closing */
+    .fw-closing {
+      padding: 4rem 0; margin-top: 1rem;
+      border-top: 1px solid rgba(232,228,223,0.06);
+      border-bottom: 1px solid rgba(232,228,223,0.06);
+    }
+    .fw-closing .fw-p {
+      font-size: 18px; font-weight: 400;
+      color: rgba(232,228,223,0.92);
+      line-height: 2.3; margin-bottom: 0;
+    }
+    .fw-closing-last {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 22px; font-weight: 600;
+      letter-spacing: 4px;
+      color: var(--accent);
+      margin-top: 3rem;
+      text-shadow: 0 0 30px rgba(200,169,110,0.2);
+      opacity: 0; transform: scale(0.95);
+      transition: opacity 1s ease 0.5s, transform 1s ease 0.5s, text-shadow 1s ease 0.5s;
+    }
+    .fw-reveal.vis .fw-closing-last {
+      opacity: 1; transform: scale(1);
+      text-shadow: 0 0 40px rgba(200,169,110,0.35);
+    }
+
     .fw-credit {
-      text-align: center; margin-top: 72px;
+      margin-top: 72px;
       font-size: 12px; letter-spacing: 4px;
       color: rgba(232,228,223,0.2); font-weight: 300;
     }
@@ -1572,58 +1746,60 @@
       <div class="docs-panel active" id="docForeword">
         <div class="fw-topline"></div>
         <div class="fw-label">Group Exhibition 2026</div>
-        <h2 class="fw-title">첫 번째 : 모의실험(模擬實驗)</h2>
+        <h2 class="fw-title" id="fwTitle"><div class="fw-flash"></div><span class="fw-title-text">모의실험<br/><span class="fw-title-hanja">(模擬實驗)</span></span></h2>
         <div class="fw-subtitle">MOUI-IST 1st Group Exhibition</div>
         <div class="fw-divider"></div>
         <div class="fw-seomund">전 시 서 문</div>
 
-        <div class="reveal">
-          <p class="fw-p">모의(謀議).
-이 두 글자에는 위험한 에너지가 있다.
+        <div class="fw-opening-wrap" id="fwOpeningWrap">
+          <span class="fw-opening"><span class="fw-open-char fw-hanja">모</span><span class="fw-open-char fw-hanja">의</span><span class="fw-open-char fw-hanja">(</span><span class="fw-open-char fw-hanja">謀</span><span class="fw-open-char fw-hanja">議</span><span class="fw-open-char fw-hanja">)</span><span class="fw-open-char">.</span></span>
+        </div>
+
+        <div class="fw-reveal">
+          <p class="fw-p">이 두 글자에는 위험한 에너지가 있다.
 누군가와 머리를 맞대고, 아직 세상에 없는 것을 꾀하는 일.
 그것은 언제나 은밀하고, 뜨겁고, 약간은 불온하다.</p>
           <div class="fw-diamond"></div>
         </div>
 
-        <div class="reveal">
+        <div class="fw-reveal">
           <p class="fw-p">우리는 그 단어를 이름으로 택했다.
 '작가모의'라는 모임에서 출발한 아홉 명의 작가는
 각자의 작업실에서 저마다의 모의를 거듭해왔다.
 캔버스 위에서, 렌즈 뒤에서, 컴퓨터 앞에서
-조용히, 그러나 집요하게.</p>
+—조용히, 그러나 집요하게.</p>
           <div class="fw-diamond"></div>
         </div>
 
-        <div class="reveal">
-          <p class="fw-p">모의(謀議) : 함께 꾀하다.
-모의(模擬) : 세계를 본뜨고, 시험하다.
-모의(某意) : 이름 붙일 수 없는 어떤 뜻.
-
-그리고 모의실험(模擬實驗)
-아직 일어나지 않은 일을 시험해보는 행위.</p>
+        <div class="fw-reveal">
+          <div class="fw-defs">
+            <div class="fw-def-item"><span class="fw-def-key">모의(謀議)</span> 함께 꾀하다.</div>
+            <div class="fw-def-item"><span class="fw-def-key">모의(模擬)</span> 세계를 본뜨고, 시험하다.</div>
+            <div class="fw-def-item"><span class="fw-def-key">모의(某意)</span> 이름 붙일 수 없는 어떤 뜻.</div>
+            <div class="fw-def-experiment">그리고 <span class="fw-hanja">模擬實驗</span>—모의실험.</div>
+            <div class="fw-def-experiment-sub">아직 일어나지 않은 일을 시험해보는 행위.</div>
+          </div>
           <div class="fw-diamond"></div>
         </div>
 
-        <div class="reveal">
+        <div class="fw-reveal">
           <p class="fw-p">이 전시는 하나의 모의실험이다.
-
 아홉 명의 작가가 각자의 가설을 세우고,
 각자의 조건 안에서 실험하고,
 그 결과를 이 공간에 펼쳐 놓았다.
-
 과학의 실험은 정답을 찾기 위해 존재하지만,
 작가의 실험은 더 좋은 질문을 찾기 위해 존재한다.</p>
           <div class="fw-diamond"></div>
         </div>
 
-        <div class="reveal">
-          <p class="fw-p closing-text">이 전시장에 들어서는 순간,
+        <div class="fw-reveal">
+          <div class="fw-closing">
+            <p class="fw-p">이 전시장에 들어서는 순간,
 당신은 관람자가 아니라 관찰자가 된다.
 아홉 개의 실험을 목격하고,
-당신만의 가설을 세우게 될 것이다.
-
-실험은 계속된다.
-모의는 이미 시작되었다.</p>
+당신만의 가설을 세우게 될 것이다.</p>
+            <p class="fw-closing-last">실험은 계속된다.<br>모의는 이미 시작되었다.</p>
+          </div>
         </div>
 
         <div class="fw-credit">2026, MOUI-IST</div>
@@ -2424,6 +2600,7 @@
       docBgC2.textContent = target === 'foreword' ? '議' : '驗';
       // re-observe reveals in newly shown panel
       document.querySelectorAll('.docs-panel.active .reveal:not(.vis)').forEach(el => revealObs.observe(el));
+      document.querySelectorAll('.docs-panel.active .fw-reveal:not(.vis)').forEach(el => fwRevealObs.observe(el));
     });
   });
 
@@ -2433,9 +2610,43 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  // ===== HERO PARALLAX =====
+  // foreword blur-fade reveal (lower threshold for earlier trigger)
+  const fwRevealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.fw-reveal').forEach(el => fwRevealObs.observe(el));
+
+  // foreword "모의(謀議)." char stagger
+  const fwOpenWrap = document.getElementById('fwOpeningWrap');
+  const fwOpenChars = fwOpenWrap.querySelectorAll('.fw-open-char');
+  const fwOpenObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        fwOpenChars.forEach((ch, i) => {
+          setTimeout(() => ch.classList.add('vis'), i * 120);
+        });
+        fwOpenObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  fwOpenObs.observe(fwOpenWrap);
+
+  // foreword title "모의실험(模擬實驗)" flash-bang
+  const fwTitle = document.getElementById('fwTitle');
+  const fwTitleObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+        fwTitleObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  fwTitleObs.observe(fwTitle);
+
+  // ===== HERO PARALLAX + DOCS PARALLAX =====
   const heroContent = document.querySelector('.hero-content');
   const heroSection = document.querySelector('.hero');
+  const docsSection = document.querySelector('.docs');
   window.addEventListener('scroll', () => {
     const s = window.scrollY;
     const h = heroSection.offsetHeight;
@@ -2443,6 +2654,13 @@
       const p = s / h;
       heroContent.style.opacity = 1 - p * 1.8;
       heroContent.style.transform = `translateY(${s * 0.35}px) scale(${1 - p * 0.05})`;
+    }
+    // docs background character parallax
+    const docsRect = docsSection.getBoundingClientRect();
+    if (docsRect.top < window.innerHeight && docsRect.bottom > 0) {
+      const progress = (window.innerHeight - docsRect.top) / (window.innerHeight + docsRect.height);
+      docBgC1.style.transform = `translateY(${progress * -80}px) rotate(${progress * 3}deg)`;
+      docBgC2.style.transform = `translateY(${progress * -50}px) rotate(${progress * -2}deg)`;
     }
   });
 

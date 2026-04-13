@@ -724,6 +724,115 @@
     }
     .lightbox-close:hover { color: var(--accent); }
 
+    /* ===== ARTIST MODAL ===== */
+    .artist-modal {
+      position: fixed; inset: 0;
+      z-index: 100000;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(20px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s, visibility 0.4s;
+      padding: 2rem;
+      cursor: pointer;
+    }
+    .artist-modal.open { opacity: 1; visibility: visible; }
+    .artist-modal-content {
+      max-width: 520px; width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      transform: translateY(20px);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-dim) transparent;
+    }
+    .artist-modal-content::-webkit-scrollbar { width: 4px; }
+    .artist-modal-content::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 2px; }
+    .artist-modal.open .artist-modal-content { transform: translateY(0); }
+    .artist-modal-photo {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-dim);
+    }
+    .artist-modal-num {
+      font-family: var(--font-en);
+      font-size: 0.55rem; letter-spacing: 0.3em;
+      color: var(--accent);
+      text-align: center;
+    }
+    .artist-modal-name {
+      font-size: 1.4rem; font-weight: 700;
+      text-align: center;
+      margin-top: 0.3rem;
+    }
+    .artist-modal-field {
+      font-size: 0.8rem; color: var(--accent-dim);
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-top: 0.2rem;
+    }
+    .artist-modal-bio {
+      font-size: 0.8rem; color: var(--muted);
+      line-height: 1.9;
+      white-space: pre-line;
+      text-align: left;
+      width: 100%;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .artist-modal-close {
+      position: absolute;
+      top: 2rem; right: 2rem;
+      font-size: 1.5rem;
+      color: var(--fg);
+      background: none; border: none;
+      cursor: pointer;
+      transition: color 0.3s;
+      font-family: var(--font-en);
+      z-index: 1;
+    }
+    .artist-modal-close:hover { color: var(--accent); }
+    .artist-modal-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--accent-dim);
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+    .artist-modal-link:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+    .artist-modal-link svg { width: 16px; height: 16px; }
+    @media (max-width: 600px) {
+      .artist-modal { padding: 1rem; }
+      .artist-modal-content { padding: 1.5rem; }
+      .artist-modal-photo { width: 140px; height: 140px; }
+    }
+
+    /* ===== ARTIST CARD PORTFOLIO BUTTON ===== */
+    .artist-card-portfolio {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      margin-top: 0.6rem;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+      letter-spacing: 0.05em;
+    }
+    .artist-card-portfolio:hover { color: var(--accent); }
+    .artist-card-portfolio svg { width: 13px; height: 13px; }
+
     /* ===== ARTISTS ===== */
     .artists {
       position: relative; z-index: 2;
@@ -793,6 +902,21 @@
       content: '';
       position: absolute; inset: 0;
       background: linear-gradient(180deg, transparent 50%, rgba(6,6,6,0.95) 100%);
+    }
+    .artist-card-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) brightness(0.7);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .artist-card:hover .artist-card-img {
+      filter: grayscale(0%) brightness(0.85);
+      transform: scale(1.05);
+    }
+    a.artist-card-link {
+      text-decoration: none; color: inherit;
+      display: block;
     }
     .artist-num-bg {
       font-family: var(--font-en);
@@ -1236,7 +1360,7 @@
     <div class="artists-header">
       <div class="artists-header-left reveal">
         <p class="about-label">The Collective</p>
-        <div class="artists-count"><strong>10</strong></div>
+        <div class="artists-count"><strong>09</strong></div>
         <p class="artists-subtitle">명의 모의자들이 새로운 이야기를 시작합니다</p>
       </div>
     </div>
@@ -1259,9 +1383,9 @@
       </div>
       <div class="core-team-grid">
         <div class="core-card reveal">
-          <div class="core-card-visual" onclick="openLightbox('assets/images/director.png', '고코더 (이진현)')">
+          <div class="core-card-visual" onclick="openLightbox('assets/profile/director.png', '고코더 (이진현)')">
             <span class="core-card-role-badge">Director</span>
-            <img src="assets/images/director.png" alt="고코더" class="core-card-img">
+            <img src="assets/profile/director.png" alt="고코더" class="core-card-img">
           </div>
           <div class="core-card-body">
             <p class="core-card-role">Exhibition Director</p>
@@ -1271,9 +1395,9 @@
           </div>
         </div>
         <div class="core-card reveal reveal-delay-1">
-          <div class="core-card-visual">
+          <div class="core-card-visual" onclick="openLightbox('assets/profile/leadartist.JPG', '김가람')">
             <span class="core-card-role-badge">Lead Artist</span>
-            <span class="core-card-icon">&#9671;</span>
+            <img src="assets/profile/leadartist.JPG" alt="김가람" class="core-card-img">
           </div>
           <div class="core-card-body">
             <p class="core-card-role">Lead Artist</p>
@@ -1282,9 +1406,9 @@
           </div>
         </div>
         <div class="core-card reveal reveal-delay-2">
-          <div class="core-card-visual">
+          <div class="core-card-visual" onclick="openLightbox('assets/profile/manager.jpg', '김지나')">
             <span class="core-card-role-badge">Manager</span>
-            <span class="core-card-icon">&#9674;</span>
+            <img src="assets/profile/manager.jpg" alt="김지나" class="core-card-img">
           </div>
           <div class="core-card-body">
             <p class="core-card-role">General Manager &amp; Marketing</p>
@@ -1374,6 +1498,24 @@
     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
     <img id="lightboxImg" src="" alt="">
     <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <!-- Artist Modal -->
+  <div class="artist-modal" id="artistModal" onclick="closeArtistModal()">
+    <button class="artist-modal-close" onclick="closeArtistModal()">&times;</button>
+    <div class="artist-modal-content" onclick="event.stopPropagation()">
+      <img class="artist-modal-photo" id="artistModalPhoto" src="" alt="">
+      <div>
+        <p class="artist-modal-num" id="artistModalNum"></p>
+        <p class="artist-modal-name" id="artistModalName"></p>
+        <p class="artist-modal-field" id="artistModalField"></p>
+      </div>
+      <div class="artist-modal-bio" id="artistModalBio"></div>
+      <a class="artist-modal-link" id="artistModalLink" href="" target="_blank" rel="noopener noreferrer">
+        <span id="artistModalLinkIcon"></span>
+        <span id="artistModalLinkText"></span>
+      </a>
+    </div>
   </div>
 
   <!-- Footer -->
@@ -1789,41 +1931,89 @@
   });
 
   // ===== ARTISTS =====
+  const igIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>';
+  const webIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+
   const artistData = [
-    { num: '01', name: 'Artist 01', field: 'TBA' },
-    { num: '02', name: 'Artist 02', field: 'TBA' },
-    { num: '03', name: 'Artist 03', field: 'TBA' },
-    { num: '04', name: 'Artist 04', field: 'TBA' },
-    { num: '05', name: 'Artist 05', field: 'TBA' },
-    { num: '06', name: 'Artist 06', field: 'TBA' },
-    { num: '07', name: 'Artist 07', field: 'TBA' },
-    { num: '08', name: 'Artist 08', field: 'TBA' },
-    { num: '09', name: 'Artist 09', field: 'TBA' },
-    { num: '10', name: 'Artist 10', field: 'TBA' },
+    { num: '01', name: '김가람', field: '금속·목재 공예', img: 'assets/profile/1김가람.JPG', url: 'https://www.instagram.com/smokekirin', urlType: 'instagram',
+      bio: '2019.10 단체전 문래창작촌예술제 문래굿즈프로젝트 전시\n2019.11 산울림아트앤크래프트 손우진개인전 \'보강\' 기술자문\n2020.07 단체전 영등포시장역문화 예술철도사업 사이벤치 및 의자 제작 참여\n2020.11 문래창작촌예술제 오픈스튜디오 전시\n2020.11 DDP 디자인페어 참여\n2021.10 DDP 디자인페어 참여\n2021.12 단체전 영등포문화재단 예술 기술 전시 \'잇다\', 술술센터\n2022.05 개인전 Brand New Planet, 예술도시\n2022.05 단체전 영등포문화재단 공모 전시 \'문래동에서 만듭니다\', 술술센터\n2022.11 DDP 디자인페어 참여\n\n현) 월간절단&용접저널 발행인, 편집장\n현) 메탈라이브러리 / 헤기랩 디자인 금속 및 목재 가구 및 소품제작소 운영' },
+    { num: '02', name: '윤슬', field: '', img: 'assets/profile/2윤슬.jpg', url: 'https://www.instagram.com/j.a.u.n.e.brilliant', urlType: 'instagram', bio: '' },
+    { num: '03', name: '떼쟁', field: '', img: 'assets/profile/3떼쟁.jpg', url: 'https://www.instagram.com/ean_space', urlType: 'instagram', bio: '' },
+    { num: '04', name: '코랄', field: '', img: 'assets/profile/4코랄.jpeg', url: 'https://www.instagram.com/coral.drawing', urlType: 'instagram', bio: '' },
+    { num: '05', name: '반하리', field: '웹툰', img: 'assets/profile/5반하리.jpg', url: 'https://www.instagram.com/vanha_lee/', urlType: 'instagram',
+      bio: '[웹툰 연재]\n2018.11 - 2020.09 네이버 베스트 도전, 빵뽀시래기 (완결)\n2023.08 - 2024.11 네이버 웹툰, 손 잡은 사이 (완결)' },
+    { num: '06', name: '주표', field: '회화', img: 'assets/profile/6주표.jpeg', url: 'https://www.instagram.com/ultra.sulpermania', urlType: 'instagram',
+      bio: '중앙미술대전 외 공모전 수상\n프랑스 파리 Galerie89 전시\n오징어 게임 외 영화·드라마·CF·무대 작화' },
+    { num: '07', name: '현지', field: '회화', img: 'assets/profile/7현지.jpeg', url: 'https://www.instagram.com/painter_hyunji', urlType: 'instagram',
+      bio: '[개인전]\n2026 <그럼에도, 안녕>, 바이브 아트 스페이스\n\n[단체전]\n2026 <겹의 원리>, 갤러리 디 아르테 청담\n2026 <태도에 대하여>, 스페이스 모순\n2025 <KMAF 초대전>, 마루아트센터\n2024 <보통의 그리움>, 경민현대미술관\n2024 <KMAF 수상전>, 마루아트센터\n\n[수상]\n2025 제25회 안견미술대전 특선\n2024 KMAF 대한민국현대미술제 최우수상' },
+    { num: '08', name: '켈빈', field: '현대음악 작곡', img: 'assets/profile/8켈빈.jpg', url: 'http://www.kelvinng.info', urlType: 'website',
+      bio: '현대음악 작곡가, 예술 연구자이자 장구 연주자.\n\n허더즈필드 대학교 박사 연구원 및 전 시간강사. 오스트리아 그라츠 예술대학, 미국 미주리-캔자스시티 대학교, 홍콩 중문대학교에서 작곡을 수학하였다.\n\n작품들은 오스트리아, 호주, 중국, 홍콩, 프랑스, 페로 제도, 독일, 슬로베니아, 대한민국, 스위스, 영국, 미국에서 저명하고 헌신적인 연주자들과 앙상블에 의해 연주되었다.\n\n작품들은 시간과 공간 속에서 공존하는 존재로서의 우리 자신에 대한 근본적인 탐구로부터 비롯된다. 대부분의 작품들은 청각과 시각을 아우르는 총체적 감각 경험을 지향하며, 청중에게 한층 깊어진 주의와 공감적 몰입을 이끌어낸다.' },
+    { num: '09', name: 'veil', field: '', img: 'assets/profile/9veil.jpeg', url: 'https://www.instagram.com/paradoxipse', urlType: 'instagram', bio: '' },
   ];
 
   const track = document.getElementById('artistsTrack');
   artistData.forEach(a => {
+    const isIg = a.urlType === 'instagram';
+    const icon = isIg ? igIcon : webIcon;
+    const label = isIg ? 'Instagram' : 'Website';
+
     const card = document.createElement('div');
     card.className = 'artist-card';
+    card.style.cursor = 'pointer';
     card.innerHTML = `
       <div class="artist-card-visual">
+        <img class="artist-card-img" src="${a.img}" alt="${a.name}" loading="lazy">
         <span class="artist-num-bg">${a.num}</span>
       </div>
       <div class="artist-card-info">
         <p class="artist-card-num">NO. ${a.num}</p>
         <p class="artist-card-name">${a.name}</p>
         <p class="artist-card-field">${a.field}</p>
+        <a class="artist-card-portfolio" href="${a.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+          ${icon} ${label}
+        </a>
       </div>
     `;
+    card.addEventListener('click', () => {
+      if (hasDragged) return;
+      openArtistModal(a);
+    });
     track.appendChild(card);
+  });
+
+  // Artist Modal
+  const artistModal = document.getElementById('artistModal');
+  function openArtistModal(a) {
+    const isIg = a.urlType === 'instagram';
+    document.getElementById('artistModalPhoto').src = a.img;
+    document.getElementById('artistModalPhoto').alt = a.name;
+    document.getElementById('artistModalNum').textContent = 'NO. ' + a.num;
+    document.getElementById('artistModalName').textContent = a.name;
+    document.getElementById('artistModalField').textContent = a.field;
+    const bioEl = document.getElementById('artistModalBio');
+    bioEl.textContent = a.bio;
+    bioEl.style.display = a.bio ? '' : 'none';
+    const linkEl = document.getElementById('artistModalLink');
+    linkEl.href = a.url;
+    document.getElementById('artistModalLinkIcon').innerHTML = isIg ? igIcon : webIcon;
+    document.getElementById('artistModalLinkText').textContent = isIg ? 'Instagram' : 'Website';
+    artistModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeArtistModal() {
+    artistModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeArtistModal();
   });
 
   // Drag to scroll
   const scrollWrap = document.getElementById('artistsScroll');
-  let isDown = false, startX, scrollLeft;
+  let isDown = false, startX, scrollLeft, hasDragged = false;
   scrollWrap.addEventListener('mousedown', e => {
     isDown = true;
+    hasDragged = false;
     startX = e.pageX - scrollWrap.offsetLeft;
     scrollLeft = scrollWrap.scrollLeft;
     scrollWrap.style.cursor = 'grabbing';
@@ -1834,6 +2024,7 @@
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - scrollWrap.offsetLeft;
+    if (Math.abs(x - startX) > 5) hasDragged = true;
     scrollWrap.scrollLeft = scrollLeft - (x - startX) * 1.5;
   });
 

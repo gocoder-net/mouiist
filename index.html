@@ -637,6 +637,18 @@
     .core-card:hover .core-card-visual::before {
       transform: translateX(100%);
     }
+    .core-card-crown {
+      position: absolute;
+      top: 0.6rem; right: 0.6rem;
+      font-size: 1.2rem;
+      z-index: 3;
+      filter: drop-shadow(0 2px 6px rgba(200,169,110,0.4));
+      animation: crownBob 2s ease-in-out infinite;
+    }
+    @keyframes crownBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
     .core-card-role-badge {
       position: absolute;
       top: 1rem; left: 1rem;
@@ -2299,6 +2311,7 @@
       <div class="core-team-grid">
         <div class="core-card reveal">
           <div class="core-card-visual" style="cursor:pointer" onclick="openStaffModal('director')">
+            <span class="core-card-crown">&#x1F451;</span>
             <span class="core-card-role-badge director-badge">Director</span>
             <img src="assets/profile/director.png" alt="고코더" class="core-card-img">
           </div>
@@ -2311,6 +2324,7 @@
         </div>
         <div class="core-card reveal reveal-delay-1">
           <div class="core-card-visual" style="cursor:pointer" onclick="openStaffModal('lead')">
+            <span class="core-card-crown">&#x1F3A8;</span>
             <span class="core-card-role-badge">Lead Artist</span>
             <img src="assets/profile/leadartist.JPG" alt="김가람" class="core-card-img">
           </div>
@@ -2322,6 +2336,7 @@
         </div>
         <div class="core-card reveal reveal-delay-2">
           <div class="core-card-visual" style="cursor:pointer" onclick="openStaffModal('manager')">
+            <span class="core-card-crown">&#x1F680;</span>
             <span class="core-card-role-badge">Manager</span>
             <img src="assets/profile/manager.jpg" alt="김지나" class="core-card-img">
           </div>

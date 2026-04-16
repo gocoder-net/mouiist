@@ -1319,17 +1319,22 @@
     /* approved stamp */
     .exh-stamp {
       position: absolute; z-index: 4;
-      bottom: 5%; right: 5%;
-      font-family: var(--font-en); font-size: 0.7rem;
-      letter-spacing: 0.35em; text-transform: uppercase;
-      color: var(--accent); border: 2px solid var(--accent);
-      padding: 0.4rem 1.2rem; border-radius: 3px;
-      opacity: 0; transform: translateY(-30px) rotate(-5deg);
+      bottom: 6%; right: 6%;
+      width: 68px; height: 68px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Noto Serif KR', serif; font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.1em;
+      text-align: center; line-height: 1.3;
+      color: #c0392b;
+      border: 2.5px solid #c0392b;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 3.5px transparent, inset 0 0 0 5px #c0392b;
+      opacity: 0; transform: translateY(-30px) rotate(-8deg);
       pointer-events: none;
       transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .exhibition.unsealed .exh-stamp {
-      opacity: 1; transform: translateY(0) rotate(-5deg);
+      opacity: 0.9; transform: translateY(0) rotate(-8deg);
     }
     .poster-year {
       font-family: var(--font-en);
@@ -2076,7 +2081,7 @@
       <div class="exhibition-poster">
         <div class="poster" id="exhPoster">
           <div class="poster-shimmer"></div>
-          <span class="exh-stamp">APPROVED &middot; 승인</span>
+          <span class="exh-stamp">모의<br>스트</span>
           <p class="poster-invite-label">You are invited to</p>
           <span class="poster-year">2 0 2 6</span>
           <h3 class="poster-main">MOUI<span class="acc">-</span>IST</h3>

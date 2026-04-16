@@ -1153,25 +1153,142 @@
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 6rem;
     }
-    .exhibition-info {}
+    .exhibition-info {
+      position: relative;
+    }
+    /* classified badge */
+    .exh-classified {
+      position: absolute; top: -1.5rem; left: 0; z-index: 10;
+      font-family: var(--font-en); font-size: 0.65rem;
+      letter-spacing: 0.4em; text-transform: uppercase;
+      color: #d44; background: rgba(200,40,40,0.08);
+      border: 1px solid rgba(200,40,40,0.25);
+      padding: 0.35rem 1.2rem; border-radius: 2px;
+      transition: opacity 0.4s, transform 0.4s;
+      animation: exhClassifiedPulse 2s ease-in-out infinite;
+    }
+    .exhibition.unsealed .exh-classified {
+      animation: exhShake 0.5s ease forwards;
+    }
+    /* corner marks */
+    .exh-corner {
+      position: absolute; width: 18px; height: 18px;
+      border-color: rgba(200,169,110,0.25); border-style: solid; border-width: 0;
+      pointer-events: none; z-index: 5;
+      opacity: 0; transform: scale(0);
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .exhibition.unsealed .exh-corner {
+      opacity: 1; transform: scale(1);
+    }
+    .exh-corner.tl { top: -8px; left: -8px; border-top-width: 1px; border-left-width: 1px; transform-origin: top left; }
+    .exh-corner.tr { top: -8px; right: -8px; border-top-width: 1px; border-right-width: 1px; transform-origin: top right; }
+    .exh-corner.bl { bottom: -8px; left: -8px; border-bottom-width: 1px; border-left-width: 1px; transform-origin: bottom left; }
+    .exh-corner.br { bottom: -8px; right: -8px; border-bottom-width: 1px; border-right-width: 1px; transform-origin: bottom right; }
+    /* seal overlay */
+    .exh-seal {
+      position: absolute; inset: 0; z-index: 8;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      background: rgba(6,6,6,0.6);
+      transition: opacity 0.8s ease, backdrop-filter 0.8s ease, -webkit-backdrop-filter 0.8s ease;
+      pointer-events: none;
+    }
+    .exhibition.unsealed .exh-seal {
+      opacity: 0; backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0);
+    }
+    /* sweep line */
+    .exh-sweep {
+      position: absolute; top: 0; left: 0; z-index: 9;
+      width: 2px; height: 100%;
+      background: linear-gradient(180deg, transparent, var(--accent), transparent);
+      opacity: 0; pointer-events: none;
+    }
+    .exhibition.unsealed .exh-sweep {
+      animation: exhSweepLine 0.8s ease-out forwards;
+    }
     .exh-label {
       font-family: var(--font-en);
       font-size: 0.6rem; letter-spacing: 0.5em;
       text-transform: uppercase; color: var(--accent);
       margin-bottom: 2rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .exh-title {
       font-size: clamp(2rem, 4vw, 3.5rem);
       font-weight: 900;
       margin-bottom: 4rem;
+      opacity: 0; transform: scale(1.4);
+      filter: blur(10px) brightness(2.5);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .exh-detail {
       padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid transparent;
       display: grid; grid-template-columns: 100px 1fr;
       gap: 2rem; align-items: baseline;
+      opacity: 0; transform: translateX(-30px) translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+    }
+    .exh-detail::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 1px;
+      background: var(--accent-dim);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: inherit;
+    }
+    .exhibition.unsealed .exh-detail::after {
+      transform: scaleX(1);
     }
     .exh-detail:first-of-type { border-top: 1px solid var(--border); }
+    .exhibition.unsealed .exh-label {
+      opacity: 1; transform: translateY(0);
+    }
+    .exhibition.unsealed .exh-title {
+      opacity: 1; transform: scale(1);
+      filter: blur(0) brightness(1);
+    }
+    .exhibition.unsealed .exh-detail {
+      opacity: 1; transform: translateX(0) translateY(0);
+    }
+    /* D-Day counter */
+    .exh-dday {
+      display: flex; align-items: baseline; gap: 1rem;
+      margin-bottom: 3.5rem;
+      opacity: 0; transform: translateY(15px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .exhibition.unsealed .exh-dday {
+      opacity: 1; transform: translateY(0);
+    }
+    .exh-dday-label {
+      font-family: var(--font-en);
+      font-size: 0.55rem; letter-spacing: 0.4em;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .exh-dday-number {
+      font-family: var(--font-en);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 900; letter-spacing: -0.02em;
+      color: var(--accent);
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(200,169,110,0.3);
+      animation: exhDdayPulse 3s ease-in-out infinite;
+    }
+    .exh-dday-unit {
+      font-family: var(--font-en);
+      font-size: 0.6rem; letter-spacing: 0.3em;
+      color: var(--accent-dim); text-transform: uppercase;
+    }
+    @keyframes exhDdayPulse {
+      0%, 100% { text-shadow: 0 0 40px rgba(200,169,110,0.2); }
+      50% { text-shadow: 0 0 60px rgba(200,169,110,0.5), 0 0 100px rgba(200,169,110,0.15); }
+    }
+
     .exh-detail-label {
       font-family: var(--font-en);
       font-size: 0.6rem; letter-spacing: 0.3em;
@@ -1184,9 +1301,35 @@
       font-size: 0.8rem; color: var(--muted);
       margin-top: 0.3rem;
     }
+    /* venue link */
+    .exh-venue-link {
+      color: inherit; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      transition: color 0.3s;
+    }
+    .exh-venue-link:hover { color: var(--accent); }
+    .exh-venue-link:hover .exh-detail-value { text-decoration: underline; text-underline-offset: 3px; }
+    .exh-venue-link .exh-pin {
+      font-size: 0.9rem; color: var(--accent); flex-shrink: 0;
+    }
+    .exh-venue-link .exh-arrow {
+      font-size: 0.65rem; color: var(--muted); transition: transform 0.3s, color 0.3s;
+    }
+    .exh-venue-link:hover .exh-arrow { transform: translate(2px, -2px); color: var(--accent); }
+
+    /* full-section flash burst */
+    .exh-flash {
+      position: absolute; inset: 0; z-index: 11;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.7) 0%, rgba(200,169,110,0.4) 40%, transparent 70%);
+      opacity: 0; pointer-events: none;
+    }
+    .exhibition.unsealed .exh-flash {
+      animation: exhFlashBurst 0.6s ease-out forwards;
+    }
 
     .exhibition-poster {
       display: flex; align-items: center; justify-content: center;
+      perspective: 800px;
     }
     .poster {
       width: 100%; aspect-ratio: 2/3;
@@ -1196,6 +1339,12 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center; padding: 3rem;
+      transition: transform 0.15s ease-out, box-shadow 0.4s ease;
+      transform-style: preserve-3d;
+      opacity: 0; filter: blur(4px);
+    }
+    .exhibition.unsealed .poster {
+      animation: exhPosterIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.0s forwards;
     }
     .poster::before {
       content: ''; position: absolute;
@@ -1207,6 +1356,31 @@
       inset: 0;
       background: radial-gradient(ellipse at 30% 20%, rgba(200,169,110,0.04) 0%, transparent 60%);
       pointer-events: none;
+    }
+    /* poster shimmer */
+    .poster-shimmer {
+      position: absolute; inset: 0; z-index: 3;
+      background: linear-gradient(105deg, transparent 40%, rgba(200,169,110,0.06) 45%, rgba(200,169,110,0.12) 50%, rgba(200,169,110,0.06) 55%, transparent 60%);
+      background-size: 250% 100%;
+      pointer-events: none; opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .poster:hover .poster-shimmer { opacity: 1; animation: posterShimmer 1.5s ease infinite; }
+    /* poster glow */
+    /* glow applied via JS inline after poster-in completes */
+    /* approved stamp */
+    .exh-stamp {
+      position: absolute; z-index: 4;
+      bottom: 12%; right: 10%;
+      font-family: var(--font-en); font-size: 0.7rem;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--accent); border: 2px solid var(--accent);
+      padding: 0.4rem 1.2rem; border-radius: 3px;
+      opacity: 0; transform: scale(3) rotate(-12deg);
+      pointer-events: none;
+    }
+    .exhibition.unsealed .exh-stamp {
+      animation: exhStampIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.4s forwards;
     }
     .poster-year {
       font-family: var(--font-en);
@@ -1221,8 +1395,8 @@
     }
     .poster-main .acc { color: var(--accent); }
     .poster-sub {
-      font-family: var(--font-en);
-      font-size: 0.6rem; letter-spacing: 0.4em;
+      font-family: var(--font-kr);
+      font-size: 0.6rem; letter-spacing: 0.3em;
       color: var(--muted); margin-bottom: 2.5rem;
     }
     .poster-divider {
@@ -1234,6 +1408,52 @@
       font-size: 0.6rem; letter-spacing: 0.2em;
       color: var(--muted); line-height: 2.5;
       text-transform: uppercase;
+    }
+
+    /* exhibition keyframes */
+    @keyframes exhSweepLine {
+      0% { left: 0; opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+    @keyframes exhStampIn {
+      0% { opacity: 0; transform: scale(3) rotate(-12deg); }
+      60% { opacity: 1; transform: scale(0.9) rotate(-6deg); }
+      80% { transform: scale(1.05) rotate(-5deg); }
+      100% { opacity: 1; transform: scale(1) rotate(-5deg); }
+    }
+    @keyframes exhShake {
+      0% { transform: translateX(0); opacity: 1; }
+      15% { transform: translateX(-6px) rotate(-2deg); }
+      30% { transform: translateX(5px) rotate(1.5deg); }
+      45% { transform: translateX(-4px) rotate(-1deg); }
+      60% { transform: translateX(3px); opacity: 0.6; }
+      80% { transform: translateX(-2px); opacity: 0.3; }
+      100% { transform: translateX(0) translateY(-10px); opacity: 0; pointer-events: none; }
+    }
+    @keyframes exhGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(200,169,110,0); }
+      50% { box-shadow: 0 0 30px rgba(200,169,110,0.12), 0 0 60px rgba(200,169,110,0.06); }
+    }
+    @keyframes posterShimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -50% 0; }
+    }
+    /* classified red pulse (sealed state) */
+    @keyframes exhClassifiedPulse {
+      0%, 100% { box-shadow: 0 0 6px rgba(200,40,40,0); }
+      50% { box-shadow: 0 0 16px rgba(200,40,40,0.35), 0 0 30px rgba(200,40,40,0.15); }
+    }
+    /* full-section flash burst */
+    @keyframes exhFlashBurst {
+      0% { opacity: 0; }
+      20% { opacity: 0.9; }
+      100% { opacity: 0; }
+    }
+    /* poster bounce-in */
+    @keyframes exhPosterIn {
+      0% { opacity: 0; transform: scale(0.85); filter: blur(4px); }
+      60% { opacity: 1; transform: scale(1.03); filter: blur(0); }
+      100% { opacity: 1; transform: scale(1); filter: blur(0); }
     }
 
     /* ===== DOCS (서문 / 지침서) ===== */
@@ -1693,6 +1913,8 @@
       body { cursor: auto; }
       a, button { cursor: auto; }
       .cursor, .cursor-ring { display: none; }
+      .exhibition-poster { perspective: none; }
+      .exh-classified { font-size: 0.55rem; padding: 0.25rem 0.8rem; }
       nav { padding: 1.2rem 1.5rem; }
       nav.compact { padding: 1rem 1.5rem; }
       .nav-links {
@@ -1864,30 +2086,49 @@
   <section class="exhibition" id="exhibition">
     <div class="exhibition-inner">
       <div class="exhibition-info">
-        <p class="exh-label reveal">Exhibition</p>
-        <h2 class="exh-title reveal reveal-delay-1">2026 상반기<br>단체전</h2>
-        <div class="exh-detail reveal reveal-delay-1">
+        <span class="exh-classified">CLASSIFIED &middot; 기밀</span>
+        <span class="exh-corner tl"></span>
+        <span class="exh-corner tr"></span>
+        <span class="exh-corner bl"></span>
+        <span class="exh-corner br"></span>
+        <div class="exh-seal"></div>
+        <div class="exh-sweep"></div>
+        <div class="exh-flash"></div>
+        <p class="exh-label">Exhibition</p>
+        <h2 class="exh-title">2026 상반기<br>단체전</h2>
+        <div class="exh-dday" id="exhDday">
+          <span class="exh-dday-label">OPENING IN</span>
+          <span class="exh-dday-number" id="exhDdayNum"></span>
+          <span class="exh-dday-unit">DAYS</span>
+        </div>
+        <div class="exh-detail" data-exh-row="0">
           <span class="exh-detail-label">Title</span>
           <div>
-            <p class="exh-detail-value">MOUI-IST 첫 번째 모의</p>
-            <p class="exh-detail-sub">9인의 작가가 펼치는 첫 번째 단체전</p>
+            <p class="exh-detail-value">모의실험(模擬實驗)</p>
+            <p class="exh-detail-sub">MOUI-IST 첫 번째 단체전</p>
           </div>
         </div>
-        <div class="exh-detail reveal reveal-delay-2">
+        <div class="exh-detail" data-exh-row="1">
           <span class="exh-detail-label">Date</span>
           <div>
             <p class="exh-detail-value">2026.07.27 — 08.03</p>
             <p class="exh-detail-sub">7월 27일 설치 · 8월 3일까지</p>
           </div>
         </div>
-        <div class="exh-detail reveal reveal-delay-2">
+        <div class="exh-detail" data-exh-row="2">
           <span class="exh-detail-label">Venue</span>
           <div>
-            <p class="exh-detail-value">사이아트센터 FLUX</p>
-            <p class="exh-detail-sub">안국역 3분 거리</p>
+            <a class="exh-venue-link" href="https://maps.app.goo.gl/ypXSdPSfiyYbZcDo9" target="_blank" rel="noopener noreferrer">
+              <span class="exh-pin">&#x1F4CD;</span>
+              <span>
+                <p class="exh-detail-value">사이아트센터 FLUX</p>
+                <p class="exh-detail-sub">안국역 3분 거리</p>
+              </span>
+              <span class="exh-arrow">&#x2197;</span>
+            </a>
           </div>
         </div>
-        <div class="exh-detail reveal reveal-delay-3">
+        <div class="exh-detail" data-exh-row="3">
           <span class="exh-detail-label">Artists</span>
           <div>
             <p class="exh-detail-value">9 Artists</p>
@@ -1895,11 +2136,13 @@
           </div>
         </div>
       </div>
-      <div class="exhibition-poster reveal reveal-delay-2">
-        <div class="poster">
+      <div class="exhibition-poster">
+        <div class="poster" id="exhPoster">
+          <div class="poster-shimmer"></div>
+          <span class="exh-stamp">APPROVED &middot; 승인</span>
           <span class="poster-year">2 0 2 6</span>
           <h3 class="poster-main">MOUI<span class="acc">-</span>IST</h3>
-          <p class="poster-sub">GROUP EXHIBITION &middot; 07.27 — 08.03</p>
+          <p class="poster-sub">모의실험(模擬實驗) &middot; 07.27 — 08.03</p>
           <div class="poster-divider"></div>
           <p class="poster-detail">
             9 Artists<br>
@@ -2882,6 +3125,82 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeLightbox();
   });
+
+  // ===== D-DAY CALCULATION =====
+  const exhOpeningDate = new Date('2026-07-27T00:00:00');
+  const exhDdayNumEl = document.getElementById('exhDdayNum');
+  function updateDday() {
+    const now = new Date();
+    const diff = exhOpeningDate - now;
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    if (days > 0) {
+      exhDdayNumEl.textContent = 'D-' + days;
+    } else if (days === 0) {
+      exhDdayNumEl.textContent = 'D-DAY';
+    } else {
+      exhDdayNumEl.textContent = 'NOW';
+    }
+  }
+  updateDday();
+
+  // ===== EXHIBITION UNSEAL SEQUENCE =====
+  const exhSection = document.getElementById('exhibition');
+  const exhDetails = exhSection.querySelectorAll('.exh-detail');
+  const exhLabel = exhSection.querySelector('.exh-label');
+  const exhTitle = exhSection.querySelector('.exh-title');
+  const exhDday = document.getElementById('exhDday');
+  const exhCorners = exhSection.querySelectorAll('.exh-corner');
+  const exhPosterEl = exhSection.querySelector('.poster');
+  const exhObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        // 0.0s — sweep line + flash burst + classified shake (via CSS .unsealed)
+        exhSection.classList.add('unsealed');
+        // 0.4s — corner marks draw-in
+        exhCorners.forEach(c => { c.style.transitionDelay = '0.4s'; });
+        // 0.5s — title 쾅 등장 (scale+blur+brightness)
+        exhTitle.style.transitionDelay = '0.5s';
+        // 0.65s — D-Day counter
+        exhDday.style.transitionDelay = '0.65s';
+        // 0.7s — label
+        exhLabel.style.transitionDelay = '0.7s';
+        // 0.9s~1.5s — detail rows slide-in from left
+        exhDetails.forEach((row, i) => {
+          row.style.transitionDelay = (0.9 + i * 0.2) + 's';
+        });
+        // 1.0s — poster bounce-in (handled by CSS animation-delay)
+        // 1.7s — poster glow (set inline to avoid animation override)
+        setTimeout(() => {
+          if (exhPosterEl) {
+            exhPosterEl.style.opacity = '1';
+            exhPosterEl.style.filter = 'blur(0)';
+            exhPosterEl.style.animation = 'exhGlow 3s ease-in-out infinite';
+          }
+        }, 1700);
+        exhObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  exhObs.observe(exhSection);
+
+  // ===== POSTER 3D TILT =====
+  const exhPoster = document.getElementById('exhPoster');
+  if (window.innerWidth > 768 && exhPoster) {
+    const posterWrap = exhPoster.parentElement;
+    posterWrap.addEventListener('mousemove', e => {
+      const rect = posterWrap.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const rotY = (x - 0.5) * 10;  // -5 to 5
+      const rotX = (0.5 - y) * 10;  // -5 to 5
+      exhPoster.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+    posterWrap.addEventListener('mouseleave', () => {
+      exhPoster.style.transition = 'transform 0.5s ease';
+      exhPoster.style.transform = 'rotateX(0) rotateY(0)';
+      setTimeout(() => { exhPoster.style.transition = 'transform 0.15s ease-out, box-shadow 0.4s ease'; }, 500);
+    });
+  }
   </script>
 </body>
 </html>

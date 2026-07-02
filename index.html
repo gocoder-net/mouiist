@@ -34,6 +34,16 @@
       --font-kr: 'Noto Sans KR', sans-serif;
       --font-en: 'Inter', sans-serif;
     }
+    html.light {
+      --bg: #f5f2ec;
+      --fg: #1a1a1a;
+      --accent: #9a7b3e;
+      --accent-light: #b8943f;
+      --accent-dim: #c4ad7a;
+      --muted: #8a857e;
+      --card-bg: #eae6de;
+      --border: #d5d0c8;
+    }
 
     html { scroll-behavior: auto; }
 
@@ -345,6 +355,19 @@
     }
     .nav-links a:hover::after { width: 100%; }
 
+    .theme-toggle {
+      background: none; border: 1px solid rgba(200,169,110,0.3);
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; cursor: none;
+      transition: border-color 0.3s, transform 0.3s;
+      mix-blend-mode: normal;
+      position: relative; z-index: 1001;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
     .nav-toggle {
       display: none; flex-direction: column; gap: 6px;
       background: none; border: none; padding: 5px;
@@ -1869,7 +1892,7 @@
       nav.compact { padding: 1rem 1.5rem; }
       .nav-links {
         display: none; position: fixed;
-        inset: 0; background: rgba(6,6,6,1);
+        inset: 0; background: var(--bg);
         z-index: 1000;
         flex-direction: column;
         align-items: center; justify-content: center;
@@ -1933,6 +1956,7 @@
       <li><a href="#team" onclick="closeNav()">Staff</a></li>
       <li><a href="#contact" onclick="closeNav()">Connect</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -2841,11 +2865,12 @@
   const artistData = [
     { num: '01', name: '김가람', field: '금속·목재 공예', img: 'assets/profile/1김가람.JPG', url: 'https://www.instagram.com/smokekirin', urlType: 'instagram', color: '#d4a574', fieldIcon: iconCraft,
       bio: '2019.10 단체전 문래창작촌예술제 문래굿즈프로젝트 전시\n2019.11 산울림아트앤크래프트 손우진개인전 \'보강\' 기술자문\n2020.07 단체전 영등포시장역문화 예술철도사업 사이벤치 및 의자 제작 참여\n2020.11 문래창작촌예술제 오픈스튜디오 전시\n2020.11 DDP 디자인페어 참여\n2021.10 DDP 디자인페어 참여\n2021.12 단체전 영등포문화재단 예술 기술 전시 \'잇다\', 술술센터\n2022.05 개인전 Brand New Planet, 예술도시\n2022.05 단체전 영등포문화재단 공모 전시 \'문래동에서 만듭니다\', 술술센터\n2022.11 DDP 디자인페어 참여\n\n현) 월간절단&용접저널 발행인, 편집장\n현) 메탈라이브러리 / 헤기랩 디자인 금속 및 목재 가구 및 소품제작소 운영' },
-    { num: '02', name: '윤슬', field: '회화', img: 'assets/profile/2윤슬.jpg', url: 'https://www.instagram.com/j.a.u.n.e.brilliant', urlType: 'instagram', color: '#7eb8da', fieldIcon: iconBrush, bio: '' },
-    { num: '03', name: '떼쟁', field: '어반드로잉', img: 'assets/profile/3떼쟁.jpg', url: 'https://www.instagram.com/ean_space', urlType: 'instagram', color: '#a8d5a2', fieldIcon: iconPen, bio: '' },
-    { num: '04', name: '코랄', field: '회화', img: 'assets/profile/4코랄.jpeg', url: 'https://www.instagram.com/coral.drawing', urlType: 'instagram', color: '#f08080', fieldIcon: iconBrush, bio: '' },
-    { num: '05', name: '현지', field: '회화', img: 'assets/profile/7현지.jpeg', url: 'https://www.instagram.com/painter_hyunji', urlType: 'instagram', color: '#d4a0c0', fieldIcon: iconBrush,
+    { num: '02', name: '떼쟁', field: '어반드로잉', img: 'assets/profile/3떼쟁.jpg', url: 'https://www.instagram.com/ean_space', urlType: 'instagram', color: '#a8d5a2', fieldIcon: iconPen, bio: '' },
+    { num: '03', name: '코랄', field: '회화', img: 'assets/profile/4코랄.jpeg', url: 'https://www.instagram.com/coral.drawing', urlType: 'instagram', color: '#f08080', fieldIcon: iconBrush, bio: '' },
+    { num: '04', name: '현지', field: '회화', img: 'assets/profile/7현지.jpeg', url: 'https://www.instagram.com/painter_hyunji', urlType: 'instagram', color: '#d4a0c0', fieldIcon: iconBrush,
       bio: '[수상]\n2025  안견미술대전 특선\n2024  KMAF 대한민국현대미술대전 최우수상\n\n[개인전]\n2026  <그럼에도, 안녕> (선정작가 기획전), 바이브 아트 스페이스\n\n[기획 및 단체전]\n2026  <태도에 대하여> (기획전), 스페이스 모순\n2026  <겹의 원리> (기획전), 갤러리 디아르테 청담\n2025  <KMAF 초대전>, 마루아트센터\n2024  <보통의 그리움>, 경민현대미술관\n2024  <KMAF 수상전>, 마루아트센터' },
+    { num: '05', name: '하늘조각', field: '일러스트', img: 'assets/profile/10하늘조각.jpg', url: 'https://www.instagram.com/skys_pieces', urlType: 'instagram', color: '#87CEEB', fieldIcon: iconPen,
+      bio: '2011~ 영상 프로덕션 모션그래픽팀 수석디자이너\n2025~ \'Sky\'s Pieces\' 일러스트 계정 운영' },
     { num: '06', name: '반하리', field: '웹툰', img: 'assets/profile/5반하리.jpg', url: 'https://www.instagram.com/vanha_lee/', urlType: 'instagram', color: '#9b8ec4', fieldIcon: iconPen,
       bio: '[웹툰 연재]\n2018.11 - 2020.09 네이버 베스트 도전, 빵뽀시래기 (완결)\n2023.08 - 2024.11 네이버 웹툰, 손 잡은 사이 (완결)' },
     { num: '07', name: '주표', field: '회화', img: 'assets/profile/6주표.jpeg', url: 'https://www.instagram.com/ultra.sulpermania', urlType: 'instagram', color: '#e8c547', fieldIcon: iconBrush,
@@ -3150,6 +3175,18 @@
       setTimeout(() => { exhPoster.style.transition = 'transform 0.15s ease-out, box-shadow 0.4s ease'; }, 500);
     });
   }
+
+  // ===== THEME TOGGLE =====
+  const themeBtn = document.getElementById('themeToggle');
+  function setTheme(light) {
+    document.documentElement.classList.toggle('light', light);
+    themeBtn.textContent = light ? '☀️' : '🌙';
+    localStorage.setItem('theme', light ? 'light' : 'dark');
+  }
+  setTheme(localStorage.getItem('theme') === 'light');
+  themeBtn.addEventListener('click', () => {
+    setTheme(!document.documentElement.classList.contains('light'));
+  });
 
   // ===== POSTER SAVE & SHARE =====
   document.getElementById('posterSaveBtn').addEventListener('click', async () => {

@@ -1302,6 +1302,25 @@
     .exhibition-poster {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       perspective: 800px;
+      gap: 2.5rem;
+    }
+    .poster-image-wrap {
+      width: 100%;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      opacity: 0; transform: translateY(-80px);
+      transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .exhibition.unsealed .poster-image-wrap {
+      opacity: 1; transform: translateY(0);
+    }
+    .poster-img {
+      width: 100%; height: auto;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .poster-image-wrap:hover .poster-img {
+      transform: scale(1.02);
     }
     .poster {
       width: 100%; aspect-ratio: 2/3;
@@ -1949,11 +1968,11 @@
   <nav id="nav">
     <div class="nav-logo">MOUI<span>-</span>IST</div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about" onclick="closeNav()">About</a></li>
       <li><a href="#exhibition" onclick="closeNav()">Exhibition</a></li>
       <li><a href="#docs" onclick="closeNav()">Statement</a></li>
       <li><a href="#artists" onclick="closeNav()">Artists</a></li>
       <li><a href="#team" onclick="closeNav()">Staff</a></li>
+      <li><a href="#about" onclick="closeNav()">About</a></li>
       <li><a href="#contact" onclick="closeNav()">Connect</a></li>
     </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
@@ -2012,50 +2031,6 @@
     </div>
   </section>
 
-  <!-- About -->
-  <section class="about" id="about">
-    <div class="about-inner">
-      <div class="about-left">
-        <p class="about-label reveal">About</p>
-        <h2 class="about-heading reveal reveal-delay-1">
-          우리는 창작을<br><span>모의</span>합니다
-        </h2>
-        <p class="about-text reveal reveal-delay-2">
-          <strong>MOUI-IST</strong>는 모임 '작가모의'에서 출발했습니다.<br><br>
-          '모의(謀議)'라는 단어 속에 담긴 치밀함과 열정,
-          그리고 함께 도모한다는 연대의 의미를 품고
-          9인의 작가가 하나의 이름 아래 모였습니다.<br><br>
-          각자의 세계를 가진 작가들이
-          하나의 공간에서 만들어내는 <strong>새로운 서사</strong>.<br><br>
-          우리는 예술을 모의하고,
-          그 모의는 곧 하나의 작품이 됩니다.
-        </p>
-      </div>
-      <div class="about-right">
-        <div class="name-card reveal reveal-delay-2">
-          <div class="name-row">
-            <span class="name-key">MOUI</span>
-            <div>
-              <div class="name-val">모의(謀議) — 일을 꾀하다, 함께 도모하다.<br>작가모의의 핵심 정신을 계승합니다.</div>
-            </div>
-          </div>
-          <div class="name-row">
-            <span class="name-key">-IST</span>
-            <div>
-              <div class="name-val">전문가, 실천하는 자를 뜻하는 접미사.<br>창작을 말이 아닌 행동으로 보여주는 사람들.</div>
-            </div>
-          </div>
-          <div class="name-row">
-            <span class="name-key" style="font-size:1rem;">MOUI-IST</span>
-            <div>
-              <div class="name-val">창작을 모의하는 자들의 집단.<br>모임의 뿌리를 지키며 새로운 서사를 도모합니다.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Exhibition -->
   <section class="exhibition" id="exhibition">
     <div class="exhibition-inner">
@@ -2103,6 +2078,10 @@
         </div>
       </div>
       <div class="exhibition-poster">
+        <div class="poster-image-wrap">
+          <img src="assets/poster.jpeg" alt="모의실험 전시 포스터" class="poster-img">
+        </div>
+        <!-- 초대장 (주석 처리)
         <div class="poster" id="exhPoster">
           <div class="poster-shimmer"></div>
           <span class="exh-stamp">모의<br>스트</span>
@@ -2129,6 +2108,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
         </div>
+        -->
       </div>
     </div>
   </section>
@@ -2374,6 +2354,50 @@
             <p class="core-card-role">General Manager &amp; Marketing</p>
             <p class="core-card-name">김지나</p>
             <p class="core-card-desc">운영과 마케팅을 책임지며 모의를 세상에 알립니다.<br>모의의 전략가.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-left">
+        <p class="about-label reveal">About</p>
+        <h2 class="about-heading reveal reveal-delay-1">
+          우리는 창작을<br><span>모의</span>합니다
+        </h2>
+        <p class="about-text reveal reveal-delay-2">
+          <strong>MOUI-IST</strong>는 모임 '작가모의'에서 출발했습니다.<br><br>
+          '모의(謀議)'라는 단어 속에 담긴 치밀함과 열정,
+          그리고 함께 도모한다는 연대의 의미를 품고
+          9인의 작가가 하나의 이름 아래 모였습니다.<br><br>
+          각자의 세계를 가진 작가들이
+          하나의 공간에서 만들어내는 <strong>새로운 서사</strong>.<br><br>
+          우리는 예술을 모의하고,
+          그 모의는 곧 하나의 작품이 됩니다.
+        </p>
+      </div>
+      <div class="about-right">
+        <div class="name-card reveal reveal-delay-2">
+          <div class="name-row">
+            <span class="name-key">MOUI</span>
+            <div>
+              <div class="name-val">모의(謀議) — 일을 꾀하다, 함께 도모하다.<br>작가모의의 핵심 정신을 계승합니다.</div>
+            </div>
+          </div>
+          <div class="name-row">
+            <span class="name-key">-IST</span>
+            <div>
+              <div class="name-val">전문가, 실천하는 자를 뜻하는 접미사.<br>창작을 말이 아닌 행동으로 보여주는 사람들.</div>
+            </div>
+          </div>
+          <div class="name-row">
+            <span class="name-key" style="font-size:1rem;">MOUI-IST</span>
+            <div>
+              <div class="name-val">창작을 모의하는 자들의 집단.<br>모임의 뿌리를 지키며 새로운 서사를 도모합니다.</div>
+            </div>
           </div>
         </div>
       </div>

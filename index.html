@@ -37,13 +37,66 @@
     html.light {
       --bg: #f5f2ec;
       --fg: #1a1a1a;
-      --accent: #9a7b3e;
-      --accent-light: #b8943f;
-      --accent-dim: #c4ad7a;
-      --muted: #8a857e;
-      --card-bg: #eae6de;
-      --border: #d5d0c8;
+      --accent: #7a6230;
+      --accent-light: #9a7b3e;
+      --accent-dim: #a8936a;
+      --muted: #6b665f;
+      --card-bg: #e4dfd6;
+      --border: #c8c2b8;
     }
+    /* Light mode overrides */
+    html.light .lab-card { border-color: #c0b8aa; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    html.light .lab-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+    html.light .lab-card-badge { background: rgba(255,255,255,0.85); color: #6b5a35; border-color: #b8a67a; }
+    html.light .lab-modal-content { border-color: #c0b8aa; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+    html.light .lab-modal-close { background: rgba(0,0,0,0.6); }
+    html.light .poster { border-color: #c0b8aa; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    html.light .poster-image-wrap { border-color: #c0b8aa; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    html.light .exh-stamp { color: #b8332a; border-color: #b8332a; box-shadow: inset 0 0 0 3.5px transparent, inset 0 0 0 5px #b8332a; }
+    html.light .name-card { border-color: #c0b8aa; background: rgba(255,255,255,0.6); }
+    html.light .artist-card { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    html.light .artist-modal-content,
+    html.light .group-modal-content { box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+    html.light .core-card { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    html.light .docs { background: var(--card-bg); }
+    html.light .docs-bg-char { color: rgba(0,0,0,0.03); }
+    html.light .fw-title { color: var(--fg); }
+    html.light .quote-text { color: rgba(26,26,26,0.7); }
+    html.light .hero-desc { color: rgba(26,26,26,0.6); }
+    html.light .about-text { color: rgba(26,26,26,0.7); }
+    /* Docs section light mode: all hardcoded rgba(232,...) → dark equivalents */
+    html.light .fw-p { color: rgba(26,26,26,0.75); }
+    html.light .fw-opening .fw-open-char { color: rgba(26,26,26,0.8); }
+    html.light .fw-seomund { color: rgba(26,26,26,0.25); }
+    html.light .fw-subtitle { color: rgba(26,26,26,0.3); }
+    html.light .fw-label { color: rgba(26,26,26,0.55); }
+    html.light .fw-credit { color: rgba(26,26,26,0.15); }
+    html.light .fw-closing-last { color: rgba(26,26,26,0.85); }
+    html.light .fw-def-item { color: rgba(26,26,26,0.7); }
+    html.light .fw-def-experiment { color: rgba(26,26,26,0.85); }
+    html.light .fw-def-experiment-sub { color: rgba(26,26,26,0.6); }
+    html.light .docs-tab-btn { color: rgba(26,26,26,0.3); }
+    html.light .docs-tab-btn:hover { color: rgba(26,26,26,0.5); }
+    html.light .docs-tab-btn.active { color: rgba(26,26,26,0.75); }
+    html.light .fw-topline { background: rgba(26,26,26,0.1); }
+    html.light .fw-diamond { border-color: rgba(26,26,26,0.1); }
+    /* Guide tab light mode */
+    html.light .guide-title { color: var(--fg); }
+    html.light .guide-subtitle { color: rgba(26,26,26,0.2); }
+    html.light .guide-rule-num { color: rgba(26,26,26,0.15); }
+    html.light .guide-rule-title { color: rgba(26,26,26,0.82); }
+    html.light .guide-rule-text { color: rgba(26,26,26,0.65); }
+    html.light .guide-closing { color: rgba(26,26,26,0.5); }
+    html.light .guide-credit { color: rgba(26,26,26,0.15); }
+    html.light .guide-rule { border-color: rgba(26,26,26,0.08); }
+    /* CTA & scroll hint light mode */
+    html.light .scroll-hint-text { color: var(--muted); }
+    html.light .cta-desc { color: rgba(26,26,26,0.6); }
+    /* Staff modal light mode */
+    html.light .group-modal-body p { color: rgba(26,26,26,0.7); }
+    html.light .group-modal-header { border-color: rgba(26,26,26,0.1); }
+    html.light .group-modal-members { border-color: rgba(26,26,26,0.1); }
+    html.light .staff-greeting { color: var(--fg); }
 
     html { scroll-behavior: auto; }
 
@@ -2276,7 +2329,7 @@
           <span class="exh-detail-label">Date</span>
           <div>
             <p class="exh-detail-value">2026.07.28 — 08.02</p>
-            <p class="exh-detail-sub">7월 28일(월) — 8월 2일(토)</p>
+            <p class="exh-detail-sub">7월 28일(월) — 8월 2일(일)</p>
           </div>
         </div>
         <div class="exh-detail" data-exh-row="2">

@@ -2244,9 +2244,44 @@
         text-align: center; gap: 1rem;
       }
       .footer-right { text-align: center; }
+
+      /* === 모바일 성능 최적화 === */
+      /* grain 효과 비활성화 */
+      .grain { display: none; }
+      /* backdrop-filter 제거 (모바일 GPU 부담 감소) */
+      .name-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .core-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      nav { backdrop-filter: none; -webkit-backdrop-filter: none; mix-blend-mode: normal; background: rgba(6,6,6,0.92); }
+      html.light nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255,255,255,0.95); }
+      html.light nav.compact { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255,255,255,0.97); }
+      /* hover 효과 간소화 */
+      .core-card:hover { transform: none; box-shadow: none; }
+      .artist-card:hover { transform: none; box-shadow: none; }
+      /* 카드 shimmer 효과 비활성화 */
+      .core-card-visual::before { display: none; }
     }
     @media (max-width: 480px) {
       .artist-card { width: 200px; }
+    }
+
+    /* 오프스크린 섹션 렌더링 최적화 */
+    .about, .core-team, .cta, .lab-reports {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 800px;
+    }
+
+    /* will-change 힌트 */
+    .hero-content { will-change: transform, opacity; }
+    #bgCanvas { will-change: contents; }
+
+    /* 저전력 모드 대응 */
+    @media (prefers-reduced-motion: reduce) {
+      .grain { display: none; }
+      .marquee-track { animation: none; }
+      .scroll-line { animation: none; }
+      .hero-title .dash { animation: none; }
+      .core-card-crown { animation: none; }
+      #bgCanvas { display: none; }
     }
   </style>
 </head>
@@ -2392,7 +2427,7 @@
       </div>
       <div class="exhibition-poster">
         <div class="poster-image-wrap">
-          <img src="assets/poster.jpeg" alt="모의실험 전시 포스터" class="poster-img">
+          <img src="assets/poster.jpeg" alt="모의실험 전시 포스터" class="poster-img" loading="lazy" decoding="async">
         </div>
         <!-- 초대장 (주석 처리)
         <div class="poster" id="exhPoster">
@@ -2668,7 +2703,7 @@
           <div class="core-card-visual" style="cursor:pointer" onclick="openStaffModal('director')">
             <span class="core-card-crown">&#x1F451;</span>
             <span class="core-card-role-badge director-badge">Director</span>
-            <img src="assets/profile/director.png" alt="고코더" class="core-card-img">
+            <img src="assets/profile/director.png" alt="고코더" class="core-card-img" loading="lazy" decoding="async">
           </div>
           <div class="core-card-body">
             <p class="core-card-role">Exhibition Director</p>
@@ -2681,7 +2716,7 @@
           <div class="core-card-visual" style="cursor:pointer" onclick="openStaffModal('lead')">
             <span class="core-card-crown">&#x1F3A8;</span>
             <span class="core-card-role-badge">Lead Artist</span>
-            <img src="assets/profile/leadartist.JPG" alt="김가람" class="core-card-img">
+            <img src="assets/profile/leadartist.JPG" alt="김가람" class="core-card-img" loading="lazy" decoding="async">
           </div>
           <div class="core-card-body">
             <p class="core-card-role">Lead Artist</p>
@@ -2693,7 +2728,7 @@
           <div class="core-card-visual" style="cursor:pointer" onclick="openStaffModal('manager')">
             <span class="core-card-crown">&#x1F680;</span>
             <span class="core-card-role-badge">Manager</span>
-            <img src="assets/profile/manager.jpg" alt="김지나" class="core-card-img">
+            <img src="assets/profile/manager.jpg" alt="김지나" class="core-card-img" loading="lazy" decoding="async">
           </div>
           <div class="core-card-body">
             <p class="core-card-role">General Manager &amp; Marketing</p>
@@ -3009,6 +3044,9 @@
   const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
   let W, H, mouseCanvas = { x: -9999, y: -9999 };
+  const isMobile = window.innerWidth <= 768;
+  let canvasRunning = true;
+  let animFrameId = null;
 
   function resize() {
     W = canvas.width = window.innerWidth;
@@ -3017,14 +3055,27 @@
   resize();
   window.addEventListener('resize', resize);
 
-  document.addEventListener('mousemove', e => {
-    mouseCanvas.x = e.clientX;
-    mouseCanvas.y = e.clientY;
+  // Page Visibility API: 탭 비활성시 캔버스 멈추기
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      canvasRunning = false;
+      if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
+    } else {
+      canvasRunning = true;
+      if (!animFrameId) animFrameId = requestAnimationFrame(frame);
+    }
   });
-  document.addEventListener('mouseleave', () => {
-    mouseCanvas.x = -9999;
-    mouseCanvas.y = -9999;
-  });
+
+  if (!isMobile) {
+    document.addEventListener('mousemove', e => {
+      mouseCanvas.x = e.clientX;
+      mouseCanvas.y = e.clientY;
+    });
+    document.addEventListener('mouseleave', () => {
+      mouseCanvas.x = -9999;
+      mouseCanvas.y = -9999;
+    });
+  }
 
   class Dot {
     constructor() {
@@ -3044,13 +3095,15 @@
       if (this.y < -30) this.y = H + 30;
       if (this.y > H + 30) this.y = -30;
 
-      const dx = this.x - mouseCanvas.x;
-      const dy = this.y - mouseCanvas.y;
-      const d = Math.sqrt(dx * dx + dy * dy);
-      if (d < 180) {
-        const f = (180 - d) / 180;
-        this.x += dx * f * 0.015;
-        this.y += dy * f * 0.015;
+      if (!isMobile) {
+        const dx = this.x - mouseCanvas.x;
+        const dy = this.y - mouseCanvas.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 180) {
+          const f = (180 - d) / 180;
+          this.x += dx * f * 0.015;
+          this.y += dy * f * 0.015;
+        }
       }
       this.opacity = this.baseOpacity * (0.5 + 0.5 * Math.sin(t * 0.001 + this.phase));
     }
@@ -3062,11 +3115,15 @@
     }
   }
 
-  const dots = Array.from({ length: Math.min(100, Math.floor(W * H / 12000)) }, () => new Dot());
-  const LINK_DIST = 130;
+  // 모바일: 파티클 수 대폭 감소 (최대 25개), 데스크톱: 기존대로
+  const dotCount = isMobile
+    ? Math.min(25, Math.floor(W * H / 40000))
+    : Math.min(100, Math.floor(W * H / 12000));
+  const dots = Array.from({ length: dotCount }, () => new Dot());
+  const LINK_DIST = isMobile ? 80 : 130;
   const MOUSE_LINK = 220;
 
-  // Floating geometric rings
+  // 모바일에서는 rings, streaks 비활성화
   class Ring {
     constructor() {
       this.x = Math.random() * W;
@@ -3109,9 +3166,8 @@
       ctx.restore();
     }
   }
-  const rings = Array.from({ length: 8 }, () => new Ring());
+  const rings = isMobile ? [] : Array.from({ length: 8 }, () => new Ring());
 
-  // Shooting streaks
   class Streak {
     constructor() { this.reset(); }
     reset() {
@@ -3151,20 +3207,30 @@
       ctx.stroke();
     }
   }
-  const streaks = Array.from({ length: 4 }, () => new Streak());
+  const streaks = isMobile ? [] : Array.from({ length: 4 }, () => new Streak());
 
+  // 모바일에서는 프레임 스킵 (매 2프레임마다 렌더)
   let time = 0;
+  let frameSkip = 0;
   function frame() {
+    if (!canvasRunning) return;
     time++;
+    animFrameId = requestAnimationFrame(frame);
+
+    if (isMobile) {
+      frameSkip++;
+      if (frameSkip % 2 !== 0) return;
+    }
+
     ctx.clearRect(0, 0, W, H);
 
     rings.forEach(r => { r.update(); r.draw(); });
-
     dots.forEach(d => { d.update(time); d.draw(); });
 
-    // Connections
-    for (let i = 0; i < dots.length; i++) {
-      for (let j = i + 1; j < dots.length; j++) {
+    // Connections - 모바일에서는 연결선 수 제한
+    const connLimit = isMobile ? Math.min(dots.length, 15) : dots.length;
+    for (let i = 0; i < connLimit; i++) {
+      for (let j = i + 1; j < connLimit; j++) {
         const dx = dots[i].x - dots[j].x;
         const dy = dots[i].y - dots[j].y;
         const dist = dx * dx + dy * dy;
@@ -3178,31 +3244,31 @@
           ctx.stroke();
         }
       }
-      // Mouse connection
-      const mx = dots[i].x - mouseCanvas.x;
-      const my = dots[i].y - mouseCanvas.y;
-      const md = mx * mx + my * my;
-      if (md < MOUSE_LINK * MOUSE_LINK) {
-        const o = (1 - Math.sqrt(md) / MOUSE_LINK) * 0.25;
-        ctx.beginPath();
-        ctx.moveTo(dots[i].x, dots[i].y);
-        ctx.lineTo(mouseCanvas.x, mouseCanvas.y);
-        ctx.strokeStyle = `rgba(200,169,110,${o})`;
-        ctx.lineWidth = 0.6;
-        ctx.stroke();
+      if (!isMobile) {
+        const mx = dots[i].x - mouseCanvas.x;
+        const my = dots[i].y - mouseCanvas.y;
+        const md = mx * mx + my * my;
+        if (md < MOUSE_LINK * MOUSE_LINK) {
+          const o = (1 - Math.sqrt(md) / MOUSE_LINK) * 0.25;
+          ctx.beginPath();
+          ctx.moveTo(dots[i].x, dots[i].y);
+          ctx.lineTo(mouseCanvas.x, mouseCanvas.y);
+          ctx.strokeStyle = `rgba(200,169,110,${o})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
       }
     }
 
     streaks.forEach(s => { s.update(); s.draw(); });
-    requestAnimationFrame(frame);
   }
-  frame();
+  animFrameId = requestAnimationFrame(frame);
 
   // ===== NAV =====
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('compact', window.scrollY > 80);
-  });
+  }, { passive: true });
 
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
@@ -3315,7 +3381,7 @@
     card.className = 'lab-card reveal';
     card.innerHTML = `
       <div class="lab-card-img-wrap">
-        <img class="lab-card-img" src="${d.art}" alt="${d.name}" loading="lazy">
+        <img class="lab-card-img" src="${d.art}" alt="${d.name}" loading="lazy" decoding="async">
         <div class="lab-card-overlay"></div>
         <span class="lab-card-badge">Report</span>
         <div class="lab-card-info">
@@ -3391,7 +3457,7 @@
     card.style.setProperty('--ac', a.color);
     card.innerHTML = `
       <div class="artist-card-visual">
-        <img class="artist-card-img" src="${a.img}" alt="${a.name}" loading="lazy">
+        <img class="artist-card-img" src="${a.img}" alt="${a.name}" loading="lazy" decoding="async">
         <span class="artist-num-bg">${a.num}</span>
       </div>
       <div class="artist-card-info">
@@ -3572,22 +3638,29 @@
   const heroContent = document.querySelector('.hero-content');
   const heroSection = document.querySelector('.hero');
   const docsSection = document.querySelector('.docs');
+  let parallaxTicking = false;
   window.addEventListener('scroll', () => {
-    const s = window.scrollY;
-    const h = heroSection.offsetHeight;
-    if (s < h) {
-      const p = s / h;
-      heroContent.style.opacity = 1 - p * 1.8;
-      heroContent.style.transform = `translateY(${s * 0.35}px) scale(${1 - p * 0.05})`;
-    }
-    // docs background character parallax
-    const docsRect = docsSection.getBoundingClientRect();
-    if (docsRect.top < window.innerHeight && docsRect.bottom > 0) {
-      const progress = (window.innerHeight - docsRect.top) / (window.innerHeight + docsRect.height);
-      docBgC1.style.transform = `translateY(${progress * -80}px) rotate(${progress * 3}deg)`;
-      docBgC2.style.transform = `translateY(${progress * -50}px) rotate(${progress * -2}deg)`;
-    }
-  });
+    if (parallaxTicking) return;
+    parallaxTicking = true;
+    requestAnimationFrame(() => {
+      const s = window.scrollY;
+      const h = heroSection.offsetHeight;
+      if (s < h) {
+        const p = s / h;
+        heroContent.style.opacity = 1 - p * 1.8;
+        heroContent.style.transform = `translateY(${s * 0.35}px) scale(${1 - p * 0.05})`;
+      }
+      if (!isMobile) {
+        const docsRect = docsSection.getBoundingClientRect();
+        if (docsRect.top < window.innerHeight && docsRect.bottom > 0) {
+          const progress = (window.innerHeight - docsRect.top) / (window.innerHeight + docsRect.height);
+          docBgC1.style.transform = `translateY(${progress * -80}px) rotate(${progress * 3}deg)`;
+          docBgC2.style.transform = `translateY(${progress * -50}px) rotate(${progress * -2}deg)`;
+        }
+      }
+      parallaxTicking = false;
+    });
+  }, { passive: true });
 
   // ===== LIGHTBOX =====
   const lightbox = document.getElementById('lightbox');

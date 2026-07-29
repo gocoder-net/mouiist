@@ -458,6 +458,15 @@
       border-color: var(--accent);
       transform: scale(1.1);
     }
+    .nav-actions {
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .lang-toggle {
+      font-family: var(--font-en);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--fg);
+    }
     .nav-toggle {
       display: none; flex-direction: column; gap: 6px;
       background: none; border: none; padding: 5px;
@@ -2388,12 +2397,12 @@
   <div class="welcome-overlay" id="welcomeOverlay">
     <div class="welcome-content">
       <p class="welcome-label">Welcome to the Exhibition</p>
-      <h2 class="welcome-title">전시장에 오신 것을<br>환영합니다</h2>
-      <p class="welcome-desc">모의실험(模擬實驗) — MOUI-IST 첫 번째 단체전<br>9인의 작가가 펼치는 실험의 현장입니다.</p>
-      <button class="welcome-btn" id="welcomeCloseBtn">입장하기</button>
+      <h2 class="welcome-title" data-i18n="welcomeTitle">전시장에 오신 것을<br>환영합니다</h2>
+      <p class="welcome-desc" data-i18n="welcomeDesc">모의실험(模擬實驗) — MOUI-IST 첫 번째 단체전<br>9인의 작가가 펼치는 실험의 현장입니다.</p>
+      <button class="welcome-btn" id="welcomeCloseBtn" data-i18n="welcomeBtn">입장하기</button>
     </div>
   </div>
-  <div class="welcome-toast" id="welcomeToast">전시 서문부터 확인해볼까요?</div>
+  <div class="welcome-toast" id="welcomeToast" data-i18n="welcomeToast">전시 서문부터 확인해볼까요?</div>
 
   <!-- Custom Cursor -->
   <div class="cursor" id="cursor"></div>
@@ -2415,10 +2424,13 @@
       <li><a href="#about" onclick="closeNav()">About</a></li>
       <li><a href="#contact" onclick="closeNav()">Connect</a></li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-actions">
+      <button class="theme-toggle lang-toggle" id="langToggle" aria-label="Language">EN</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
   <!-- Hero -->
@@ -2431,7 +2443,7 @@
       <div class="hero-kr-wrap">
         <p class="hero-kr" id="heroKr">모 의 스 트</p>
       </div>
-      <p class="hero-desc" id="heroDesc">
+      <p class="hero-desc" id="heroDesc" data-i18n="heroDesc">
         작품과 창작을 <em>모의</em>하는 자들의 집단
       </p>
     </div>
@@ -2464,7 +2476,7 @@
   <!-- Quote -->
   <section class="quote-section">
     <div class="reveal">
-      <p class="quote-text">
+      <p class="quote-text" data-i18n="quoteText">
         "<em>모의</em>를<br>시작해 볼까?"
       </p>
       <p class="quote-attr">— MOUI-IST</p>
@@ -2476,7 +2488,7 @@
     <div class="exhibition-inner">
       <div class="exhibition-info">
         <p class="exh-label">Exhibition</p>
-        <h2 class="exh-title">2026 상반기<br>단체전</h2>
+        <h2 class="exh-title" data-i18n="exhTitle">2026 상반기<br>단체전</h2>
         <div class="exh-dday" id="exhDday">
           <span class="exh-dday-label">OPENING IN</span>
           <span class="exh-dday-number" id="exhDdayNum"></span>
@@ -2485,22 +2497,22 @@
         <div class="exh-detail" data-exh-row="0">
           <span class="exh-detail-label">Title</span>
           <div>
-            <p class="exh-detail-value">모의실험(模擬實驗)</p>
-            <p class="exh-detail-sub">MOUI-IST 첫 번째 단체전</p>
+            <p class="exh-detail-value" data-i18n="exhTitleValue">모의실험(模擬實驗)</p>
+            <p class="exh-detail-sub" data-i18n="exhTitleSub">MOUI-IST 첫 번째 단체전</p>
           </div>
         </div>
         <div class="exh-detail" data-exh-row="1">
           <span class="exh-detail-label">Date</span>
           <div>
             <p class="exh-detail-value">2026.07.28 — 08.02</p>
-            <p class="exh-detail-sub">7월 28일(월) — 8월 2일(일)</p>
+            <p class="exh-detail-sub" data-i18n="exhDateSub">7월 28일(월) — 8월 2일(일)</p>
           </div>
         </div>
         <div class="exh-detail" data-exh-row="2">
           <span class="exh-detail-label">Hours</span>
           <div>
             <p class="exh-detail-value">11:00 — 18:00</p>
-            <p class="exh-detail-sub">매일 낮 11시 — 저녁 6시</p>
+            <p class="exh-detail-sub" data-i18n="exhHoursSub">매일 낮 11시 — 저녁 6시</p>
           </div>
         </div>
         <div class="exh-detail" data-exh-row="3">
@@ -2509,8 +2521,8 @@
             <a class="exh-venue-link" href="https://naver.me/xMj3pOhd" target="_blank" rel="noopener noreferrer">
               <span class="exh-pin">&#x1F4CD;</span>
               <span>
-                <p class="exh-detail-value">사이아트센터 FLUX</p>
-                <p class="exh-detail-sub">안국역 3분 거리</p>
+                <p class="exh-detail-value" data-i18n="exhVenueValue">사이아트센터 FLUX</p>
+                <p class="exh-detail-sub" data-i18n="exhVenueSub">안국역 3분 거리</p>
               </span>
               <span class="exh-arrow">&#x2197;</span>
             </a>
@@ -2520,7 +2532,7 @@
           <span class="exh-detail-label">Artists</span>
           <div>
             <p class="exh-detail-value">9 Artists</p>
-            <p class="exh-detail-sub">MOUI-IST 소속 9인의 창작자</p>
+            <p class="exh-detail-sub" data-i18n="exhArtistsSub">MOUI-IST 소속 9인의 창작자</p>
           </div>
         </div>
       </div>
@@ -2566,32 +2578,32 @@
     <span class="docs-bg-char c2" id="docsBgC2">議</span>
     <div class="docs-wrap">
       <div class="docs-tab-bar">
-        <button class="docs-tab-btn active" data-doc-tab="foreword">전시 서문</button>
-        <button class="docs-tab-btn" data-doc-tab="guide">작가 지침서</button>
+        <button class="docs-tab-btn active" data-doc-tab="foreword" data-i18n="tabForeword">전시 서문</button>
+        <button class="docs-tab-btn" data-doc-tab="guide" data-i18n="tabGuide">작가 지침서</button>
       </div>
 
       <!-- 전시 서문 -->
       <div class="docs-panel active" id="docForeword">
         <div class="fw-topline"></div>
         <div class="fw-label">Group Exhibition 2026</div>
-        <h2 class="fw-title" id="fwTitle"><div class="fw-flash"></div><span class="fw-title-text">모의실험<br/><span class="fw-title-hanja">(模擬實驗)</span></span></h2>
+        <h2 class="fw-title" id="fwTitle"><div class="fw-flash"></div><span class="fw-title-text" data-i18n="fwTitleText">모의실험<br/><span class="fw-title-hanja">(模擬實驗)</span></span></h2>
         <div class="fw-subtitle">MOUI-IST 1st Group Exhibition</div>
         <div class="fw-divider"></div>
-        <div class="fw-seomund">전 시 서 문</div>
+        <div class="fw-seomund" data-i18n="fwSeomun">전 시 서 문</div>
 
         <div class="fw-opening-wrap" id="fwOpeningWrap">
-          <span class="fw-opening"><span class="fw-open-char fw-hanja">모</span><span class="fw-open-char fw-hanja">의</span><span class="fw-open-char fw-hanja">(</span><span class="fw-open-char fw-hanja">謀</span><span class="fw-open-char fw-hanja">議</span><span class="fw-open-char fw-hanja">)</span><span class="fw-open-char">.</span></span>
+          <span class="fw-opening" data-i18n="fwOpening"><span class="fw-open-char fw-hanja">모</span><span class="fw-open-char fw-hanja">의</span><span class="fw-open-char fw-hanja">(</span><span class="fw-open-char fw-hanja">謀</span><span class="fw-open-char fw-hanja">議</span><span class="fw-open-char fw-hanja">)</span><span class="fw-open-char">.</span></span>
         </div>
 
         <div class="fw-reveal">
-          <p class="fw-p">이 두 글자에는 위험한 에너지가 있다.
+          <p class="fw-p" data-i18n="fwP1">이 두 글자에는 위험한 에너지가 있다.
 누군가와 머리를 맞대고, 아직 세상에 없는 것을 꾀하는 일.
 그것은 언제나 은밀하고, 뜨겁고, 약간은 불온하다.</p>
           <div class="fw-diamond"></div>
         </div>
 
         <div class="fw-reveal">
-          <p class="fw-p">우리는 그 단어를 이름으로 택했다.
+          <p class="fw-p" data-i18n="fwP2">우리는 그 단어를 이름으로 택했다.
 '작가모의'라는 모임에서 출발한 아홉 명의 작가는
 각자의 작업실에서 저마다의 모의를 거듭해왔다.
 캔버스 위에서, 렌즈 뒤에서, 컴퓨터 앞에서
@@ -2600,7 +2612,7 @@
         </div>
 
         <div class="fw-reveal">
-          <div class="fw-defs">
+          <div class="fw-defs" data-i18n="fwDefs">
             <div class="fw-def-item"><span class="fw-def-key">모의(謀議)</span> 함께 꾀하다.</div>
             <div class="fw-def-item"><span class="fw-def-key">모의(模擬)</span> 세계를 본뜨고, 시험하다.</div>
             <div class="fw-def-item"><span class="fw-def-key">모의(某意)</span> 이름 붙일 수 없는 어떤 뜻.</div>
@@ -2611,7 +2623,7 @@
         </div>
 
         <div class="fw-reveal">
-          <p class="fw-p">이 전시는 하나의 모의실험이다.
+          <p class="fw-p" data-i18n="fwP3">이 전시는 하나의 모의실험이다.
 아홉 명의 작가가 각자의 가설을 세우고,
 각자의 조건 안에서 실험하고,
 그 결과를 이 공간에 펼쳐 놓았다.
@@ -2622,11 +2634,11 @@
 
         <div class="fw-reveal">
           <div class="fw-closing">
-            <p class="fw-p">이 전시장에 들어서는 순간,
+            <p class="fw-p" data-i18n="fwP4">이 전시장에 들어서는 순간,
 당신은 관람자가 아니라 관찰자가 된다.
 아홉 개의 실험을 목격하고,
 당신만의 가설을 세우게 될 것이다.</p>
-            <p class="fw-closing-last">실험은 계속된다.<br>모의는 이미 시작되었다.</p>
+            <p class="fw-closing-last" data-i18n="fwClosing">실험은 계속된다.<br>모의는 이미 시작되었다.</p>
           </div>
         </div>
 
@@ -2637,12 +2649,12 @@
       <div class="docs-panel" id="docGuide">
         <div class="gd-header">
           <div class="gd-header-sub">MOUI-IST Internal Document</div>
-          <h2 class="gd-header-title">작가 실험 지침서</h2>
+          <h2 class="gd-header-title" data-i18n="gdTitle">작가 실험 지침서</h2>
           <div class="gd-header-en">Artist Experiment Protocol</div>
         </div>
 
         <div class="reveal">
-          <div class="gd-intro">이 문서는 MOUI-IST 첫 번째 단체전에 참여하는
+          <div class="gd-intro" data-i18n="gdIntro">이 문서는 MOUI-IST 첫 번째 단체전에 참여하는
 작가를 위한 실험 지침서입니다.
 
 전시의 프레임은 '모의실험'입니다.
@@ -2656,50 +2668,50 @@
         <div class="reveal">
           <div class="gd-block">
             <div class="gd-number">01</div>
-            <div class="gd-block-label">가설 Hypothesis</div>
-            <div class="gd-block-body">당신이 이 작업을 통해
+            <div class="gd-block-label" data-i18n="gdLabel1">가설 Hypothesis</div>
+            <div class="gd-block-body" data-i18n="gdBody1">당신이 이 작업을 통해
 시험하고자 하는 것은 무엇인가.
 
 아직 답을 모르는 질문,
 증명되지 않은 직감,
 혹은 세상에 던지고 싶은 하나의 명제.</div>
-            <div class="gd-example">예시: "사람은 정지된 이미지 안에서도 시간의 흐름을 느낄 수 있는가"</div>
+            <div class="gd-example" data-i18n="gdEx1">예시: "사람은 정지된 이미지 안에서도 시간의 흐름을 느낄 수 있는가"</div>
           </div>
         </div>
 
         <div class="reveal">
           <div class="gd-block">
             <div class="gd-number">02</div>
-            <div class="gd-block-label">실험 조건 Conditions</div>
-            <div class="gd-block-body">어떤 매체, 어떤 방법,
+            <div class="gd-block-label" data-i18n="gdLabel2">실험 조건 Conditions</div>
+            <div class="gd-block-body" data-i18n="gdBody2">어떤 매체, 어떤 방법,
 어떤 제약 안에서 실험하는가.
 
 붓인가 렌즈인가, 빛인가 어둠인가.
 스스로 설정한 규칙이
 실험의 윤곽을 만든다.</div>
-            <div class="gd-example">예시: "유화, 80호 캔버스 1점, 작업 기간 4주, 따뜻한 색 배제"</div>
+            <div class="gd-example" data-i18n="gdEx2">예시: "유화, 80호 캔버스 1점, 작업 기간 4주, 따뜻한 색 배제"</div>
           </div>
         </div>
 
         <div class="reveal">
           <div class="gd-block">
             <div class="gd-number">03</div>
-            <div class="gd-block-label">관찰 Observation</div>
-            <div class="gd-block-body">작업하는 동안
+            <div class="gd-block-label" data-i18n="gdLabel3">관찰 Observation</div>
+            <div class="gd-block-body" data-i18n="gdBody3">작업하는 동안
 당신은 무엇을 발견했는가.
 
 예상과 다르게 흘러간 순간,
 통제할 수 없었던 변수,
 우연히 마주친 균열과 아름다움.</div>
-            <div class="gd-example">예시: "차가운 색만 쓰려 했으나, 3주차에 무의식적으로 붉은 선이 들어갔다"</div>
+            <div class="gd-example" data-i18n="gdEx3">예시: "차가운 색만 쓰려 했으나, 3주차에 무의식적으로 붉은 선이 들어갔다"</div>
           </div>
         </div>
 
         <div class="reveal">
           <div class="gd-block">
             <div class="gd-number">04</div>
-            <div class="gd-block-label">결과 Result</div>
-            <div class="gd-block-body">작품, 그 자체가 실험의 결과다.
+            <div class="gd-block-label" data-i18n="gdLabel4">결과 Result</div>
+            <div class="gd-block-body" data-i18n="gdBody4">작품, 그 자체가 실험의 결과다.
 
 성공도 실패도 아닌,
 아직 해석이 끝나지 않은
@@ -2708,14 +2720,14 @@
 완벽한 실험은 없다.
 바로 그것이 예술이고,
 바로 그것이 모의실험의 본질이다.</div>
-            <div class="gd-example">예시: "가설은 절반만 증명되었다. 시간은 느껴졌지만, 내가 의도한 방향과는 달랐다."</div>
+            <div class="gd-example" data-i18n="gdEx4">예시: "가설은 절반만 증명되었다. 시간은 느껴졌지만, 내가 의도한 방향과는 달랐다."</div>
           </div>
         </div>
 
         <div class="reveal">
           <div class="gd-format">
-            <div class="gd-format-label">제출 형식 Submission Format</div>
-            <div class="gd-format-body">작가 노트 제출 형식
+            <div class="gd-format-label" data-i18n="gdFormatLabel">제출 형식 Submission Format</div>
+            <div class="gd-format-body" data-i18n="gdFormatBody">작가 노트 제출 형식
 
 제목: 실험 보고서 — [작가명]
 가설:
@@ -2736,8 +2748,8 @@
     <div class="lab-inner">
       <div class="lab-header reveal">
         <p class="lab-label">Experiment Reports</p>
-        <h2 class="lab-title">실험보고서</h2>
-        <p class="lab-subtitle">9인의 모의자가 제출한 실험 기록 — 작품을 눌러 확인하세요</p>
+        <h2 class="lab-title" data-i18n="labTitle">실험보고서</h2>
+        <p class="lab-subtitle" data-i18n="labSubtitle">9인의 모의자가 제출한 실험 기록 — 작품을 눌러 확인하세요</p>
       </div>
       <div class="lab-grid" id="labGrid"></div>
     </div>
@@ -2769,7 +2781,7 @@
       <div class="artists-header-left reveal">
         <p class="about-label">The Collective</p>
         <div class="artists-count"><strong>09</strong></div>
-        <p class="artists-subtitle">명의 모의자들이 새로운 이야기를 시작합니다</p>
+        <p class="artists-subtitle" data-i18n="artistsSubtitle">명의 모의자들이 새로운 이야기를 시작합니다</p>
       </div>
     </div>
     <div class="scroll-hint reveal">
@@ -2806,8 +2818,8 @@
           </div>
           <div class="core-card-body">
             <p class="core-card-role">Exhibition Director</p>
-            <p class="core-card-name">고코더 (이진현)</p>
-            <p class="core-card-desc">전시의 방향성과 전체 기획을 총괄합니다.<br>모의의 큰 그림을 그리는 사람.</p>
+            <p class="core-card-name" data-i18n="staffName1">고코더 (이진현)</p>
+            <p class="core-card-desc" data-i18n="staffDesc1">전시의 방향성과 전체 기획을 총괄합니다.<br>모의의 큰 그림을 그리는 사람.</p>
             <a href="http://brunch.co.kr/@gocoder" target="_blank" rel="noopener" class="core-card-link"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M3 3h18v18H3V3zm16.5 16.5v-15h-15v15h15zM6.5 8.5h5v1h-5v-1zm0 3h11v1h-11v-1zm0 3h11v1h-11v-1z"/></svg> 브런치</a>
           </div>
         </div>
@@ -2819,8 +2831,8 @@
           </div>
           <div class="core-card-body">
             <p class="core-card-role">Lead Artist</p>
-            <p class="core-card-name">김가람</p>
-            <p class="core-card-desc">작가진을 대표하며 창작의 중심을 잡습니다.<br>모의의 첫 번째 목소리.</p>
+            <p class="core-card-name" data-i18n="staffName2">김가람</p>
+            <p class="core-card-desc" data-i18n="staffDesc2">작가진을 대표하며 창작의 중심을 잡습니다.<br>모의의 첫 번째 목소리.</p>
           </div>
         </div>
         <div class="core-card reveal reveal-delay-2">
@@ -2831,8 +2843,8 @@
           </div>
           <div class="core-card-body">
             <p class="core-card-role">General Manager &amp; Marketing</p>
-            <p class="core-card-name">김지나</p>
-            <p class="core-card-desc">운영과 마케팅을 책임지며 모의를 세상에 알립니다.<br>모의의 전략가.</p>
+            <p class="core-card-name" data-i18n="staffName3">김지나</p>
+            <p class="core-card-desc" data-i18n="staffDesc3">운영과 마케팅을 책임지며 모의를 세상에 알립니다.<br>모의의 전략가.</p>
           </div>
         </div>
       </div>
@@ -2844,10 +2856,10 @@
     <div class="about-inner">
       <div class="about-left">
         <p class="about-label reveal">About</p>
-        <h2 class="about-heading reveal reveal-delay-1">
+        <h2 class="about-heading reveal reveal-delay-1" data-i18n="aboutHeading">
           우리는 창작을<br><span>모의</span>합니다
         </h2>
-        <p class="about-text reveal reveal-delay-2">
+        <p class="about-text reveal reveal-delay-2" data-i18n="aboutText">
           <strong>MOUI-IST</strong>는 모임 '작가모의'에서 출발했습니다.<br><br>
           '모의(謀議)'라는 단어 속에 담긴 치밀함과 열정,
           그리고 함께 도모한다는 연대의 의미를 품고
@@ -2863,19 +2875,19 @@
           <div class="name-row">
             <span class="name-key">MOUI</span>
             <div>
-              <div class="name-val">모의(謀議) — 일을 꾀하다, 함께 도모하다.<br>작가모의의 핵심 정신을 계승합니다.</div>
+              <div class="name-val" data-i18n="nameVal1">모의(謀議) — 일을 꾀하다, 함께 도모하다.<br>작가모의의 핵심 정신을 계승합니다.</div>
             </div>
           </div>
           <div class="name-row">
             <span class="name-key">-IST</span>
             <div>
-              <div class="name-val">전문가, 실천하는 자를 뜻하는 접미사.<br>창작을 말이 아닌 행동으로 보여주는 사람들.</div>
+              <div class="name-val" data-i18n="nameVal2">전문가, 실천하는 자를 뜻하는 접미사.<br>창작을 말이 아닌 행동으로 보여주는 사람들.</div>
             </div>
           </div>
           <div class="name-row">
             <span class="name-key" style="font-size:1rem;">MOUI-IST</span>
             <div>
-              <div class="name-val">창작을 모의하는 자들의 집단.<br>모임의 뿌리를 지키며 새로운 서사를 도모합니다.</div>
+              <div class="name-val" data-i18n="nameVal3">창작을 모의하는 자들의 집단.<br>모임의 뿌리를 지키며 새로운 서사를 도모합니다.</div>
             </div>
           </div>
         </div>
@@ -2887,8 +2899,8 @@
   <section class="cta" id="contact">
     <div class="reveal">
       <p class="cta-label">Follow Us</p>
-      <h2 class="cta-heading">모의에<br>함께하세요</h2>
-      <p class="cta-desc">
+      <h2 class="cta-heading" data-i18n="ctaHeading">모의에<br>함께하세요</h2>
+      <p class="cta-desc" data-i18n="ctaDesc">
         MOUI-IST의 여정을 함께 지켜봐 주세요.<br>
         새로운 소식을 가장 먼저 전해드립니다.
       </p>
@@ -3412,8 +3424,243 @@
     });
   });
 
+  // ===== I18N (KO/EN) =====
+  let curLang = localStorage.getItem('mouiist_lang') || 'ko';
+
+  const I18N_EN = {
+    welcomeTitle: `Welcome to<br>the Exhibition`,
+    welcomeDesc: `Simulation (模擬實驗) — MOUI-IST's first group exhibition<br>A live experiment unfolded by nine artists.`,
+    welcomeBtn: `Enter`,
+    welcomeToast: `Shall we start with the foreword?`,
+    heroDesc: `
+        A collective of those who <em>conspire</em> in works and creation
+      `,
+    quoteText: `
+        "Shall we begin<br>the <em>conspiracy</em>?"
+      `,
+    exhTitle: `2026 First Half<br>Group Exhibition`,
+    exhTitleValue: `Simulation (模擬實驗)`,
+    exhTitleSub: `MOUI-IST's First Group Exhibition`,
+    exhDateSub: `Mon, Jul 28 — Sun, Aug 2`,
+    exhHoursSub: `Daily 11 AM — 6 PM`,
+    exhVenueValue: `Sai Art Center FLUX`,
+    exhVenueSub: `3 min from Anguk Station`,
+    exhArtistsSub: `9 creators of MOUI-IST`,
+    tabForeword: `Foreword`,
+    tabGuide: `Artist Protocol`,
+    fwTitleText: `Simulation<br/><span class="fw-title-hanja">(模擬實驗)</span>`,
+    fwSeomun: `F O R E W O R D`,
+    fwOpening: `<span class="fw-open-char">C</span><span class="fw-open-char">o</span><span class="fw-open-char">n</span><span class="fw-open-char">s</span><span class="fw-open-char">p</span><span class="fw-open-char">i</span><span class="fw-open-char">r</span><span class="fw-open-char">a</span><span class="fw-open-char">c</span><span class="fw-open-char">y</span><span class="fw-open-char">.</span>`,
+    fwP1: `These two characters carry a dangerous energy.
+Putting heads together to plot something that does not yet exist in the world —
+it is always secretive, fervent, and just a little subversive.`,
+    fwP2: `We chose that word as our name.
+Nine artists, who began in a gathering called 'Jakga-moui',
+have each carried on their own conspiracies in their studios.
+On the canvas, behind the lens, in front of the computer
+—quietly, yet relentlessly.`,
+    fwDefs: `
+            <div class="fw-def-item"><span class="fw-def-key">moui (謀議)</span> to conspire together.</div>
+            <div class="fw-def-item"><span class="fw-def-key">moui (模擬)</span> to model the world, and to test it.</div>
+            <div class="fw-def-item"><span class="fw-def-key">moui (某意)</span> a certain meaning that cannot be named.</div>
+            <div class="fw-def-experiment">And <span class="fw-hanja">模擬實驗</span>—the simulation.</div>
+            <div class="fw-def-experiment-sub">The act of testing what has not yet happened.</div>
+          `,
+    fwP3: `This exhibition is one simulation.
+Nine artists each set up a hypothesis,
+experimented within their own conditions,
+and laid the results out across this space.
+A scientific experiment exists to find the right answer,
+but an artist's experiment exists to find a better question.`,
+    fwP4: `The moment you step into this gallery,
+you become not a viewer but an observer.
+You will witness nine experiments
+and come to form a hypothesis of your own.`,
+    fwClosing: `The experiment continues.<br>The conspiracy has already begun.`,
+    gdTitle: `Artist Experiment Protocol`,
+    gdIntro: `This document is an experiment protocol
+for the artists taking part in MOUI-IST's first group exhibition.
+
+The frame of the exhibition is the 'simulation'.
+Each artist conducts one experiment,
+and the work becomes its result.
+
+Based on the four items below,
+please write your artist's note (experiment report).`,
+    gdLabel1: `Hypothesis`,
+    gdBody1: `What is it that you seek to test
+through this work?
+
+A question yet unanswered,
+an unproven intuition,
+or a single proposition you wish to throw at the world.`,
+    gdEx1: `e.g. "Can a person feel the flow of time within a still image?"`,
+    gdLabel2: `Conditions`,
+    gdBody2: `In what medium, by what method,
+within what constraints do you experiment?
+
+Brush or lens, light or darkness.
+The rules you set for yourself
+draw the outline of the experiment.`,
+    gdEx2: `e.g. "Oil paint, one size-80 canvas, four weeks of work, no warm colors"`,
+    gdLabel3: `Observation`,
+    gdBody3: `While working,
+what did you discover?
+
+Moments that strayed from expectation,
+variables beyond your control,
+cracks and beauty met by chance.`,
+    gdEx3: `e.g. "I meant to use only cold colors, but in week three a red line slipped in unconsciously"`,
+    gdLabel4: `Result`,
+    gdBody4: `The work itself is the result of the experiment.
+
+Neither success nor failure —
+a single piece of data
+whose interpretation is not yet finished.
+
+There is no perfect experiment.
+That is precisely what art is,
+and that is the essence of the simulation.`,
+    gdEx4: `e.g. "The hypothesis was only half proven. Time was felt, but not in the direction I intended."`,
+    gdFormatLabel: `Submission Format`,
+    gdFormatBody: `Artist's note format
+
+Title: Experiment Report — [Artist Name]
+Hypothesis:
+Conditions:
+Observation:
+Result:
+
+Write freely, as long as the four items above are included.
+There is no length limit, but the more concise, the better.`,
+    labTitle: `Experiment Reports`,
+    labSubtitle: `Experiment records submitted by 9 conspirators — click an artwork to view`,
+    artistsSubtitle: `conspirators begin a new narrative`,
+    staffName1: `Gocoder (Lee Jin-hyun)`,
+    staffDesc1: `Oversees the direction and overall planning of the exhibition.<br>The one who draws the big picture of the conspiracy.`,
+    staffName2: `Garam (Kim Garam)`,
+    staffDesc2: `Represents the artists and anchors the creative center.<br>The first voice of the conspiracy.`,
+    staffName3: `Kim Jina`,
+    staffDesc3: `Leads operations and marketing, bringing the conspiracy to the world.<br>The strategist of the conspiracy.`,
+    aboutHeading: `
+          We <span>conspire</span><br>in creation
+        `,
+    aboutText: `
+          <strong>MOUI-IST</strong> began with a gathering called 'Jakga-moui'.<br><br>
+          Embracing the precision and passion held in the word 'moui (謀議)' —
+          and its sense of solidarity, of plotting together —
+          nine artists gathered under one name.<br><br>
+          Artists, each with a world of their own,
+          creating a <strong>new narrative</strong> in a single space.<br><br>
+          We conspire art,
+          and that conspiracy soon becomes a work.
+        `,
+    nameVal1: `Moui (謀議) — to plot, to conspire together.<br>Carrying on the core spirit of Jakga-moui.`,
+    nameVal2: `A suffix for an expert, one who practices.<br>People who show creation through action, not words.`,
+    nameVal3: `A collective of those who conspire creation.<br>Keeping the gathering's roots while plotting a new narrative.`,
+    ctaHeading: `Join the<br>Conspiracy`,
+    ctaDesc: `
+        Follow MOUI-IST on its journey.<br>
+        Be the first to hear our news.
+      `
+  };
+
+  const labEn = {
+    '01': { name: 'Garam', field: 'Metal & Wood Craft',
+      title: 'If the Witch Does Not Laugh, the Princess Tells No Lie.',
+      sections: [
+        { label: 'Hypothesis', text: `Within the figure of woman coexist a 'spirit of resistance (the witch)' that confronts social oppression and a 'truthfulness (the princess)' that purely wishes to be respected and protected.\nWhen the subject is seated in an isolated 'chair of judgment' and asked essential questions, those wearing a false persona (mask) fall silent or deceive themselves, while those who face their true heart do not fear judgment and reveal their true archetype — the witch's resistance or the princess's truth. The moment the witch's laughter stops, the concealed truth of the princess is finally proven.` },
+        { label: 'Conditions', text: `The subject wears a silver iron-maiden mask that completely blocks sight and hearing, and sits on a pink chair of judgment placed at the center of a controlled room. In isolated darkness, the subject must answer the essential questions of an unseen judge.\nA truth-measuring device attached to the fingers determines whether each answer is true, forcing a crossroads of choice. If a lie is mixed into an answer, an electric stimulus is applied, and the subject becomes a 'witch of fierce resistance' who must endure the pain and outside pressure to defend her own agency. If, instead, she acknowledges her vulnerability and speaks only the truth, the painful stimulus stops and she at last becomes a 'princess with the right to be fully protected, respected and honored'.` },
+        { label: 'Observation', text: `At the moment a lie is told and the electric shock is applied, the bodily signs of a 'resistant witch' were observed — trembling with pain yet enduring in silence behind the mask, determined to keep her own narrative to the end. Conversely, a psychological turn was observed in subjects who, faced with the electric threat, abandoned their defenses and confessed their bare inner face in tears, returning to the 'truthful princess'.` },
+        { label: 'Result', text: `Through the extreme external pressure of pain (electric stimulus), this experiment makes the subject choose for herself: to become a 'witch' who endures the pain, or a 'princess' who stops the pain and recovers her dignity. In the end it proves that both archetypes are honest states, each defending its essence in its own way.` }
+      ] },
+    '02': { name: 'Tea jeang', field: 'Urban Drawing',
+      title: 'For a Moment, Another City',
+      sections: [
+        { label: 'Hypothesis', text: `A city does not exist in a single form. Even a familiar landscape, the moment another gaze is layered upon it, can be read as a different scene.\nUrban drawing was assumed to be a medium that records reality while, at the same time, cautiously conspiring possibilities that do not yet exist.` },
+        { label: 'Conditions', text: `The work took Budapest, Venice, Bukchon, Europe's surface trams, and Seoul's Songhyeon Park as its subjects. After observing and recording each place, new scenes were overlaid on the existing landscape, or the time latent within a place was drawn out — exploring the other possibilities a city holds.` },
+        { label: 'Observation', text: `The new scenes did not erase the existing city. When the familiar landscape and imagined possibility coexisted within a single frame, the city began to be read in a different way. Drawing could become more than a record reproducing reality — a medium for contemplating unseen possibilities and time.` },
+        { label: 'Result', text: `In this work, 'conspiracy' is not a proposal to replace reality or change the city, but an experiment in reading the city through another gaze. When reality and imagination, present and memory overlap within one frame, the city remains not a single answer but an object of many interpretations.` }
+      ] },
+    '03': { name: 'CORAL', field: 'Painting',
+      title: 'Beyond Familiarity, Another Gaze',
+      sections: [
+        { label: 'Hypothesis', text: `Even with identical form, when color and scale change, the perceived sensation changes.` },
+        { label: 'Conditions', text: `The same composition of a space is presented repeatedly.\nKeeping the form intact while varying only color and scale, the work compares what difference minimal change makes in how the space is perceived.` },
+        { label: 'Observation', text: `The repeated structure made the space recognizable as the same, while changes in color and scale made it experienced with different senses.\nColor changed the mood and temperature of the space; scale altered the density and concentration of sensation. Above all, it was confirmed that even a small change can open a different gaze toward a familiar object.` },
+        { label: 'Result', text: `The identical form was perceived with different senses depending on the point of view.\nA shift in perspective does not begin with enormous change; even the smallest change can transform perception greatly.\nThe hypothesis held.` }
+      ] },
+    '04': { name: 'Hyun ji', field: 'Painting',
+      title: 'What Emotion Arises When Two Positive Colors Collide?',
+      sections: [
+        { label: 'Conditions', text: `In this work I let green, which I have used all along, coexist in a single frame with newly introduced orange. In color theory, green symbolizes life, stability and recovery, while orange means vitality and joy. For this meeting the orange was taken from the color of the trumpet vine.\nAs its Korean name — 'the flower that surpasses the sky' — suggests, it symbolizes the courage to face anxiety. All three paintings use only these two families of color, varying only saturation, brightness and arrangement.` },
+        { label: 'Observation', text: `Even though only the same families of color were used, different emotions were induced by changes in saturation and brightness. In frames of high saturation and strong collision, tension and anxiety stood out; in frames with lowered saturation or dispersed color density, calmer and warmer feelings were sensed.` },
+        { label: 'Result', text: `The meeting of two colors with positive images did not necessarily amplify positive emotion. Even the same combination generated opposing feelings — tension and anxiety, or serenity — depending on the ratio and density in which the colors collided.` }
+      ] },
+    '05': { name: 'Ahreum Ra', field: 'Photography',
+      title: 'A Record for Living On',
+      sections: [
+        { label: 'Hypothesis', text: `Existence does not vanish; it remains in the form of traces.` },
+        { label: 'Conditions', text: `Using light, movement and contrast, the moments between presence and absence are recorded.` },
+        { label: 'Observation', text: `The more the form blurs, the more the figure is perceived not as an individual but as an afterimage of memory and emotion.` },
+        { label: 'Result', text: `Existence leaves a trace, then disappears. These photographs are not records made to hold on, but traces left behind in order to disappear.` }
+      ] },
+    '06': { name: "Sky's Pieces", field: 'Illustration',
+      title: 'You & Me',
+      sections: [
+        { label: 'Hypothesis', text: `If, in this world, there were only you and me.` },
+        { label: 'Conditions', text: `A room completely cut off from all the noise and relations of the world. Emotional exchange in a space where only two beings remain — my cat 'Coco' and me.` },
+        { label: 'Observation', text: `Last year there was a season of deep despair, as if every light in my life had gone out. For about two months I cut off all social contact except the minimal orbit of work. In that room of self-imposed isolation, the only warmth allowed me was one very small living being — my cat, Coco. She willingly endured my darkness with me.\nThrough that time Coco became my family and my friend, my love and my everything. To her, I too must have been the whole universe.` },
+        { label: 'Result', text: `And I came to draw again. The fear and lack I had buried deep for sixteen long years — about picking up the pen again — began to heal as I expressed the pure love between her and me. Her harmless love set my fingertips moving again. In the end, holding the warmth of this small creature, I gained the courage and hope to move on to the next chapter of my life.` }
+      ] },
+    '07': { name: 'Kelvin', field: 'Contemporary Music Composition',
+      title: 't-test',
+      sections: [
+        { label: 'Hypothesis', text: `This experiment is conducted single-blind; the hypothesis is not disclosed in advance. Participants are guided by an explanatory text accessible via QR code after taking part.` },
+        { label: 'Conditions', text: `Inside a narrow white space, sound plays only while each of the two participants stands on their own spot. Once the sound begins, participants are asked to remain in place for the six minutes until the music ends. If either participant leaves their position, the sound stops.` },
+        { label: 'Observation & Result', text: `Observation and results are derived from survey responses collected via QR code after participation.` }
+      ] },
+    '08': { name: 'Joo pyo', field: 'Painting',
+      title: 'A Meditation on Thought and Memory',
+      sections: [
+        { label: 'Hypothesis', text: `If I could become another and look at myself.` },
+        { label: 'Conditions', text: `Fragmentary memories and recollections. The instants of remembered moments are held within the flow of passing time. Points of memory become a single line; lines of other memories intersect and become fragments; countless fragments meet the same time, compose and collide, becoming the great wave of a life — and I paint myself facing that wave.` },
+        { label: 'Observation', text: `I tried to express one form and figure with diverse colors and fragments, but through countless revisions and changes, the original plan and form could not be kept.` },
+        { label: 'Result', text: `I tried hard to hold on to the jagged fragments and contradictory colors, but in the end I could only erase and revise — and came to see that we, too, cannot help but need such a process of change.` }
+      ] },
+    '09': { name: 'Vanhalee', field: 'Webtoon',
+      title: `'La Bayadère' Act 1, Pas de Deux`,
+      sections: [
+        { label: 'Hypothesis', text: `When ballet, an art of time, is decomposed into successive still images and rearranged in space, can the viewer perceive a single dance even without actual movement?` },
+        { label: 'Conditions', text: `This work decomposed the Act I pas de deux of the ballet 'La Bayadère' into about 45 drawings, recorded along the flow of time.\nAccording to the traditional modern classification of the arts centered on French culture, ballet is the sixth art, existing only in time, while painting is the third art, fixing a single moment and leaving it in space. Starting from this difference between the two media, the work set out to experiment with translating movement made of time into a succession of images in space.` },
+        { label: 'Observation', text: `Each drawing was an independent still image, but when arranged in a set order and interval, viewers came to perceive the movement between the images before the individual scenes. No actual movement exists in the still frames, yet viewers naturally connect the previous and next scenes and complete a single dance in their minds.` },
+        { label: 'Result', text: `This work is a simulation — an experiment in translating ballet, an art of time, through the method of painting, an art of space. Movement itself does not exist within the frame, yet through the arrangement of successive images the viewer composes the flow of time and experiences the dance.\nThrough this, it was confirmed that a picture can go beyond recording a single moment, becoming a device that makes us imagine time and movement through the relations between images.` }
+      ] }
+  };
+
+  const artistEn = {
+    '01': { name: 'Garam', field: 'Metal & Wood Craft',
+      bio: `[Solo Exhibitions]\n2022  Brand New Planet, Art City\n\n[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n2022  Yeongdeungpo Cultural Foundation open-call exhibition 'Made in Mullae-dong', Sulsul Center\n2021  Yeongdeungpo Cultural Foundation art & technology exhibition 'Itda', Sulsul Center\n2020  Mullae Art Village Festival, open studio exhibition\n2020  Bench & chair production, Yeongdeungpo Market Station Culture & Art Railway Project\n2019  Mullae Art Village Festival, Mullae Goods Project exhibition\n\n[Experience]\n2019  Technical advisor, Son Woo-jin solo exhibition 'Bogang', Sanwoolim Art & Craft\n2020–2022  DDP Design Fair participant` },
+    '02': { name: 'Tea jeang', field: 'Urban Drawing',
+      bio: `[Awards]\n2010  Architecture Design Camp, Excellence Award\n2010  46th Jeonnam Art Exhibition, Honorable Mention\n2010  23rd Gwangju Art Exhibition, Special Selection\n\n[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul` },
+    '03': { name: 'CORAL', field: 'Painting',
+      bio: `[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n\nBackground: Interior Architecture Design / Painting` },
+    '04': { name: 'Hyun ji', field: 'Painting',
+      bio: `[Education]\nB.F.A. in Visual Design, Dankook University\n\n[Awards]\n2025  An Gyeon Art Competition, Special Selection\n2024  KMAF Korea Contemporary Art Competition, Grand Excellence Award\n\n[Solo Exhibitions]\n2026  <Nevertheless, Hello>, The Library Sunae\n2026  <Nevertheless, Hello>, Vibe Art Space\n\n[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n2026  <The Principle of Layers>, Gallery D'Arte Cheongdam\n2026  <On Attitude>, Space Mosoon\n2025  <KMAF Invited Artists>, Maru Art Center\n2025  <An Gyeon Art Competition Winners>, Seosan Culture Center\n2024  <KMAF Winners>, Maru Art Center\n2024  <Ordinary Longing>, Kyungmin Museum of Modern Art` },
+    '05': { name: 'Ahreum Ra', field: 'Photography',
+      bio: `[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n\nPhotography — exploring memory and trace, the boundary between presence and absence` },
+    '06': { name: "Sky's Pieces", field: 'Illustration',
+      bio: `[Education]\nVideo Design, Kaywon University of Art & Design\n\n[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n\n[Experience]\n2025–  Runs global motion-art & illustration Instagram 'skys_pieces' (7K)\n2013–  Video production instructor, Green Academy, Gangnam\n2013–  Senior designer, motion graphics team, video production company\n2011–2013  Webtoon serialization for a public corporation / video production / animation studio\n2008–2009  Art academy instructor` },
+    '07': { name: 'Kelvin', field: 'Contemporary Music Composition',
+      bio: `[Education]\n2021–present  PhD in Music Composition, University of Huddersfield, UK\n2012–2014  Postgraduate studies, University of Music and Performing Arts Graz (KUG), Austria\n2009–2010  Electronic music, Hong Kong Academy for Performing Arts (HKAPA)\n2007–2012  M.M. in Composition, UMKC Conservatory, USA\n2004–2007  B.A. in Music, The Chinese University of Hong Kong (CUHK)\n\n[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n2024  Seoul Fringe Festival, Seoul, "Brief Version of Seoljanggu"\n2024  ISCM World New Music Days, Faroe Islands, "Brief Version of Seoljanggu"\n2018  Darmstadt International Summer Course for New Music, Germany, "Seoljanggu"\n2013  BCMF, Beijing Concert Hall, China, "Nidra"\n2011  Festival Acanthes, Arsenal de Metz, France, "Tombe de Sommeil"\n2009  ACL Conference, Seoul, "The Pale Bone from Dragon Spring"\n\n[Experience]\n2023–2025  Sessional lecturer (Orchestration), University of Huddersfield, UK\n2022–2023  Teaching assistant (Composition), University of Huddersfield, UK\n2011–2012  Manager, Hong Kong New Music Ensemble (HKNME)\n2009–2010  Research assistant, Hong Kong Institute of Education (HKIEd)\n2008–2009  Composition mentor, UMKC, USA\n2007  Visiting high school instructor, Paseo Academy, USA` },
+    '08': { name: 'Joo pyo', field: 'Painting',
+      bio: `[Education]\nCollege of Fine Arts, University of Suwon\n\n[Awards]\n2026  International Contemporary Art Competition, Special Selection\n2025  JoongAng Painting Competition, Special Selection\n2025  ISA World Art Competition, Special Selection\n\n[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n2025  Exhibition at Galerie89, Paris, France\n\n[Experience]\nArtwork for film, drama, stage and commercials (Squid Game and many others)` },
+    '09': { name: 'Vanhalee', field: 'Webtoon',
+      bio: `[Education]\nB.S. in Urban Engineering, University of Seoul\n\n[Group Exhibitions]\n2026  "Simulation", Sai Art Center FLUX, Seoul\n\n[Experience]\n2023–2024  Naver Webtoon <Holding Hands> serialization (completed)\n2018–2020  Naver Best Challenge <Bbangppo Siraegi> serialization (completed)` }
+  };
+
   // ===== ARTISTS =====
-  const igIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>';
+  const igIcon ='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>';
   const webIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
 
   // field icons
@@ -3502,24 +3749,29 @@
 
   // Render lab grid cards
   const labGrid = document.getElementById('labGrid');
-  labData.forEach(d => {
-    const card = document.createElement('div');
-    card.className = 'lab-card reveal';
-    card.innerHTML = `
-      <div class="lab-card-img-wrap">
-        <img class="lab-card-img" src="${d.art}" alt="${d.name}" loading="lazy" decoding="async">
-        <div class="lab-card-overlay"></div>
-        <span class="lab-card-badge">Report</span>
-        <div class="lab-card-info">
-          <p class="lab-card-num">${d.num}</p>
-          <p class="lab-card-name">${d.name}</p>
-          <p class="lab-card-work-title">${d.title}</p>
+  function renderLab() {
+    labGrid.innerHTML = '';
+    labData.forEach(base => {
+      const d = curLang === 'en' ? Object.assign({}, base, labEn[base.num]) : base;
+      const card = document.createElement('div');
+      card.className = 'lab-card reveal';
+      card.innerHTML = `
+        <div class="lab-card-img-wrap">
+          <img class="lab-card-img" src="${d.art}" alt="${d.name}" loading="lazy" decoding="async">
+          <div class="lab-card-overlay"></div>
+          <span class="lab-card-badge">Report</span>
+          <div class="lab-card-info">
+            <p class="lab-card-num">${d.num}</p>
+            <p class="lab-card-name">${d.name}</p>
+            <p class="lab-card-work-title">${d.title}</p>
+          </div>
         </div>
-      </div>
-    `;
-    card.addEventListener('click', () => openLabModal(d));
-    labGrid.appendChild(card);
-  });
+      `;
+      card.addEventListener('click', () => openLabModal(d));
+      labGrid.appendChild(card);
+    });
+  }
+  renderLab();
 
   // Lab modal
   const labModal = document.getElementById('labModal');
@@ -3572,35 +3824,40 @@
   ];
 
   const track = document.getElementById('artistsTrack');
-  artistData.forEach(a => {
-    const isIg = a.urlType === 'instagram';
-    const icon = isIg ? igIcon : webIcon;
-    const label = isIg ? 'Instagram' : 'Website';
+  function renderArtists() {
+    track.innerHTML = '';
+    artistData.forEach(base => {
+      const a = curLang === 'en' ? Object.assign({}, base, artistEn[base.num]) : base;
+      const isIg = a.urlType === 'instagram';
+      const icon = isIg ? igIcon : webIcon;
+      const label = isIg ? 'Instagram' : 'Website';
 
-    const card = document.createElement('div');
-    card.className = 'artist-card';
-    card.style.cursor = 'pointer';
-    card.style.setProperty('--ac', a.color);
-    card.innerHTML = `
-      <div class="artist-card-visual">
-        <img class="artist-card-img" src="${a.img}" alt="${a.name}" loading="lazy" decoding="async">
-        <span class="artist-num-bg">${a.num}</span>
-      </div>
-      <div class="artist-card-info">
-        <p class="artist-card-num">NO. ${a.num}</p>
-        <p class="artist-card-name">${a.name}</p>
-        <p class="artist-card-field">${a.fieldIcon || ''} ${a.field}</p>
-        <a class="artist-card-portfolio" href="${a.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
-          ${icon} ${label}
-        </a>
-      </div>
-    `;
-    card.addEventListener('click', () => {
-      if (hasDragged) return;
-      openArtistModal(a);
+      const card = document.createElement('div');
+      card.className = 'artist-card';
+      card.style.cursor = 'pointer';
+      card.style.setProperty('--ac', a.color);
+      card.innerHTML = `
+        <div class="artist-card-visual">
+          <img class="artist-card-img" src="${a.img}" alt="${a.name}" loading="lazy" decoding="async">
+          <span class="artist-num-bg">${a.num}</span>
+        </div>
+        <div class="artist-card-info">
+          <p class="artist-card-num">NO. ${a.num}</p>
+          <p class="artist-card-name">${a.name}</p>
+          <p class="artist-card-field">${a.fieldIcon || ''} ${a.field}</p>
+          <a class="artist-card-portfolio" href="${a.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+            ${icon} ${label}
+          </a>
+        </div>
+      `;
+      card.addEventListener('click', () => {
+        if (hasDragged) return;
+        openArtistModal(a);
+      });
+      track.appendChild(card);
     });
-    track.appendChild(card);
-  });
+  }
+  renderArtists();
 
   // Artist Modal
   const artistModal = document.getElementById('artistModal');
@@ -3660,8 +3917,37 @@
         <p>많은 관심과 응원 부탁드립니다.</p>`
     }
   };
+  const staffDataEn = {
+    director: {
+      label: 'Exhibition Director',
+      title: 'Gocoder (Lee Jin-hyun)',
+      body: `<p class="staff-greeting">Hello, I am Gocoder, the exhibition director.</p>
+        <p><strong>MOUI-IST</strong> is a collective of nine artists that began with a gathering called 'Jakga-moui'.</p>
+        <p>Embracing the precision and passion held in the word 'moui (謀議)' — and its sense of solidarity, of plotting together — we have each carried on our own conspiracies in our studios.</p>
+        <p>Artists from different fields have gathered under one name to prepare the first group exhibition of the first half of 2026, <strong>"Simulation (模擬實驗)"</strong>.</p>
+        <p>As the director in charge of the exhibition's direction and planning, I am doing my best to build a stage where each artist can fully unfold their own experiment.</p>
+        <p>To everyone who visits, we will repay you with a meaningful and memorable exhibition.</p>
+        <img src="assets/profile/staff-director-logo.png" alt="Gocoder" class="director-logo">`
+    },
+    lead: {
+      label: 'Lead Artist',
+      title: 'Garam (Kim Garam)',
+      body: `<p class="staff-greeting">Hello, I am Garam, the lead artist.</p>
+        <p>I represent the artists, coordinating the creative direction among them and anchoring the center of the work.</p>
+        <p>My role is to find the balance so that artists from different fields can each experiment in their own language, yet come together naturally within a single exhibition.</p>
+        <p>Please look forward to MOUI-IST's first story.</p>`
+    },
+    manager: {
+      label: 'General Manager',
+      title: 'Kim Jina',
+      body: `<p class="staff-greeting">Hello, I am Kim Jina, the manager.</p>
+        <p>I am in charge of the exhibition's operations and marketing, building bridges so that the artists' works can reach more people.</p>
+        <p>From behind the stage I design every point where MOUI-IST meets the world, preparing this exhibition to be not just a viewing but an experience.</p>
+        <p>Your interest and support are greatly appreciated.</p>`
+    }
+  };
   function openStaffModal(role) {
-    const d = staffData[role];
+    const d = curLang === 'en' ? staffDataEn[role] : staffData[role];
     document.getElementById('staffModalLabel').textContent = d.label;
     document.getElementById('staffModalTitle').textContent = d.title;
     document.getElementById('staffModalBody').innerHTML = d.body;
@@ -3735,11 +4021,10 @@
 
   // foreword "모의(謀議)." char stagger
   const fwOpenWrap = document.getElementById('fwOpeningWrap');
-  const fwOpenChars = fwOpenWrap.querySelectorAll('.fw-open-char');
   const fwOpenObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        fwOpenChars.forEach((ch, i) => {
+        fwOpenWrap.querySelectorAll('.fw-open-char').forEach((ch, i) => {
           setTimeout(() => ch.classList.add('vis'), i * 120);
         });
         fwOpenObs.unobserve(e.target);
@@ -3873,6 +4158,31 @@
       setTimeout(() => { exhPoster.style.transition = 'transform 0.15s ease-out, box-shadow 0.4s ease'; }, 500);
     });
   }
+
+  // ===== LANGUAGE TOGGLE =====
+  const langBtn = document.getElementById('langToggle');
+  const i18nKo = {};
+  document.querySelectorAll('[data-i18n]').forEach(el => { i18nKo[el.dataset.i18n] = el.innerHTML; });
+  function applyLang() {
+    const fwWasVis = !!document.querySelector('.fw-open-char.vis');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const v = curLang === 'en' ? I18N_EN[el.dataset.i18n] : i18nKo[el.dataset.i18n];
+      if (v != null) el.innerHTML = v;
+    });
+    if (fwWasVis) document.querySelectorAll('.fw-open-char').forEach(c => c.classList.add('vis'));
+    document.documentElement.lang = curLang;
+    langBtn.textContent = curLang === 'en' ? '한' : 'EN';
+    renderLab();
+    renderArtists();
+    // re-observe rebuilt reveal cards
+    document.querySelectorAll('#labGrid .reveal:not(.vis)').forEach(el => revealObs.observe(el));
+  }
+  langBtn.addEventListener('click', () => {
+    curLang = curLang === 'en' ? 'ko' : 'en';
+    localStorage.setItem('mouiist_lang', curLang);
+    applyLang();
+  });
+  if (curLang === 'en') applyLang();
 
   // ===== THEME TOGGLE =====
   const themeBtn = document.getElementById('themeToggle');

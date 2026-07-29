@@ -862,6 +862,87 @@
     }
     .lightbox-close:hover { color: var(--accent); }
 
+    /* ===== GALLERY WELCOME OVERLAY (QR ?v=v) ===== */
+    .welcome-overlay {
+      position: fixed; inset: 0;
+      z-index: 99999;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(20px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    .welcome-overlay.open { opacity: 1; visibility: visible; }
+    html.light .welcome-overlay { background: rgba(255,255,255,0.95); }
+    .welcome-content {
+      max-width: 480px; width: 100%;
+      margin: 0 2rem;
+      text-align: center;
+      transform: translateY(30px);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .welcome-overlay.open .welcome-content { transform: translateY(0); }
+    .welcome-label {
+      font-family: var(--font-en);
+      font-size: 0.65rem; letter-spacing: 0.4em;
+      color: var(--accent); margin-bottom: 1.2rem;
+      text-transform: uppercase;
+    }
+    .welcome-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.8rem; font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--fg);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .welcome-desc {
+      font-size: 0.9rem; line-height: 2;
+      color: rgba(232,228,223,0.7);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+    }
+    html.light .welcome-desc { color: rgba(26,26,26,0.65); }
+    .welcome-btn {
+      font-family: var(--font-en);
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--accent-dim);
+      padding: 0.9rem 2.5rem;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      text-transform: uppercase;
+    }
+    .welcome-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .welcome-toast {
+      position: fixed;
+      left: 50%; bottom: 3rem;
+      transform: translate(-50%, 20px);
+      z-index: 99998;
+      background: var(--card-bg);
+      border: 1px solid var(--accent-dim);
+      color: var(--fg);
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      padding: 0.9rem 1.8rem;
+      border-radius: 999px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s, transform 0.4s, visibility 0.4s;
+      white-space: nowrap;
+    }
+    .welcome-toast.show {
+      opacity: 1; visibility: visible;
+      transform: translate(-50%, 0);
+    }
+    html.light .welcome-toast { box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+
     /* ===== GROUP MODAL ===== */
     .group-modal {
       position: fixed; inset: 0;
@@ -2303,6 +2384,17 @@
     <div class="loader-progress"></div>
   </div>
 
+  <!-- Gallery Welcome Overlay (QR ?v=v) -->
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-content">
+      <p class="welcome-label">Welcome to the Exhibition</p>
+      <h2 class="welcome-title">전시장에 오신 것을<br>환영합니다</h2>
+      <p class="welcome-desc">모의실험(模擬實驗) — MOUI-IST 첫 번째 단체전<br>9인의 작가가 펼치는 실험의 현장입니다.</p>
+      <button class="welcome-btn" id="welcomeCloseBtn">입장하기</button>
+    </div>
+  </div>
+  <div class="welcome-toast" id="welcomeToast">전시 서문부터 확인해볼까요?</div>
+
   <!-- Custom Cursor -->
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
@@ -2858,6 +2950,33 @@
   </footer>
 
   <script>
+  // ===== GALLERY WELCOME (QR ?v=v) =====
+  (() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('v') !== 'v') return;
+
+    // 전시장 방문 기록 저장
+    localStorage.setItem('mouiist_gallery_visited', '1');
+
+    // 주소창에서 파라미터 정리
+    params.delete('v');
+    const clean = location.pathname + (params.toString() ? '?' + params.toString() : '') + location.hash;
+    history.replaceState(null, '', clean);
+
+    const overlay = document.getElementById('welcomeOverlay');
+    overlay.classList.add('open');
+    document.getElementById('welcomeCloseBtn').addEventListener('click', () => {
+      overlay.classList.remove('open');
+      // 오버레이가 사라진 뒤 멘트 표시 + 전시 서문으로 스크롤
+      const toast = document.getElementById('welcomeToast');
+      setTimeout(() => {
+        toast.classList.add('show');
+        document.getElementById('docs').scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      }, 400);
+    });
+  })();
+
   // ===== LOADER =====
   (() => {
     const loader = document.getElementById('loader');

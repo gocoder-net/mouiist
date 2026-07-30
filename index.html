@@ -2835,7 +2835,7 @@
             <p class="core-card-desc" data-i18n="staffDesc2">작가진을 대표하며 창작의 중심을 잡습니다.<br>모의의 첫 번째 목소리.</p>
           </div>
         </div>
-        <div class="core-card reveal reveal-delay-2">
+        <div class="core-card reveal reveal-delay-2" id="staffManagerCard">
           <div class="core-card-visual" style="cursor:pointer" onclick="openStaffModal('manager')">
             <span class="core-card-crown">&#x1F680;</span>
             <span class="core-card-role-badge">Manager</span>
@@ -2850,6 +2850,14 @@
       </div>
     </div>
   </section>
+  <script>
+    // 김지나 매니저 카드: 한국시간 2026-07-31(금) 하루만 숨김
+    (function () {
+      var card = document.getElementById('staffManagerCard');
+      var now = Date.now();
+      if (card && now >= Date.UTC(2026, 6, 30, 15, 0, 0) && now < Date.UTC(2026, 6, 31, 15, 0, 0)) card.style.display = 'none';
+    })();
+  </script>
 
   <!-- About -->
   <section class="about" id="about">

@@ -2851,11 +2851,10 @@
     </div>
   </section>
   <script>
-    // 김지나 매니저 카드: 한국시간 2026-07-31(금) 11:00~15:00만 숨김
+    // 김지나 매니저 카드: 한국시간 2026-08-01(토) 00:00부터 노출
     (function () {
       var card = document.getElementById('staffManagerCard');
-      var now = Date.now();
-      if (card && now >= Date.UTC(2026, 6, 31, 2, 0, 0) && now < Date.UTC(2026, 6, 31, 6, 0, 0)) card.style.display = 'none';
+      if (card && Date.now() < Date.UTC(2026, 6, 31, 15, 0, 0)) card.style.display = 'none';
     })();
   </script>
 

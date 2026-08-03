@@ -39,7 +39,7 @@
       min-height: 100vh; min-height: 100dvh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 3rem 1.5rem;
+      padding: 3.5rem 1.5rem;
     }
     .bg-char {
       position: fixed; font-size: 38vw; font-weight: 900;
@@ -54,38 +54,37 @@
       font-size: 0.72rem; letter-spacing: 0.35em;
       color: var(--accent); text-transform: uppercase;
       margin-bottom: 1.4rem;
-      opacity: 0; animation: rise 1s ease 0.1s forwards;
+      opacity: 0;
     }
     h1 {
       font-size: clamp(2.4rem, 8vw, 4.6rem);
       font-weight: 900; letter-spacing: 0.02em; line-height: 1.1;
-      opacity: 0; animation: rise 1s ease 0.25s forwards;
+      opacity: 0;
     }
     h1 .dash { color: var(--accent); }
     .kr {
       font-size: clamp(0.95rem, 2.6vw, 1.3rem); font-weight: 300;
       letter-spacing: 0.6em; color: var(--muted); margin-top: 0.8rem;
-      opacity: 0; animation: rise 1s ease 0.4s forwards;
+      opacity: 0;
     }
     .desc {
       font-size: clamp(0.88rem, 1.9vw, 1rem); font-weight: 300;
       line-height: 2; color: var(--muted); margin-top: 1.6rem;
-      opacity: 0; animation: rise 1s ease 0.55s forwards;
+      opacity: 0;
     }
     .desc em { font-style: normal; color: var(--accent); font-weight: 700; }
     .gens {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+      display: flex; flex-direction: column; gap: 1.4rem;
       margin-top: 3.2rem;
-      opacity: 0; animation: rise 1s ease 0.75s forwards;
+      opacity: 0;
     }
-    @media (max-width: 640px) { .gens { grid-template-columns: 1fr; } }
     .gen-card {
       display: block; text-decoration: none; color: var(--fg);
       background: var(--card-bg); border: 1px solid var(--card-border);
       border-radius: 14px; padding: 2.2rem 1.8rem; text-align: left;
       transition: border-color 0.35s, transform 0.35s, background 0.35s;
     }
-    .gen-card:hover {
+    a.gen-card:hover {
       border-color: var(--accent); transform: translateY(-4px);
       background: rgba(200,169,110,0.05);
     }
@@ -94,9 +93,12 @@
       font-size: 0.72rem; letter-spacing: 0.3em; color: var(--accent);
     }
     .gen-title {
+      display: inline-block;
       font-size: clamp(1.3rem, 3vw, 1.7rem); font-weight: 700;
-      margin-top: 0.7rem;
+      margin-top: 0.7rem; color: var(--fg); text-decoration: none;
+      transition: color 0.3s;
     }
+    a.gen-title:hover { color: var(--accent-light); }
     .gen-sub {
       font-size: 0.85rem; font-weight: 300; line-height: 1.8;
       color: var(--muted); margin-top: 0.6rem;
@@ -106,28 +108,111 @@
       font-size: 0.75rem; letter-spacing: 0.12em;
       color: var(--accent); margin-top: 0.7rem;
     }
-    .gen-artists {
-      font-size: 0.78rem; font-weight: 300; line-height: 1.9;
-      color: var(--muted); margin-top: 0.5rem;
+    /* 1기 카드: 포스터 + 정보 */
+    .gen1-top {
+      display: flex; gap: 1.8rem; align-items: flex-start;
     }
+    .gen1-info { flex: 1; min-width: 0; }
+    .gen-poster {
+      flex-shrink: 0; width: 132px; display: block;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--card-border);
+      transition: border-color 0.35s, transform 0.35s;
+    }
+    .gen-poster:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .gen-poster img { width: 100%; display: block; }
+    @media (max-width: 560px) {
+      .gen1-top { flex-direction: column; }
+      .gen-poster { width: 150px; margin: 0 auto; }
+      .gen1-info { text-align: left; width: 100%; }
+    }
+    /* 작가 이름 링크 */
+    .gen-artists {
+      font-size: 0.8rem; font-weight: 300; line-height: 2.1;
+      color: var(--muted); margin-top: 1.4rem;
+    }
+    .gen-artists-label, .gen-works-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.28em; color: var(--muted);
+      text-transform: uppercase; display: block; margin-bottom: 0.4rem;
+    }
+    .gen-artists a {
+      color: rgba(240,236,228,0.7); text-decoration: none;
+      padding: 0.1rem 0.15rem; border-bottom: 1px solid transparent;
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .gen-artists a:hover { color: var(--accent-light); border-color: var(--accent); }
+    .gen-artists .sep { color: rgba(240,236,228,0.25); margin: 0 0.15rem; }
+    /* 작품 썸네일 */
+    .gen-works { margin-top: 1.4rem; }
+    .gen-works-grid {
+      display: grid; grid-template-columns: repeat(9, 1fr); gap: 0.5rem;
+    }
+    @media (max-width: 700px) { .gen-works-grid { grid-template-columns: repeat(5, 1fr); } }
+    @media (max-width: 460px) { .gen-works-grid { grid-template-columns: repeat(3, 1fr); } }
+    .gen-works-grid a {
+      display: block; aspect-ratio: 1; border-radius: 6px; overflow: hidden;
+      border: 1px solid var(--card-border);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .gen-works-grid a:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .gen-works-grid img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: grayscale(0.25);
+      transition: filter 0.3s, transform 0.4s;
+    }
+    .gen-works-grid a:hover img { filter: grayscale(0); transform: scale(1.07); }
     .gen-status {
-      display: inline-block; margin-top: 1.3rem;
+      display: inline-block; margin-top: 1.6rem;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.68rem; letter-spacing: 0.2em;
       padding: 0.35rem 0.8rem; border-radius: 100px;
       border: 1px solid var(--card-border); color: var(--muted);
+      text-decoration: none;
+      transition: border-color 0.3s, color 0.3s;
     }
     .gen-card.archive .gen-status {
       border-color: rgba(200,169,110,0.4); color: var(--accent);
     }
+    a.gen-status:hover { border-color: var(--accent); color: var(--accent-light); }
     .gen-card.soon { opacity: 0.75; }
     .gen-card.soon .gen-status { animation: pulse 3s ease-in-out infinite; }
     .footer {
       margin-top: 3.4rem;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.68rem; letter-spacing: 0.25em; color: var(--muted);
-      opacity: 0; animation: rise 1s ease 0.95s forwards;
+      opacity: 0;
     }
+    /* 인트로 종료 후(body.ready) 콘텐츠 등장 */
+    .ready .eyebrow { animation: rise 1s ease 0.1s forwards; }
+    .ready h1 { animation: rise 1s ease 0.25s forwards; }
+    .ready .kr { animation: rise 1s ease 0.4s forwards; }
+    .ready .desc { animation: rise 1s ease 0.55s forwards; }
+    .ready .gens { animation: rise 1s ease 0.75s forwards; }
+    .ready .footer { animation: rise 1s ease 0.95s forwards; }
+    /* 인트로 오버레이 */
+    .intro {
+      position: fixed; inset: 0; z-index: 50;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.8s ease;
+    }
+    .intro.exit { opacity: 0; pointer-events: none; }
+    .intro-title {
+      font-size: clamp(2.2rem, 8vw, 4.6rem);
+      font-weight: 900; letter-spacing: 0.04em;
+      display: flex;
+    }
+    .intro-title span {
+      display: inline-block; min-width: 0.62em; text-align: center;
+    }
+    .intro-title span.dash { color: var(--accent); }
+    .intro-title span.scrambling { color: rgba(240,236,228,0.5); }
+    .intro-title span.resolved {
+      color: var(--fg);
+      text-shadow: 0 0 24px rgba(200,169,110,0.35);
+    }
+    .intro-title span.resolved.dash { color: var(--accent); }
     @keyframes rise {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
@@ -139,6 +224,9 @@
   </style>
 </head>
 <body>
+  <div class="intro" id="intro">
+    <div class="intro-title" id="introTitle"></div>
+  </div>
   <span class="bg-char c1">謀</span>
   <span class="bg-char c2">議</span>
   <div class="wrap">
@@ -148,23 +236,95 @@
     <p class="desc">작품과 창작을 <em>모의</em>하는 자들의 집단</p>
 
     <div class="gens">
-      <a class="gen-card archive" href="/gen1/">
-        <p class="gen-num">GENERATION 1</p>
-        <p class="gen-title">1기 모의실험(模擬實驗)</p>
-        <p class="gen-sub">2026 상반기 첫 번째 단체전<br>9인의 작가 · 사이아트센터 FLUX</p>
-        <p class="gen-date">2026.07.28 — 08.02</p>
-        <p class="gen-artists">김가람 · 떼쟁 · 코랄 · 현지 · 라아름 · 하늘조각 · 켈빈 · 주표 · 반하리</p>
-        <span class="gen-status">ARCHIVE &rarr;</span>
-      </a>
+      <div class="gen-card archive">
+        <div class="gen1-top">
+          <a class="gen-poster" href="/gen1/"><img src="/assets/poster.jpeg" alt="모의실험 전시 포스터"></a>
+          <div class="gen1-info">
+            <p class="gen-num">GENERATION 1</p>
+            <a class="gen-title" href="/gen1/">1기 모의실험(模擬實驗)</a>
+            <p class="gen-sub">2026 상반기 첫 번째 단체전<br>9인의 작가 · 사이아트센터 FLUX</p>
+            <p class="gen-date">2026.07.28 — 08.02</p>
+          </div>
+        </div>
+        <p class="gen-artists">
+          <span class="gen-artists-label">Artists</span>
+          <a href="/gen1/#artist-1">김가람</a><span class="sep">·</span>
+          <a href="/gen1/#artist-2">떼쟁</a><span class="sep">·</span>
+          <a href="/gen1/#artist-3">코랄</a><span class="sep">·</span>
+          <a href="/gen1/#artist-4">현지</a><span class="sep">·</span>
+          <a href="/gen1/#artist-5">라아름</a><span class="sep">·</span>
+          <a href="/gen1/#artist-6">하늘조각</a><span class="sep">·</span>
+          <a href="/gen1/#artist-7">켈빈</a><span class="sep">·</span>
+          <a href="/gen1/#artist-8">주표</a><span class="sep">·</span>
+          <a href="/gen1/#artist-9">반하리</a>
+        </p>
+        <div class="gen-works">
+          <span class="gen-works-label">Works · 실험보고서</span>
+          <div class="gen-works-grid">
+            <a href="/gen1/#report-1" title="김가람 실험보고서"><img src="/assets/arts/01-김가람.jpg" alt="김가람 작품" loading="lazy"></a>
+            <a href="/gen1/#report-2" title="떼쟁 실험보고서"><img src="/assets/arts/02-떼쟁.jpg" alt="떼쟁 작품" loading="lazy"></a>
+            <a href="/gen1/#report-3" title="코랄 실험보고서"><img src="/assets/arts/03-코랄.jpg" alt="코랄 작품" loading="lazy"></a>
+            <a href="/gen1/#report-4" title="현지 실험보고서"><img src="/assets/arts/04-현지.jpg" alt="현지 작품" loading="lazy"></a>
+            <a href="/gen1/#report-5" title="라아름 실험보고서"><img src="/assets/arts/05-라아름.jpg" alt="라아름 작품" loading="lazy"></a>
+            <a href="/gen1/#report-6" title="하늘조각 실험보고서"><img src="/assets/arts/06-하늘조각.jpg" alt="하늘조각 작품" loading="lazy"></a>
+            <a href="/gen1/#report-7" title="켈빈 실험보고서"><img src="/assets/arts/07-켈빈.jpg" alt="켈빈 작품" loading="lazy"></a>
+            <a href="/gen1/#report-8" title="주표 실험보고서"><img src="/assets/arts/08-주표.jpg" alt="주표 작품" loading="lazy"></a>
+            <a href="/gen1/#report-9" title="반하리 실험보고서"><img src="/assets/arts/09-반하리.jpg" alt="반하리 작품" loading="lazy"></a>
+          </div>
+        </div>
+        <a class="gen-status" href="/gen1/">ARCHIVE &rarr;</a>
+      </div>
       <a class="gen-card soon" href="/gen2/">
         <p class="gen-num">GENERATION 2</p>
         <p class="gen-title">2기 준비 중</p>
-        <p class="gen-sub">두 번째 모의를 준비하고 있습니다<br>새로운 주제와 기획자들과 함께</p>
+        <p class="gen-sub">두 번째 모의를 준비하고 있습니다<br>새로운 주제와 기획으로 새로운 작가들과 함께</p>
         <span class="gen-status">COMING SOON</span>
       </a>
     </div>
 
     <p class="footer">MOUI-IST &middot; CREW.MOUIIST.COM</p>
   </div>
+  <script>
+    // ===== 인트로: MOUI-IST 스크램블 리빌 =====
+    (function () {
+      var TARGET = 'MOUI-IST';
+      var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*+=?/<>{}[]0123456789';
+      var title = document.getElementById('introTitle');
+      var spans = TARGET.split('').map(function (ch) {
+        var s = document.createElement('span');
+        s.textContent = '\u00A0';
+        if (ch === '-') s.classList.add('dash');
+        title.appendChild(s);
+        return { el: s, ch: ch };
+      });
+      var idx = 0;
+      function revealNext() {
+        if (idx >= spans.length) { setTimeout(finish, 500); return; }
+        var cur = spans[idx];
+        cur.el.classList.add('scrambling');
+        var frame = 0;
+        var iv = setInterval(function () {
+          if (frame < 6) {
+            cur.el.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            frame++;
+          } else {
+            clearInterval(iv);
+            cur.el.textContent = cur.ch;
+            cur.el.classList.remove('scrambling');
+            cur.el.classList.add('resolved');
+            idx++;
+            setTimeout(revealNext, 40);
+          }
+        }, 35);
+      }
+      function finish() {
+        var intro = document.getElementById('intro');
+        intro.classList.add('exit');
+        document.body.classList.add('ready');
+        setTimeout(function () { intro.remove(); }, 900);
+      }
+      setTimeout(revealNext, 400);
+    })();
+  </script>
 </body>
 </html>

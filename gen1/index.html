@@ -3003,150 +3003,10 @@
     });
   })();
 
-  // ===== LOADER =====
+  // ===== LOADER: 인트로는 대문(/)에서 보여주므로 아카이브에서는 생략 =====
   (() => {
-    const loader = document.getElementById('loader');
-    const title = document.getElementById('loaderTitle');
-    const isFirstVisit = !localStorage.getItem('mouiist_visited');
-    const TARGET = 'MOUI-IST';
-    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*+=?/<>{}[]0123456789';
-
-    if (isFirstVisit) {
-      // ===== FIRST VISIT: dramatic scramble reveal =====
-      localStorage.setItem('mouiist_visited', '1');
-      loader.classList.add('first-visit');
-
-      // Create spans (start invisible)
-      const spans = TARGET.split('').map((ch, i) => {
-        const span = document.createElement('span');
-        span.textContent = ' ';
-        span.style.opacity = '0';
-        span.style.transform = 'translateY(0)';
-        span.style.animation = 'none';
-        if (ch === '-') span.classList.add('dash');
-        title.appendChild(span);
-        return { span, target: ch };
-      });
-
-      // Add vertical decorative lines
-      for (let i = 0; i < 5; i++) {
-        const vl = document.createElement('div');
-        vl.className = 'intro-vline';
-        vl.style.left = (15 + i * 17) + '%';
-        vl.style.top = '20%';
-        loader.appendChild(vl);
-        setTimeout(() => vl.classList.add('go'), 300 + i * 200);
-      }
-
-      // Phase 1: Letters appear one by one with scramble
-      let charIndex = 0;
-      const SCRAMBLE_FRAMES = 8;
-      const SCRAMBLE_SPEED = 50;
-
-      function revealNext() {
-        if (charIndex >= spans.length) {
-          // All letters resolved — trigger flash + particles + exit
-          setTimeout(finishIntro, 400);
-          return;
-        }
-
-        const current = spans[charIndex];
-        current.span.style.opacity = '1';
-        current.span.classList.add('scrambling');
-        let frame = 0;
-
-        const interval = setInterval(() => {
-          if (frame < SCRAMBLE_FRAMES) {
-            current.span.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-            frame++;
-          } else {
-            clearInterval(interval);
-            current.span.textContent = current.target;
-            current.span.classList.remove('scrambling');
-            current.span.classList.add('resolved');
-            charIndex++;
-            setTimeout(revealNext, 80);
-          }
-        }, SCRAMBLE_SPEED);
-      }
-
-      function finishIntro() {
-        // Phase 1: Flash sweep across text
-        document.getElementById('introFlash').classList.add('go');
-
-        // Phase 2: Bloom glow intensifies on text
-        setTimeout(() => {
-          title.classList.add('bloom-glow');
-        }, 300);
-
-        // Phase 3: Netflix-style zoom + bloom (text scales up with glow, fades through brightness)
-        setTimeout(() => {
-          document.getElementById('loaderInner').classList.add('zoom-bloom');
-        }, 1000);
-
-        // Phase 4: Golden flash bang covers screen
-        setTimeout(() => {
-          document.getElementById('whiteFlash').classList.add('go');
-        }, 1600);
-
-        // Phase 5: Hide loader, show split panels, then split open with gold seam line
-        setTimeout(() => {
-          loader.style.display = 'none';
-
-          const splitTop = document.getElementById('splitTop');
-          const splitBottom = document.getElementById('splitBottom');
-          const splitLine = document.getElementById('splitLine');
-
-          splitTop.style.display = 'block';
-          splitBottom.style.display = 'block';
-          splitLine.style.display = 'block';
-
-          // Gold line appears at seam first
-          setTimeout(() => {
-            splitLine.classList.add('go');
-          }, 100);
-
-          // Panels split open
-          setTimeout(() => {
-            splitTop.classList.add('go');
-            splitBottom.classList.add('go');
-            animateHero();
-          }, 350);
-
-          // Clean up
-          setTimeout(() => {
-            splitTop.style.display = 'none';
-            splitBottom.style.display = 'none';
-            splitLine.style.display = 'none';
-          }, 1600);
-        }, 2200);
-      }
-
-      // Start after brief black screen
-      window.addEventListener('load', () => {
-        setTimeout(revealNext, 600);
-      });
-
-    } else {
-      // ===== RETURNING VISIT: normal loader =====
-      TARGET.split('').forEach((ch, i) => {
-        const span = document.createElement('span');
-        span.textContent = ch;
-        span.style.animationDelay = `${i * 0.08 + 0.3}s`;
-        if (ch === '-') span.classList.add('dash');
-        title.appendChild(span);
-      });
-
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          loader.classList.add('exit');
-          setTimeout(() => {
-            loader.style.display = 'none';
-            animateHero();
-          }, 800);
-        }, 2200);
-      });
-    }
+    document.getElementById('loader').style.display = 'none';
+    animateHero();
   })();
 
   // ===== HERO ENTRANCE =====
@@ -4197,8 +4057,8 @@ There is no length limit, but the more concise, the better.`,
     setTheme(!document.documentElement.classList.contains('light'));
   });
 
-  // ===== POSTER SAVE & SHARE =====
-  document.getElementById('posterSaveBtn').addEventListener('click', async () => {
+  // ===== POSTER SAVE & SHARE (초대장 주석 처리 상태면 버튼이 없음) =====
+  document.getElementById('posterSaveBtn')?.addEventListener('click', async () => {
     const poster = document.getElementById('exhPoster');
     // temporarily reset tilt transform for clean capture
     const origTransform = poster.style.transform;
@@ -4221,7 +4081,7 @@ There is no length limit, but the more concise, the better.`,
     }
   });
 
-  document.getElementById('posterShareBtn').addEventListener('click', async () => {
+  document.getElementById('posterShareBtn')?.addEventListener('click', async () => {
     const shareData = {
       title: 'MOUI-IST 모의실험(模擬實驗)',
       text: '모의실험(模擬實驗) — MOUI-IST 첫 번째 단체전\n2026.07.28 — 08.02\n사이아트센터 FLUX (안국역 3분)\n\n9인의 작가가 함께한 첫 번째 단체전, 성황리에 마쳤습니다.',
@@ -4242,6 +4102,24 @@ There is no length limit, but the more concise, the better.`,
       }
     }
   });
+
+  // ===== 대문(/) 딥링크: #artist-N → 작가 소개, #report-N → 실험보고서 =====
+  (() => {
+    const m = location.hash.match(/^#(artist|report)-(\d+)$/);
+    if (!m) return;
+    const idx = parseInt(m[2], 10) - 1;
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        if (m[1] === 'artist' && artistData[idx]) {
+          document.getElementById('artists').scrollIntoView();
+          openArtistModal(artistData[idx]);
+        } else if (m[1] === 'report' && labData[idx]) {
+          document.getElementById('lab').scrollIntoView();
+          openLabModal(labData[idx]);
+        }
+      }, 400);
+    });
+  })();
   </script>
 </body>
 </html>

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MOUI-IST | 모의스트 — 창작을 모의하는 자들</title>
-  <meta name="description" content="MOUI-IST(모의스트) — 작품과 창작을 모의하는 자들의 집단. 9인의 작가가 펼치는 2026 상반기 단체전.">
+  <meta name="description" content="MOUI-IST(모의스트) — 작품과 창작을 모의하는 자들의 집단. 9인의 작가가 함께한 2026 상반기 단체전 아카이브.">
   <meta property="og:title" content="모의실험(模擬實驗) — MOUI-IST 첫 번째 단체전">
-  <meta property="og:description" content="2026.07.28 — 08.02 | 사이아트센터 FLUX | 9인의 작가가 펼치는 단체전에 초대합니다.">
+  <meta property="og:description" content="2026.07.28 — 08.02 | 사이아트센터 FLUX | 9인의 작가가 함께한 첫 번째 단체전, 성황리에 마쳤습니다.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mouiist.com">
   <meta property="og:image" content="https://mouiist.com/assets/mouiist.png">
@@ -531,6 +531,13 @@
     }
     .hero-desc em {
       font-style: normal; color: var(--accent); font-weight: 700;
+    }
+    .hero-thanks {
+      margin-top: 1.4rem;
+      font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+      font-weight: 300; letter-spacing: 0.04em;
+      color: var(--accent);
+      opacity: 0; transform: translateY(20px);
     }
     .hero-scroll-indicator {
       position: absolute; bottom: 3rem;
@@ -2446,6 +2453,7 @@
       <p class="hero-desc" id="heroDesc" data-i18n="heroDesc">
         작품과 창작을 <em>모의</em>하는 자들의 집단
       </p>
+      <p class="hero-thanks" id="heroThanks" data-i18n="heroThanks">첫 번째 전시가 끝났습니다 — 함께해 주셔서 감사합니다</p>
     </div>
     <div class="hero-scroll-indicator" id="heroScroll">
       <span>Scroll</span>
@@ -2490,9 +2498,8 @@
         <p class="exh-label">Exhibition</p>
         <h2 class="exh-title" data-i18n="exhTitle">2026 상반기<br>단체전</h2>
         <div class="exh-dday" id="exhDday">
-          <span class="exh-dday-label">OPENING IN</span>
-          <span class="exh-dday-number" id="exhDdayNum"></span>
-          <span class="exh-dday-unit">DAYS</span>
+          <span class="exh-dday-label">EXHIBITION</span>
+          <span class="exh-dday-number" id="exhDdayNum">ENDED</span>
         </div>
         <div class="exh-detail" data-exh-row="0">
           <span class="exh-detail-label">Title</span>
@@ -2505,7 +2512,7 @@
           <span class="exh-detail-label">Date</span>
           <div>
             <p class="exh-detail-value">2026.07.28 — 08.02</p>
-            <p class="exh-detail-sub" data-i18n="exhDateSub">7월 28일(월) — 8월 2일(일)</p>
+            <p class="exh-detail-sub" data-i18n="exhDateSub">7월 28일(월) — 8월 2일(일) · 종료</p>
           </div>
         </div>
         <div class="exh-detail" data-exh-row="2">
@@ -2851,10 +2858,10 @@
     </div>
   </section>
   <script>
-    // 김지나 매니저 카드: 한국시간 2026-08-01(토) 00:00부터 노출
+    // 김지나 매니저 카드: 한국시간 2026-08-04(화) 00:00부터 노출
     (function () {
       var card = document.getElementById('staffManagerCard');
-      if (card && Date.now() < Date.UTC(2026, 6, 31, 15, 0, 0)) card.style.display = 'none';
+      if (card && Date.now() < Date.UTC(2026, 7, 3, 15, 0, 0)) card.style.display = 'none';
     })();
   </script>
 
@@ -3149,6 +3156,7 @@
       { el: document.getElementById('heroKr'), delay: 150 },
       { el: document.getElementById('heroEyebrow'), delay: 300 },
       { el: document.getElementById('heroDesc'), delay: 500 },
+      { el: document.getElementById('heroThanks'), delay: 650 },
       { el: document.getElementById('heroScroll'), delay: 800 },
     ];
     tl.forEach(({ el, delay }) => {
@@ -3442,13 +3450,14 @@
     heroDesc: `
         A collective of those who <em>conspire</em> in works and creation
       `,
+    heroThanks: `Our first exhibition has come to a close — thank you for being with us`,
     quoteText: `
         "Shall we begin<br>the <em>conspiracy</em>?"
       `,
     exhTitle: `2026 First Half<br>Group Exhibition`,
     exhTitleValue: `Simulation (模擬實驗)`,
     exhTitleSub: `MOUI-IST's First Group Exhibition`,
-    exhDateSub: `Mon, Jul 28 — Sun, Aug 2`,
+    exhDateSub: `Mon, Jul 28 — Sun, Aug 2 · Ended`,
     exhHoursSub: `Daily 11 AM — 6 PM`,
     exhVenueValue: `Sai Art Center FLUX`,
     exhVenueSub: `3 min from Anguk Station`,
@@ -4099,22 +4108,7 @@ There is no length limit, but the more concise, the better.`,
     if (e.key === 'Escape') closeLightbox();
   });
 
-  // ===== D-DAY CALCULATION =====
-  const exhOpeningDate = new Date('2026-07-28T00:00:00');
-  const exhDdayNumEl = document.getElementById('exhDdayNum');
-  function updateDday() {
-    const now = new Date();
-    const diff = exhOpeningDate - now;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    if (days > 0) {
-      exhDdayNumEl.textContent = 'D-' + days;
-    } else if (days === 0) {
-      exhDdayNumEl.textContent = 'D-DAY';
-    } else {
-      exhDdayNumEl.textContent = 'NOW';
-    }
-  }
-  updateDday();
+  // ===== D-DAY: 전시 종료(2026-08-02) — 'ENDED' 고정 표시 =====
 
   // ===== EXHIBITION POUR-IN ON SCROLL =====
   const exhSection = document.getElementById('exhibition');
@@ -4230,7 +4224,7 @@ There is no length limit, but the more concise, the better.`,
   document.getElementById('posterShareBtn').addEventListener('click', async () => {
     const shareData = {
       title: 'MOUI-IST 모의실험(模擬實驗)',
-      text: '모의실험(模擬實驗) — MOUI-IST 첫 번째 단체전\n2026.07.28 — 08.02\n사이아트센터 FLUX (안국역 3분)\n\n9인의 작가가 펼치는 단체전에 초대합니다.',
+      text: '모의실험(模擬實驗) — MOUI-IST 첫 번째 단체전\n2026.07.28 — 08.02\n사이아트센터 FLUX (안국역 3분)\n\n9인의 작가가 함께한 첫 번째 단체전, 성황리에 마쳤습니다.',
       url: 'https://mouiist.com'
     };
     if (navigator.share) {
